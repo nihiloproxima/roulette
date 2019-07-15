@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const axios = require('axios');
-const User = require("../schemas/User");
+const User = require("./schemas/User");
 
 router.get('/', (req, res) => {
 	if (req.session.auth) {
@@ -15,7 +15,7 @@ router.get('/', (req, res) => {
 	}
 });
 
-router.get('/redirect', (req, res) => {
+router.get('/redirect', async (req, res) => {
 	if (req.query.state == "pwned") {
 		console.log("CODE : ", req.query.code)
 		axios.post("https://api.intra.42.fr/oauth/token", {
@@ -25,12 +25,12 @@ router.get('/redirect', (req, res) => {
 				code: req.query.code,
 				redirect_uri: process.env.REDIRECT_URI
 			})
-			.then(response => {
+			.then(async response => {
 				var token = response.data.access_token;
 
 				axios
 					.get("https://api.intra.42.fr/v2/me?access_token=" + token)
-					.then(response => {
+					.then(async response => {
 						user_exists = await User.findOne({
 							login: response.data.login
 						});
