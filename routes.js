@@ -17,7 +17,6 @@ function extend(dest, src) {
 
 router
 	.get('/', (req, res) => {
-		console.log(req.session)
 		if (req.session.auth) {
 			// User is logged in
 			res.render(__dirname + '/views/index', {
@@ -104,6 +103,7 @@ router
 		res.sendFile(__dirname + '/db.json');
 	})
 	.get('/pwn', (req, res) => {
+		console.log(req.session)
 		if (req.session.auth) {
 			var rand = Math.floor(Math.random() * 100);
 			console.log("Rand :", rand)
