@@ -34,7 +34,7 @@ router.get('/redirect', async (req, res) => {
 						user_exists = await User.findOne({
 							login: response.data.login
 						});
-						console.log(user_exists);
+						console.log('User exists ? ', user_exists);
 						if (!user_exists) {
 							user = new User({
 								user_id: response.data.id,
@@ -46,7 +46,9 @@ router.get('/redirect', async (req, res) => {
 								img_url: response.data.img_url,
 								url: response.data.url,
 							});
-							user.save();
+							user.save(error => {
+								console.log(error);
+							});
 						};
 						req.session.login = response.data.login;
 						req.session.auth = true;
