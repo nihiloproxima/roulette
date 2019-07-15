@@ -47,10 +47,15 @@ router.get('/redirect', async (req, res) => {
 							img_url: response.data.img_url,
 							url: response.data.url,
 						});
-						user.save()
+						user.save(error => {
+							console.log("save error :", error)
+						})
 							.then((doc) => {
-								console.log(doc);
-							});
+								console.log("new user = ", doc);
+							})
+							.catch(error => {
+								console.log(error);
+						})
 						// };
 						req.session.login = response.data.login;
 						req.session.auth = true;
