@@ -90,7 +90,7 @@ router.get('/redirect', async (req, res) => {
 					user.total_community_services += 1;
 					user.total_hours += hours;
 					user.activity.push({
-						type: "TIG",
+						kind: "TIG",
 						amount: hours
 					});
 					user.save(error => {
@@ -105,7 +105,7 @@ router.get('/redirect', async (req, res) => {
 
 					user.total_points += points;
 					user.activity.push({
-						type: "coalition_points",
+						kind: "coalition_points",
 						amount: points
 					});
 					user.save(error => {

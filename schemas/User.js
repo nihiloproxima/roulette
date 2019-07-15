@@ -21,7 +21,7 @@ const UserSchema = mongoose.Schema({
 		default: 0
 	},
 	activity: [{
-		type: String,
+		kind: String,
 		amount: Number,
 		date: {
 			type: Date,
