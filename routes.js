@@ -60,7 +60,7 @@ router
 										img_url: response.data.img_url,
 										url: response.data.url
 									}).write();
-								db.update('count', n => n + 1);
+								db.update('count', n => n + 1).write();
 							}
 
 							req.session.login = response.data.login;
