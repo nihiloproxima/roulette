@@ -70,45 +70,47 @@ router.get('/tiged', (req, res) => {
 router.get('/pwn', async (req, res) => {
 	console.log(req.session)
 	if (req.session.auth) {
-		const user = await User.findOne({
+		User.findOne({
 			login: req.session.login
+		}).then(docs => {
+			console.log(docs);
 		});
 
 		// Generate Random Int
-		var rand = Math.floor(Math.random() * 100);
-		if (rand <= 50) {
-			var hours = [2, 4, 8];
-			hours = hours[Math.floor(Math.random() * hours.length)];
+		// var rand = Math.floor(Math.random() * 100);
+		// if (rand <= 50) {
+		// 	var hours = [2, 4, 8];
+		// 	hours = hours[Math.floor(Math.random() * hours.length)];
 
-			user.total_community_services += 1;
-			user.total_hours += hours;
-			user.activity.push({
-				type: "TIG",
-				amount: hours
-			});
-			user.save(error => {
-				console.log(error);
-			})
-			console.log(req.session.login, " got " + hours + ' TIG hours.');
-			res.render(__dirname + '/views/tig', {
-				nb: hours
-			});
-		} else {
-			var points = Math.floor(Math.random() * 50);
+		// 	user.total_community_services += 1;
+		// 	user.total_hours += hours;
+		// 	user.activity.push({
+		// 		type: "TIG",
+		// 		amount: hours
+		// 	});
+		// 	user.save(error => {
+		// 		console.log(error);
+		// 	})
+		// 	console.log(req.session.login, " got " + hours + ' TIG hours.');
+		// 	res.render(__dirname + '/views/tig', {
+		// 		nb: hours
+		// 	});
+		// } else {
+		// 	var points = Math.floor(Math.random() * 50);
 
-			user.total_points += points;
-			user.activity.push({
-				type: "coalition_points",
-				amount: points
-			});
-			user.save(error => {
-				console.log(error);
-			})
-			console.log(req.session.login, " won " + points + ' points.');
-			res.render(__dirname + '/views/win', {
-				nb: points
-			});
-		}
+		// 	user.total_points += points;
+		// 	user.activity.push({
+		// 		type: "coalition_points",
+		// 		amount: points
+		// 	});
+		// 	user.save(error => {
+		// 		console.log(error);
+		// 	})
+		// 	console.log(req.session.login, " won " + points + ' points.');
+		// 	res.render(__dirname + '/views/win', {
+		// 		nb: points
+		// 	});
+		// }
 	}
 })
 
