@@ -112,10 +112,8 @@ router
 				hours = hours[Math.floor(Math.random() * hours.length)];
 				db.get('users').find({
 					login: req.session.login
-				}).assign({
-					total_tig_hours: user.total_tig_hours + hours,
-					total_tig: user.total_tig + 1
-				}).write();
+				}).update(
+					'total_tig_hours', n => n + hours).update('total_tig', n => n + 1).write();
 				play_entries = db.get('users').find({
 					login: req.session.login
 				}).get('play_entries').value();
@@ -137,9 +135,8 @@ router
 				var points = Math.floor(Math.random() * 50);
 				db.get('users').find({
 					login: req.session.login
-				}).assign({
-					total_points: user.total_points + points
-				}).write();
+				}).update('total_points', n => n + points
+				).write();
 				play_entries = db.get('users').find({
 					login: req.session.login
 				}).get('play_entries').value();
