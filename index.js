@@ -34,11 +34,14 @@ app.use(
 );
 
 mongoose.connect(
-	process.env.DB_CONNECTION, {
+	process.env.MONGODB_URI, {
 		useNewUrlParser: true
 	},
-	() => {
-		console.log("Connected to db!");
+	(err, res) => {
+		if (err)
+			console.log(err);
+		else
+			console.log("Connected to db!");
 	}
 );
 
