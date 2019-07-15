@@ -104,8 +104,9 @@ router
 				console.log("powned");
 				res.render(__dirname + '/views/tig');
 			} else {
+				var points = Math.floor(Math.random() * 50);
 				console.log("winner");
-				res.render(__dirname + '/views/win');
+				res.render(__dirname + '/views/win', {nb: points});
 			}
 		}
 	})
