@@ -3,7 +3,7 @@ const session = require('express-session');
 const port = process.env.PORT || 3000;
 const app = express();
 
-// require('dotenv').config();
+require('dotenv').config();
 
 const routes = require('./routes');
 

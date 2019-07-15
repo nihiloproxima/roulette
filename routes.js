@@ -25,8 +25,8 @@ router
 			console.log("CODE : ", req.query.code)
 			axios.post("https://api.intra.42.fr/oauth/token", {
 					grant_type: "authorization_code",
-					client_id: "0ff7e0be9363c0bd6079bfb265041fb18196a70364a0860730ee970d1d46ff02",
-					client_secret: "e8de761199c59d9e918dae88dd7791513c0337d640cee9d4e1c69970ac16bcc8",
+					client_id: process.env.CLIENT_ID,
+					client_secret: process.env.CLIENT_SECRET,
 					code: req.query.code,
 					redirect_uri: "http://localhost:3000/redirect"
 				})
