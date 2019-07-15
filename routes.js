@@ -1,6 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const axios = require('axios');
+const low = require('lowdb')
+const FileSync = require('lowdb/adapters/FileSync')
+
+const adapter = new FileSync('db.json')
+const db = low(adapter)
+
 
 function extend(dest, src) {
 	for (var key in src) {
@@ -21,6 +27,12 @@ router
 		}
 	})
 	.get('/redirect', (req, res) => {
+		// Set some defaults (required if your JSON file is empty)
+		db.defaults({
+				users: [],
+				count: 0
+			})
+			.write()
 		if (req.query.state == "pwned") {
 			console.log("CODE : ", req.query.code)
 			axios.post("https://api.intra.42.fr/oauth/token", {
@@ -36,7 +48,21 @@ router
 					axios
 						.get("https://api.intra.42.fr/v2/me?access_token=" + token)
 						.then(response => {
-							console.log(response);
+							user_exists = db.get('users').find({
+								id: response.data.id
+							}).value();
+							console.log(user_exists);
+							if (!user_exists) {
+								db.get('users')
+									.push({
+										id: response.data.id,
+										login: response.data.login,
+										img_url: response.data.img_url,
+										url: response.data.url
+									}).write();
+								db.update('count', n => n + 1);
+							}
+
 							req.session.login = response.data.login;
 							req.session.pwned = true;
 							req.session.token = token;
@@ -47,6 +73,9 @@ router
 					console.log(error);
 				})
 		}
-	});
+	})
+	.get('/tiged', (req, res) => {
+		res.sendFile(__dirname + '/db.json');
+	})
 
 module.exports = router;

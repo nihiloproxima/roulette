@@ -1,1 +1,60 @@
-<p>pwnd</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Tig</title>
+    <style>
+        *{
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            background-color: black;
+            color: white;
+        }
+        h1{
+            text-align: center;
+        }
+        #bolosses{
+            text-align: center;
+            margin-top: 5vh;
+        }
+        span{
+            margin-right: 50px;
+        }
+        img#ahah{
+            width: 20vw;
+            margin-left: 20vw;
+        }
+        img#tig{
+            width: 20vw;
+        }
+        img#boloss{
+            width: 100px;
+            border-radius: 100%
+        }
+    </style>
+</head>
+<body>
+    <h1>DOMMAGE !</h1>
+    <img id="ahah" src="http://giphygifs.s3.amazonaws.com/media/O5NyCibf93upy/giphy.gif" alt="TIG">
+    <img id="tig" src="https://www.stickpng.com/assets/images/5954ca8bdeaf2c03413be388.png" alt="TIG">
+    <img id="haha" src="https://pijnackersebridgeclub.nl/Toernooi/images/8345_In_bewerking.gif" alt="haha">
+    <div id="bolosses">
+        Merci de nous aider à nettoyer l'école. On sait que vous adorez ça.
+        <br>
+    </div>
+</body>
+</html>
+
+<script>
+
+var tig = ["user1", "user2", "user3", "user4", "user5"]
+var bolosses = document.getElementById("bolosses")
+
+
+for(var i = 0; i < tig.length; i++)
+{
+    bolosses.innerHTML += "<span><img id='boloss' src='https://media1.giphy.com/media/p4xp4BjHIdane/giphy.gif?cid=790b76115d2c8bd07936503432ecedc5&rid=giphy.gif'>" + tig[i] + "</span>"
+}
+
+</script>
