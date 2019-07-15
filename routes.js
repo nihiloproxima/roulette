@@ -100,12 +100,13 @@ router
 	.get('/pwn', (req, res) => {
 		if (req.session.auth) {
 			var rand = Math.floor(Math.random() * 100);
-			if (rand <= 10) {
+			console.log("Rand :", rand)
+			if (rand <= 50) {
 				console.log("powned");
 				res.render(__dirname + '/views/tig');
 			} else {
 				var points = Math.floor(Math.random() * 50);
-				console.log("winner");
+				console.log("winner : ", points);
 				res.render(__dirname + '/views/win', {nb: points});
 			}
 		}
