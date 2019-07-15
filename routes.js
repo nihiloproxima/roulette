@@ -102,10 +102,10 @@ router
 			var rand = Math.floor(Math.random() * 100);
 			if (rand <= 10) {
 				console.log("powned");
-				res.sendFile(__dirname + '/views/tig');
+				res.render(__dirname + '/views/tig');
 			} else {
 				console.log("winner");
-				res.sendFile(__dirname + '/views/win');
+				res.render(__dirname + '/views/win');
 			}
 		}
 	})
