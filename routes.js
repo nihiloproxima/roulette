@@ -31,7 +31,8 @@ router.get('/redirect', async (req, res) => {
 				axios
 					.get("https://api.intra.42.fr/v2/me?access_token=" + token)
 					.then(async response => {
-						console.log("Searching user in db...");
+						console.log("User datas : ", response.data);
+						console.log("Creating user");
 						// user_exists = await User.findOne({
 						// 	login: response.data.login
 						// });
@@ -40,10 +41,6 @@ router.get('/redirect', async (req, res) => {
 						user = new User({
 							user_id: response.data.id,
 							login: response.data.login,
-							total_points: 0,
-							total_hours: 0,
-							total_community_services: 0,
-							activity: [],
 							img_url: response.data.img_url,
 							url: response.data.url,
 						});
