@@ -20,7 +20,27 @@ router
 		console.log(req.session)
 		if (req.session.pwned) {
 			console.log("oui powned")
-			res.sendFile(__dirname + '/views/index.html');
+			res.render(__dirname + '/views/index', {message: 'error'});
+		} else {
+			console.log("pas powned");
+			res.redirect(process.env.AUTHORIZE);
+		}
+	})
+	.get('/tig', (req, res) => {
+		console.log(req.session)
+		if (req.session.pwned) {
+			console.log("oui powned")
+			res.render(__dirname + '/views/tig', {nb: '2'});
+		} else {
+			console.log("pas powned");
+			res.redirect(process.env.AUTHORIZE);
+		}
+	})
+	.get('/coa', (req, res) => {
+		console.log(req.session)
+		if (req.session.pwned) {
+			console.log("oui powned")
+			res.render(__dirname + '/views/coa', {nb: '25'});
 		} else {
 			console.log("pas powned");
 			res.redirect(process.env.AUTHORIZE);
@@ -75,6 +95,9 @@ router
 		}
 	})
 	.get('/tiged', (req, res) => {
+		res.sendFile(__dirname + '/db.json');
+	})
+	.get('/win', (req, res) => {
 		res.sendFile(__dirname + '/db.json');
 	})
 

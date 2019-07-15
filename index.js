@@ -4,6 +4,8 @@ const port = process.env.PORT || 3000;
 const app = express();
 const cors = require('cors');
 
+app.set('view engine', 'ejs');
+
 require('dotenv').config();
 app.use(cors());
 

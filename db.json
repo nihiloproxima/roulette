@@ -4,7 +4,12 @@
       "id": 58278,
       "login": "nihilo",
       "url": "https://api.intra.42.fr/v2/users/nihilo"
+    },
+    {
+      "id": 37606,
+      "login": "ftourret",
+      "url": "https://api.intra.42.fr/v2/users/ftourret"
     }
   ],
-  "count": 1
+  "count": 2
 }

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>*DOMMAGE</title>
+    <title>DOMMAGE</title>
     <style>
         *{
             font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -53,7 +53,7 @@
 var bolosses = document.getElementById("bolosses")
 
 const req = new XMLHttpRequest();
-req.open('GET', 'https://get-pwnd.herokuapp.com/tiged', false); 
+req.open('GET', 'https://localhost:3000/tiged', false); 
 req.send(null);
 
 if (req.status === 200) {
