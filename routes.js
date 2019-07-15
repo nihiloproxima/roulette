@@ -77,11 +77,8 @@ router.get('/redirect', async (req, res) => {
 		router.get('/pwn', async (req, res) => {
 			console.log(req.session)
 			if (req.session.auth) {
-				User.findOne({
+				let user = await User.findOne({
 					login: req.session.login
-				}).then(docs => {
-					console.log('collection ? : ', docs);
-					res.send('ok');
 				});
 
 				// Generate Random Int
