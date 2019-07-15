@@ -118,7 +118,10 @@ router
 				}).assign({
 					total_tig_hours: user.total_tig_hours + hours,
 					total_tig: user.total_tig + 1
-				}).get('play_entries').push({
+				}).write();
+				db.get('user').find({
+					login: req.sessionn.login
+				}).get('user.play_entries').push({
 					date: Date.now(),
 					type: 'TIG',
 					value: hours
@@ -135,9 +138,12 @@ router
 					login: req.session.login
 				}).assign({
 					total_points: user.total_points + points
-				}).get('play_entries').push({
+				}).write();
+				db.get('user').find({
+					login: req.sessionn.login
+				}).get('user.play_entries').push({
 					date: Date.now(),
-					type: 'Win',
+					type: 'win',
 					value: points
 				}).write();
 				console.log(req.session.login, " won " + points + ' points');
