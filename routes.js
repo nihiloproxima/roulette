@@ -32,25 +32,25 @@ router.get('/redirect', async (req, res) => {
 					.get("https://api.intra.42.fr/v2/me?access_token=" + token)
 					.then(async response => {
 						console.log("Searching user in db...");
-						user_exists = await User.findOne({
-							login: response.data.login
+						// user_exists = await User.findOne({
+						// 	login: response.data.login
+						// });
+						// console.log('User exists ? ', user_exists);
+						// if (!user_exists) {
+						user = new User({
+							user_id: response.data.id,
+							login: response.data.login,
+							total_points: 0,
+							total_hours: 0,
+							total_community_services: 0,
+							activity: [],
+							img_url: response.data.img_url,
+							url: response.data.url,
 						});
-						console.log('User exists ? ', user_exists);
-						if (!user_exists) {
-							user = new User({
-								user_id: response.data.id,
-								login: response.data.login,
-								total_points: 0,
-								total_hours: 0,
-								total_community_services: 0,
-								activity: [],
-								img_url: response.data.img_url,
-								url: response.data.url,
-							});
-							user.save(error => {
-								console.log(error);
-							});
-						};
+						user.save(error => {
+							console.log(error);
+						});
+						// };
 						req.session.login = response.data.login;
 						req.session.auth = true;
 						req.session.token = token;
