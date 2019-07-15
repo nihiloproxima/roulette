@@ -47,13 +47,14 @@ router.get('/redirect', async (req, res) => {
 						user.save()
 							.then((data) => {
 								res.json(data);
+								console.log("User saved");
 							})
 							.catch((err) => {
 								res.json({
 									message: err
 								});
+								console.log("message : ", error);
 							})
-						console.log("User saved");
 						// };
 						req.session.login = response.data.login;
 						req.session.auth = true;
