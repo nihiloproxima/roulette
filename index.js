@@ -4,6 +4,7 @@ const port = process.env.PORT || 3000;
 const app = express();
 const cors = require('cors');
 const routes = require('./routes');
+const mongoose = require("mongoose");
 
 app.set('view engine', 'ejs');
 
@@ -29,6 +30,15 @@ app.use(
 			secure: false
 		}
 	})
+);
+
+mongoose.connect(
+	process.env.DB_CONNECTION, {
+		useNewUrlParser: true
+	},
+	() => {
+		console.log("Connected to db!");
+	}
 );
 
 app.use('/', routes);

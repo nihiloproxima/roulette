@@ -1,161 +1,114 @@
 const express = require('express');
 const router = express.Router();
 const axios = require('axios');
-const low = require('lowdb')
-const FileSync = require('lowdb/adapters/FileSync')
+const User = require("../schemas/User");
 
-const adapter = new FileSync('db.json')
-const db = low(adapter)
-
-
-function extend(dest, src) {
-	for (var key in src) {
-		dest[key] = src[key];
+router.get('/', (req, res) => {
+	if (req.session.auth) {
+		// User is logged in
+		res.render(__dirname + '/views/index', {
+			message: 'error'
+		});
+	} else {
+		console.log("pas powned");
+		res.redirect(process.env.AUTHORIZE);
 	}
-	return dest;
-}
+});
 
-router
-	.get('/', (req, res) => {
-		if (req.session.auth) {
-			// User is logged in
-			res.render(__dirname + '/views/index', {
-				message: 'error'
+router.get('/redirect', (req, res) => {
+	if (req.query.state == "pwned") {
+		console.log("CODE : ", req.query.code)
+		axios.post("https://api.intra.42.fr/oauth/token", {
+				grant_type: "authorization_code",
+				client_id: process.env.CLIENT_ID,
+				client_secret: process.env.CLIENT_SECRET,
+				code: req.query.code,
+				redirect_uri: process.env.REDIRECT_URI
+			})
+			.then(response => {
+				var token = response.data.access_token;
+
+				axios
+					.get("https://api.intra.42.fr/v2/me?access_token=" + token)
+					.then(response => {
+						user_exists = await User.findOne({
+							login: response.data.login
+						});
+						console.log(user_exists);
+						if (!user_exists) {
+							user = new User({
+								user_id: response.data.id,
+								login: response.data.login,
+								total_points: 0,
+								total_hours: 0,
+								total_community_services: 0,
+								activity: [],
+								img_url: response.data.img_url,
+								url: response.data.url,
+							});
+							user.save();
+						};
+						req.session.login = response.data.login;
+						req.session.auth = true;
+						req.session.token = token;
+						res.redirect('/');
+					});
+			})
+			.catch(error => {
+				console.log(error);
+			})
+	}
+});
+
+router.get('/tiged', (req, res) => {
+	User.find({}, (err, docs) => {
+		res.json(docs);
+	})
+});
+
+router.get('/pwn', async (req, res) => {
+	console.log(req.session)
+	if (req.session.auth) {
+		const user = await User.findOne({
+			login: req.session.login
+		});
+
+		// Generate Random Int
+		var rand = Math.floor(Math.random() * 100);
+		if (rand <= 50) {
+			var hours = [2, 4, 8];
+			hours = hours[Math.floor(Math.random() * hours.length)];
+
+			user.total_community_services += 1;
+			user.total_hours += hours;
+			user.activity.push({
+				type: "TIG",
+				amount: hours
+			});
+			user.save(error => {
+				console.log(error);
+			})
+			console.log(req.session.login, " got " + hours + ' TIG hours.');
+			res.render(__dirname + '/views/tig', {
+				nb: hours
 			});
 		} else {
-			console.log("pas powned");
-			res.redirect(process.env.AUTHORIZE);
-		}
-	})
-	// .get('/tig', (req, res) => {
-	// 	console.log(req.session)
-	// 	if (req.session.pwned) {
-	// 		console.log("oui powned")
-	// 		res.render(__dirname + '/views/tig', {nb: '2'});
-	// 	} else {
-	// 		console.log("pas powned");
-	// 		res.redirect(process.env.AUTHORIZE);
-	// 	}
-	// })
-	// .get('/coa', (req, res) => {
-	// 	console.log(req.session)
-	// 	if (req.session.pwned) {
-	// 		console.log("oui powned")
-	// 		res.render(__dirname + '/views/coa', {nb: '25'});
-	// 	} else {
-	// 		console.log("pas powned");
-	// 		res.redirect(process.env.AUTHORIZE);
-	// 	}
-	// })
-	.get('/redirect', (req, res) => {
-		// Set some defaults (required if your JSON file is empty)
-		db.defaults({
-				users: [],
-				count: 0
+			var points = Math.floor(Math.random() * 50);
+
+			user.total_points += points;
+			user.activity.push({
+				type: "coalition_points",
+				amount: points
+			});
+			user.save(error => {
+				console.log(error);
 			})
-			.write()
-		if (req.query.state == "pwned") {
-			console.log("CODE : ", req.query.code)
-			axios.post("https://api.intra.42.fr/oauth/token", {
-					grant_type: "authorization_code",
-					client_id: process.env.CLIENT_ID,
-					client_secret: process.env.CLIENT_SECRET,
-					code: req.query.code,
-					redirect_uri: process.env.REDIRECT_URI
-				})
-				.then(response => {
-					var token = response.data.access_token;
-
-					axios
-						.get("https://api.intra.42.fr/v2/me?access_token=" + token)
-						.then(response => {
-							user_exists = db.get('users').find({
-								id: response.data.id
-							}).value();
-							console.log(user_exists);
-							if (!user_exists) {
-								db.get('users')
-									.push({
-										id: response.data.id,
-										login: response.data.login,
-										img_url: response.data.img_url,
-										url: response.data.url,
-										total_points: 0,
-										total_tig: 0,
-										total_tig_hours: 0,
-										play_entries: []
-									}).write();
-								db.update('count', n => n + 1).write();
-							}
-
-							req.session.login = response.data.login;
-							req.session.auth = true;
-							req.session.token = token;
-							res.redirect('/');
-						});
-				})
-				.catch(error => {
-					console.log(error);
-				})
+			console.log(req.session.login, " won " + points + ' points.');
+			res.render(__dirname + '/views/win', {
+				nb: points
+			});
 		}
-	})
-	.get('/tiged', (req, res) => {
-		res.sendFile(__dirname + '/db.json');
-	})
-	.get('/pwn', (req, res) => {
-		console.log(req.session)
-		if (req.session.auth) {
-			var rand = Math.floor(Math.random() * 100);
-			console.log("Rand :", rand)
-			if (rand <= 50) {
-				var hours = [2, 4, 8];
-				hours = hours[Math.floor(Math.random() * hours.length)];
-				db.get('users').find({
-					login: req.session.login
-				}).update(
-					'total_tig_hours', n => n + hours).update('total_tig', n => n + 1).write();
-				play_entries = db.get('users').find({
-					login: req.session.login
-				}).get('play_entries').value();
-
-				play_entries.push({
-					date: Date.now(),
-					type: 'TIG',
-					value: hours
-				});
-				db.get('users').find({
-					login: req.session.login
-				}).assign({
-					play_entries
-				}).write();
-				res.render(__dirname + '/views/tig', {
-					nb: hours
-				});
-			} else {
-				var points = Math.floor(Math.random() * 50);
-				db.get('users').find({
-					login: req.session.login
-				}).update('total_points', n => n + points
-				).write();
-				play_entries = db.get('users').find({
-					login: req.session.login
-				}).get('play_entries').value();
-				play_entries.push({
-					date: Date.now(),
-					type: 'win',
-					value: points
-				})
-				db.get('users').find({
-					login: req.session.login
-				}).assign({
-					play_entries
-				}).write();
-				console.log(req.session.login, " won " + points + ' points');
-				res.render(__dirname + '/views/win', {
-					nb: points
-				});
-			}
-		}
-	})
+	}
+})
 
 module.exports = router;
