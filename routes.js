@@ -20,7 +20,9 @@ router
 		console.log(req.session)
 		if (req.session.auth) {
 			// User is logged in
-			res.render(__dirname + '/views/index', {message: 'error'});
+			res.render(__dirname + '/views/index', {
+				message: 'error'
+			});
 		} else {
 			console.log("pas powned");
 			res.redirect(process.env.AUTHORIZE);
@@ -80,7 +82,9 @@ router
 										img_url: response.data.img_url,
 										url: response.data.url,
 										total_points: 0,
-										total_tig: 0
+										total_tig: 0,
+										total_tig: hours,
+										play_entries: []
 									}).write();
 								db.update('count', n => n + 1).write();
 							}
@@ -106,13 +110,40 @@ router
 			if (rand <= 50) {
 				var hours = ['2', '4', '8'];
 				hours = hours[Math.floor(Math.random() * hours.length)];
-				console.log(req.session.login, " powned");
-				res.render(__dirname + '/views/tig', { nb: hours});
+				user = db.get('users').find({
+					login: req.session.login
+				}).value();
+				db.get('users').find({
+					login: req.session.login
+				}).assign({
+					total_tig_hours: user.total_tig_hours + hours,
+					total_tig: user.total_tig + 1
+				}).get('play_entries').push({
+					date: Date.now(),
+					type: 'TIG',
+					value: hours
+				}).write();
+				res.render(__dirname + '/views/tig', {
+					nb: hours
+				});
 			} else {
 				var points = Math.floor(Math.random() * 50);
-				db.get('users').find({ login: req.session.login }).assign({ total_points: n => n + points }).write();
+				user = db.get('users').find({
+					login: req.session.login
+				}).value();
+				db.get('users').find({
+					login: req.session.login
+				}).assign({
+					total_points: user.total_points + points
+				}).get('play_entries').push({
+					date: Date.now(),
+					type: 'Win',
+					value: points
+				}).write();
 				console.log(req.session.login, " won " + points + ' points');
-				res.render(__dirname + '/views/win', {nb: points});
+				res.render(__dirname + '/views/win', {
+					nb: points
+				});
 			}
 		}
 	})
