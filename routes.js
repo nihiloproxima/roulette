@@ -18,13 +18,34 @@ function extend(dest, src) {
 router
 	.get('/', (req, res) => {
 		console.log(req.session)
-		if (req.session.auth == true) {
-			res.sendFile(__dirname + '/views/index.html');
+		if (req.session.auth) {
+			// User is logged in
+			res.render(__dirname + '/views/index', {message: 'error'});
 		} else {
 			console.log("pas powned");
 			res.redirect(process.env.AUTHORIZE);
 		}
 	})
+	// .get('/tig', (req, res) => {
+	// 	console.log(req.session)
+	// 	if (req.session.pwned) {
+	// 		console.log("oui powned")
+	// 		res.render(__dirname + '/views/tig', {nb: '2'});
+	// 	} else {
+	// 		console.log("pas powned");
+	// 		res.redirect(process.env.AUTHORIZE);
+	// 	}
+	// })
+	// .get('/coa', (req, res) => {
+	// 	console.log(req.session)
+	// 	if (req.session.pwned) {
+	// 		console.log("oui powned")
+	// 		res.render(__dirname + '/views/coa', {nb: '25'});
+	// 	} else {
+	// 		console.log("pas powned");
+	// 		res.redirect(process.env.AUTHORIZE);
+	// 	}
+	// })
 	.get('/redirect', (req, res) => {
 		// Set some defaults (required if your JSON file is empty)
 		db.defaults({

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Tig</title>
+    <title>DOMMAGE</title>
     <style>
         *{
             font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -42,6 +42,8 @@
     <div id="bolosses">
         Merci de nous aider à nettoyer l'école. On sait que vous adorez ça.
         <br>
+        Tu as gagné <%= nb %> heures de tig.
+        <br>
     </div>
 </body>
 </html>
@@ -51,7 +53,7 @@
 var bolosses = document.getElementById("bolosses")
 
 const req = new XMLHttpRequest();
-req.open('GET', 'https://get-pwnd.herokuapp.com/tiged', false); 
+req.open('GET', 'http://localhost:3000/tiged', false); 
 req.send(null);
 
 if (req.status === 200) {

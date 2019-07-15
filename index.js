@@ -5,6 +5,8 @@ const app = express();
 const cors = require('cors');
 const routes = require('./routes');
 
+app.set('view engine', 'ejs');
+
 require('dotenv').config();
 app.use(cors());
 

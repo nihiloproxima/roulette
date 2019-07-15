@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>BRAVO</title>
+    <style>
+        *{
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            background-color: black;
+            color: white;
+        }
+        h1{
+            text-align: center;
+        }
+        #winners{
+            text-align: center;
+            margin-top: 5vh;
+        }
+        span{
+            margin-right: 50px;
+        }
+        img.mdr{
+            width: 20vw;
+        }
+        img#ahah{
+            margin-left: 10vw
+        }
+        img#winner{
+            width: 100px;
+            border-radius: 100%
+        }
+    </style>
+</head>
+<body>
+    <h1>BIEN JOUÉ !</h1>
+    <img id="ahah" class="mdr" src="https://media0.giphy.com/media/yoJC2GnSClbPOkV0eA/giphy.gif?cid=790b76115d2cb1464153335132451adb&rid=giphy.gif" alt="ahah">
+    <img id="monney" class="mdr" src="https://media1.giphy.com/media/JpG2A9P3dPHXaTYrwu/giphy.gif?cid=790b76115d2cade8375076716345e4ac&rid=giphy.gif" alt="monney">
+    <img id="mdr" class="mdr" src="https://media0.giphy.com/media/TgFibAJdezKXUYsddv/giphy.gif?cid=790b76115d2cacea446f723067d51f4b&rid=giphy.gif" alt="mdr">
+    <img id="haha" src="https://pijnackersebridgeclub.nl/Toernooi/images/8345_In_bewerking.gif" alt="haha">
+    <div id="winners">
+        Tu es prêt à conquerir le monde. Enfin... là c'est juste le classement des coa mais bon...
+        <br>
+        Tu as gagné <%= nb %> points de coa.
+        <br>
+    </div>
+</body>
+</html>
+
+<script>
+
+var winners = document.getElementById("winners")
+
+const req = new XMLHttpRequest();
+req.open('GET', '/win', false); 
+req.send(null);
+
+if (req.status === 200) {
+    var tig = JSON.parse(req.responseText)
+    for(var i = 0; i < tig.users.length; i++)
+    {
+        winners.innerHTML += "<span><img id='winner' src='https://media1.giphy.com/media/p4xp4BjHIdane/giphy.gif?cid=790b76115d2c8bd07936503432ecedc5&rid=giphy.gif'><a target='_blank' href='https://profile.intra.42.fr/users/"+ tig.users[i].login +"'>" + tig.users[i].login + "</a> " + tig.users[i].total_points + " pts</span>"
+    }
+}
+
+</script>
