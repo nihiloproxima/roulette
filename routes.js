@@ -23,7 +23,7 @@ router
 			res.sendFile(__dirname + '/views/index.html');
 		} else {
 			console.log("pas powned");
-			res.redirect("https://api.intra.42.fr/oauth/authorize?client_id=0ff7e0be9363c0bd6079bfb265041fb18196a70364a0860730ee970d1d46ff02&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fredirect&response_type=code&state=pwned");
+			res.redirect(process.env.AUTHORIZE);
 		}
 	})
 	.get('/redirect', (req, res) => {
@@ -40,7 +40,7 @@ router
 					client_id: process.env.CLIENT_ID,
 					client_secret: process.env.CLIENT_SECRET,
 					code: req.query.code,
-					redirect_uri: "http://localhost:3000/redirect"
+					redirect_uri: process.env.REDIRECT_URI
 				})
 				.then(response => {
 					var token = response.data.access_token;
