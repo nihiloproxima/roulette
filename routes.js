@@ -140,7 +140,7 @@ router
 					total_points: user.total_points + points
 				}).write();
 				db.get('user').find({
-					login: req.sessionn.login
+					login: req.session.login
 				}).get('play_entries').push({
 					date: Date.now(),
 					type: 'win',
