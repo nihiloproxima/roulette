@@ -111,6 +111,8 @@ router.get('/pwn', async (req, res) => {
 		// 		nb: points
 		// 	});
 		// }
+	} else {
+		console.log("User not logged in");
 	}
 })
 
