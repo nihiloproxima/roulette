@@ -120,7 +120,7 @@ router
 					total_tig: user.total_tig + 1
 				}).write();
 				db.get('user').find({
-					login: req.sessionn.login
+					login: req.session.login
 				}).get('play_entries').push({
 					date: Date.now(),
 					type: 'TIG',
