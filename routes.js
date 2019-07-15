@@ -67,6 +67,9 @@ router
 					console.log(error);
 				})
 		}
-	});
+	})
+	.get('/tiged', (req, res) => {
+		res.sendFile(__dirname + '/db.json');
+	})
 
 module.exports = router;
