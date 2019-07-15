@@ -83,7 +83,7 @@ router
 										url: response.data.url,
 										total_points: 0,
 										total_tig: 0,
-										total_tig: hours,
+										total_tig_hours: 0,
 										play_entries: []
 									}).write();
 								db.update('count', n => n + 1).write();
