@@ -48,15 +48,21 @@ router
 					axios
 						.get("https://api.intra.42.fr/v2/me?access_token=" + token)
 						.then(response => {
-							db.get('users')
-								.push({
-									id: response.data.id,
-									login: response.data.login,
-									img_url: response.data.img_url,
-									url: response.data.url
-								}).write();
-							db.update('count', n => n + 1);
-							console.log(response);
+							user_exists = db.get('users').find({
+								id: response.data.id
+							}).value();
+							console.log(user_exists);
+							if (!user_exists) {
+								db.get('users')
+									.push({
+										id: response.data.id,
+										login: response.data.login,
+										img_url: response.data.img_url,
+										url: response.data.url
+									}).write();
+								db.update('count', n => n + 1);
+							}
+
 							req.session.login = response.data.login;
 							req.session.pwned = true;
 							req.session.token = token;
