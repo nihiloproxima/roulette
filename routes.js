@@ -49,13 +49,8 @@ router.get('/redirect', async (req, res) => {
 						});
 						user.save(error => {
 							console.log("save error :", error)
-						})
-							.then((doc) => {
-								console.log("new user = ", doc);
-							})
-							.catch(error => {
-								console.log(error);
-						})
+						});
+						console.log("User saved");
 						// };
 						req.session.login = response.data.login;
 						req.session.auth = true;
