@@ -23,7 +23,7 @@ router
 			res.sendFile(__dirname + '/views/index.html');
 		} else {
 			console.log("pas powned");
-			res.redirect("https://api.intra.42.fr/oauth/authorize?client_id=0ff7e0be9363c0bd6079bfb265041fb18196a70364a0860730ee970d1d46ff02&redirect_uri=https%3A%2F%2Fget-pwnd.herokuapp.com%2Fredirect&response_type=code&state=pwned");
+			res.redirect(process.env.AUTHORIZE);
 		}
 	})
 	.get('/redirect', (req, res) => {
