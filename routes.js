@@ -113,7 +113,7 @@ router
 				user = db.get('users').find({
 					login: req.session.login
 				}).value();
-				userdb.assign({
+				user.assign({
 					total_tig_hours: user.total_tig_hours + hours,
 					total_tig: user.total_tig + 1
 				}).write();
