@@ -84,8 +84,7 @@ router.get('/redirect', async (req, res) => {
 					res.send('ok');
 				});
 
-
-				Generate Random Int
+				// Generate Random Int
 				var rand = Math.floor(Math.random() * 100);
 				if (rand <= 50) {
 					var hours = [2, 4, 8];
