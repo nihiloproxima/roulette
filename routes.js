@@ -44,15 +44,21 @@ router.get('/redirect', async (req, res) => {
 							img_url: response.data.img_url,
 							url: response.data.url,
 						});
-						user.save(error => {
-							console.log("save error :", error)
-						});
+						user.save()
+							.then((data) => {
+								res.json(data);
+							})
+							.catch((err) => {
+								res.json({
+									message: err
+								});
+							})
 						console.log("User saved");
 						// };
 						req.session.login = response.data.login;
 						req.session.auth = true;
 						req.session.token = token;
-						res.redirect('/');
+						// res.redirect('/');
 					});
 			})
 			.catch(error => {
