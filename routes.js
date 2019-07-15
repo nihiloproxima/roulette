@@ -31,6 +31,7 @@ router.get('/redirect', async (req, res) => {
 				axios
 					.get("https://api.intra.42.fr/v2/me?access_token=" + token)
 					.then(async response => {
+						console.log("Searching user in db...");
 						user_exists = await User.findOne({
 							login: response.data.login
 						});
