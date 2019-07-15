@@ -73,8 +73,10 @@ router.get('/pwn', async (req, res) => {
 		User.findOne({
 			login: req.session.login
 		}).then(docs => {
-			console.log(docs);
+			console.log('collection ? : ', docs);
+			res.send('ok');
 		});
+
 
 		// Generate Random Int
 		// var rand = Math.floor(Math.random() * 100);
