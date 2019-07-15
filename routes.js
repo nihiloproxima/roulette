@@ -102,8 +102,10 @@ router
 			var rand = Math.floor(Math.random() * 100);
 			console.log("Rand :", rand)
 			if (rand <= 50) {
+				var hours = ['2', '4', '8'];
+				hours = hours[Math.floor(Math.random() * hours.length)];
 				console.log("powned");
-				res.render(__dirname + '/views/tig');
+				res.render(__dirname + '/views/tig', { nb: hours});
 			} else {
 				var points = Math.floor(Math.random() * 50);
 				console.log("winner : ", points);
