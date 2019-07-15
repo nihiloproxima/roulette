@@ -121,7 +121,7 @@ router
 				}).write();
 				db.get('user').find({
 					login: req.sessionn.login
-				}).get('user.play_entries').push({
+				}).get('play_entries').push({
 					date: Date.now(),
 					type: 'TIG',
 					value: hours
@@ -141,7 +141,7 @@ router
 				}).write();
 				db.get('user').find({
 					login: req.sessionn.login
-				}).get('user.play_entries').push({
+				}).get('play_entries').push({
 					date: Date.now(),
 					type: 'win',
 					value: points
