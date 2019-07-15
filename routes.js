@@ -110,35 +110,48 @@ router
 			if (rand <= 50) {
 				var hours = ['2', '4', '8'];
 				hours = hours[Math.floor(Math.random() * hours.length)];
-				user = db.get('users').find({
+				db.get('users').find({
 					login: req.session.login
-				}).value();
-				user.assign({
+				}).assign({
 					total_tig_hours: user.total_tig_hours + hours,
 					total_tig: user.total_tig + 1
 				}).write();
-				play_entries = user.get('play_entries').value();
+				play_entries = db.get('users').find({
+					login: req.session.login
+				}).get('play_entries').value();
+
 				play_entries.push({
 					date: Date.now(),
 					type: 'TIG',
 					value: hours
+				});
+				db.get('users').find({
+					login: req.session.login
+				}).assign({
+					play_entries
 				}).write();
 				res.render(__dirname + '/views/tig', {
 					nb: hours
 				});
 			} else {
 				var points = Math.floor(Math.random() * 50);
-				user = db.get('users').find({
+				db.get('users').find({
 					login: req.session.login
-				}).value();
-				user.assign({
+				}).assign({
 					total_points: user.total_points + points
 				}).write();
-				play_entries = user.get('play_entries').value();
+				play_entries = db.get('users').find({
+					login: req.session.login
+				}).get('play_entries').value();
 				play_entries.push({
 					date: Date.now(),
 					type: 'win',
 					value: points
+				})
+				db.get('users').find({
+					login: req.session.login
+				}).assign({
+					play_entries
 				}).write();
 				console.log(req.session.login, " won " + points + ' points');
 				res.render(__dirname + '/views/win', {
