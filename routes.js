@@ -18,8 +18,7 @@ function extend(dest, src) {
 router
 	.get('/', (req, res) => {
 		console.log(req.session)
-		if (req.session.pwned) {
-			console.log("oui powned")
+		if (req.session.auth == true) {
 			res.sendFile(__dirname + '/views/index.html');
 		} else {
 			console.log("pas powned");
@@ -64,7 +63,7 @@ router
 							}
 
 							req.session.login = response.data.login;
-							req.session.pwned = true;
+							req.session.auth = true;
 							req.session.token = token;
 							res.redirect('/');
 						});
@@ -76,6 +75,18 @@ router
 	})
 	.get('/tiged', (req, res) => {
 		res.sendFile(__dirname + '/db.json');
+	})
+	.get('/pwn', (req, res) => {
+		if (req.session.auth) {
+			var rand = Math.floor(Math.random() * 100);
+			if (rand <= 10) {
+				console.log("powned");
+				res.sendFile(__dirname + '/views/tig');
+			} else {
+				console.log("winner");
+				res.sendFile(__dirname + '/views/win');
+			}
+		}
 	})
 
 module.exports = router;
