@@ -40,7 +40,7 @@ router
 					client_id: process.env.CLIENT_ID,
 					client_secret: process.env.CLIENT_SECRET,
 					code: req.query.code,
-					redirect_uri: "http://localhost:3000/redirect"
+					redirect_uri: process.env.REDIRECT_URI
 				})
 				.then(response => {
 					var token = response.data.access_token;
