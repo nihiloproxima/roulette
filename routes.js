@@ -113,15 +113,12 @@ router
 				user = db.get('users').find({
 					login: req.session.login
 				}).value();
-				db.get('users').find({
-					login: req.session.login
-				}).assign({
+				userdb.assign({
 					total_tig_hours: user.total_tig_hours + hours,
 					total_tig: user.total_tig + 1
 				}).write();
-				db.get('user').find({
-					login: req.session.login
-				}).get('play_entries').value().push({
+				play_entries = user.get('play_entries').value();
+				play_entries.push({
 					date: Date.now(),
 					type: 'TIG',
 					value: hours
@@ -134,14 +131,11 @@ router
 				user = db.get('users').find({
 					login: req.session.login
 				}).value();
-				db.get('users').find({
-					login: req.session.login
-				}).assign({
+				user.assign({
 					total_points: user.total_points + points
 				}).write();
-				db.get('user').find({
-					login: req.session.login
-				}).get('play_entries').value().push({
+				play_entries = user.get('play_entries').value();
+				play_entries.push({
 					date: Date.now(),
 					type: 'win',
 					value: points
