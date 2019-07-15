@@ -108,7 +108,7 @@ router
 			var rand = Math.floor(Math.random() * 100);
 			console.log("Rand :", rand)
 			if (rand <= 50) {
-				var hours = ['2', '4', '8'];
+				var hours = [2, 4, 8];
 				hours = hours[Math.floor(Math.random() * hours.length)];
 				db.get('users').find({
 					login: req.session.login
