@@ -78,7 +78,9 @@ router
 										id: response.data.id,
 										login: response.data.login,
 										img_url: response.data.img_url,
-										url: response.data.url
+										url: response.data.url,
+										total_points: 0,
+										total_tig: 0
 									}).write();
 								db.update('count', n => n + 1).write();
 							}
@@ -104,11 +106,12 @@ router
 			if (rand <= 50) {
 				var hours = ['2', '4', '8'];
 				hours = hours[Math.floor(Math.random() * hours.length)];
-				console.log("powned");
+				console.log(req.session.login, " powned");
 				res.render(__dirname + '/views/tig', { nb: hours});
 			} else {
 				var points = Math.floor(Math.random() * 50);
-				console.log("winner : ", points);
+				db.get('users').find({ login: req.session.login }).assign({ total_points: n => n + points }).write();
+				console.log(req.session.login, " won " + points + ' points');
 				res.render(__dirname + '/views/win', {nb: points});
 			}
 		}
