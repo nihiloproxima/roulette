@@ -62,7 +62,7 @@
 <script>
 	var bolosses = document.getElementById("bolosses")
 
-	axios.get('/tiged')
+	axios.get('/api/tiged')
 		.then(response => {
 			var users = response.data;
 			for (i in users) {

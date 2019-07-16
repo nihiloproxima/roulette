@@ -66,7 +66,7 @@
 <script>
 	var winners = document.getElementById("winners")
 
-	axios.get('/winners')
+	axios.get('/api/winners')
 		.then(response => {
 			users = response.data;
 			for (i in users) {
