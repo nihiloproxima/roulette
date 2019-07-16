@@ -102,11 +102,51 @@ router.get('/pwn', async (req, res) => {
 		});
 
 		// Compare last_entry to now, preventing user to spam actually set to 6h !
-		last_entry_date = user.activity[user.activity.length - 1].date.getTime();
-		last_try = Date.now() - last_entry_date;
-		console.log("Last try : ", last_try)
-		if (last_entry_date && last_try < 21600000) {
-			res.render(__dirname + '/views/wait', {countDownDate: last_entry_date});
+
+		last_entry = user.activity[user.activity.length - 1];
+		if (last_entry) {
+			last_try = Date.now() - last_entry.date.getTime();
+			console.log("Last try : ", last_try);
+			if (last_entry_date && last_try < 21600000) {
+				res.render(__dirname + '/views/wait', {
+					countDownDate: last_entry_date
+				});
+			} else {
+				var rand = Math.floor(Math.random() * 100);
+				if (rand <= 5) {
+					var rand2 = Math.floor(Math.random() * 100);
+					hours = rand2 <= 10 ? 4 : 2;
+
+					user.total_community_services += 1;
+					user.total_hours += hours;
+					user.activity.push({
+						kind: "TIG",
+						amount: hours
+					});
+					user.save(error => {
+						console.log(error);
+					})
+					console.log(req.session.login, " got " + hours + ' TIG hours.');
+					res.render(__dirname + '/views/tig', {
+						nb: hours
+					});
+				} else {
+					var points = Math.floor(Math.random() * 100);
+
+					user.total_points += points;
+					user.activity.push({
+						kind: "coalition_points",
+						amount: points
+					});
+					user.save(error => {
+						console.log(error);
+					})
+					console.log(req.session.login, " won " + points + ' points.');
+					res.render(__dirname + '/views/win', {
+						nb: points
+					});
+				}
+			}
 		} else {
 			// User can play 
 			var rand = Math.floor(Math.random() * 100);
