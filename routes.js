@@ -69,13 +69,21 @@ router.get('/redirect', async (req, res) => {
 });
 
 router.get('/tiged', (req, res) => {
-	User.find({}, (err, docs) => {
+	User.find({
+		total_hours: {
+			$gt: 0
+		}
+	}, (err, docs) => {
 		res.json(docs);
 	})
 });
 
 router.get('/winners', async (req, res) => {
-	User.find({ total_points: { $gt: 0 } }, (err, docs) => {
+	User.find({
+		total_points: {
+			$gt: 0
+		}
+	}, (err, docs) => {
 		res.json(docs);
 	})
 })

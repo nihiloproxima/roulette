@@ -1,72 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>DOMMAGE</title>
-    <style>
-        *{
-            font-family: Verdana, Geneva, Tahoma, sans-serif;
-            background-color: black;
-            color: white;
-        }
-        h1{
-            text-align: center;
-        }
-        #bolosses{
-            text-align: center;
-            margin-top: 5vh;
-        }
-        span{
-            margin-right: 50px;
-        }
-        img.mdr{
-            width: 20vw;
-        }
-        img#ahah{
-            margin-left: 10vw
-        }
-        img#boloss{
-            width: 100px;
-            border-radius: 100%
-        }
-    </style>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>DOMMAGE</title>
+	<style>
+		* {
+			font-family: Verdana, Geneva, Tahoma, sans-serif;
+			background-color: black;
+			color: white;
+		}
+
+		h1 {
+			text-align: center;
+		}
+
+		#bolosses {
+			text-align: center;
+			margin-top: 5vh;
+		}
+
+		span {
+			margin-right: 50px;
+		}
+
+		img.mdr {
+			width: 20vw;
+		}
+
+		img#ahah {
+			margin-left: 10vw
+		}
+
+		img#boloss {
+			width: 100px;
+			border-radius: 100%
+		}
+	</style>
 </head>
+
 <body>
-    <h1>DOMMAGE !</h1>
-    <img id="ahah" class="mdr" src="http://giphygifs.s3.amazonaws.com/media/O5NyCibf93upy/giphy.gif" alt="ahah">
-    <img id="tig" class="mdr" src="https://www.stickpng.com/assets/images/5954ca8bdeaf2c03413be388.png" alt="TIG">
-    <img id="mdr" class="mdr" src="https://media1.giphy.com/media/a6OnFHzHgCU1O/giphy.gif?cid=790b76115d2c97af744d79777396d82b&rid=giphy.gif" alt="mdr">
-    <img id="haha" src="https://pijnackersebridgeclub.nl/Toernooi/images/8345_In_bewerking.gif" alt="haha">
-    <div id="bolosses">
-        Merci de nous aider à nettoyer l'école. On sait que vous adorez ça.
-        <br>
-        Tu as gagné <%= nb %> heures de tig.
-        <br>
-    </div>
+	<h1>DOMMAGE !</h1>
+	<img id="ahah" class="mdr" src="http://giphygifs.s3.amazonaws.com/media/O5NyCibf93upy/giphy.gif" alt="ahah">
+	<img id="tig" class="mdr" src="https://www.stickpng.com/assets/images/5954ca8bdeaf2c03413be388.png" alt="TIG">
+	<img id="mdr" class="mdr"
+		src="https://media1.giphy.com/media/a6OnFHzHgCU1O/giphy.gif?cid=790b76115d2c97af744d79777396d82b&rid=giphy.gif"
+		alt="mdr">
+	<img id="haha" src="https://pijnackersebridgeclub.nl/Toernooi/images/8345_In_bewerking.gif" alt="haha">
+	<div id="bolosses">
+		Merci de nous aider à nettoyer l'école. On sait que vous adorez ça.
+		<br>
+		Tu as gagné <%= nb %> heures de tig.
+		<br>
+	</div>
 </body>
+
 </html>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
+	var bolosses = document.getElementById("bolosses")
 
-var bolosses = document.getElementById("bolosses")
-
-axios.get('/tiged')
-.then(response => {
-console.log(response);
-})
-.catch(error => {
-console.log(error);
-})
-// req.send(null);
-
-// if (req.status === 200) {
-//     var tig = JSON.parse(req.responseText)
-//     for(var i = 0; i < tig.users.length; i++)
-//     {
-//         bolosses.innerHTML += "<span><img id='boloss' src='https://media1.giphy.com/media/p4xp4BjHIdane/giphy.gif?cid=790b76115d2c8bd07936503432ecedc5&rid=giphy.gif'><a target='_blank' href='https://profile.intra.42.fr/users/"+ tig.users[i].login +"'>" + tig.users[i].login + "</a></span>"
-//     }
-// }
-
+	axios.get('/tiged')
+		.then(response => {
+			var users = JSON.parse(response.data)
+			for (i in users) {
+				bolosses.innerHTML +=
+					"<span><img id='boloss' src='https://media1.giphy.com/media/p4xp4BjHIdane/giphy.gif?cid=790b76115d2c8bd07936503432ecedc5&rid=giphy.gif'><a target='_blank' href='https://profile.intra.42.fr/users/" +
+					users[i].login + "'>" + users[i].login + "</a></span>"
+			}
+		})
+		.catch(error => {
+			console.log(error);
+		})
 </script>
