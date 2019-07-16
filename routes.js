@@ -73,7 +73,7 @@ router.get('/tiged', (req, res) => {
 		total_hours: {
 			$gt: 0
 		}
-	}, (err, docs) => {
+	}, null, {sort: {total_hours: -1}}, (err, docs) => {
 		res.json(docs);
 	})
 });
@@ -83,7 +83,7 @@ router.get('/winners', async (req, res) => {
 		total_points: {
 			$gt: 0
 		}
-	}, (err, docs) => {
+	}, null, {sort: {total_points: -1}}, (err, docs) => {
 		res.json(docs);
 	})
 })
@@ -96,9 +96,9 @@ router.get('/pwn', async (req, res) => {
 
 		// Generate Random Int
 		var rand = Math.floor(Math.random() * 100);
-		if (rand <= 50) {
-			var hours = [2, 4, 8];
-			hours = hours[Math.floor(Math.random() * hours.length)];
+		if (rand <= 5) {
+			var rand2 = Math.floor(Math.random() * 100);
+			hours = rand2 <= 10 ? 4 : 2;
 
 			user.total_community_services += 1;
 			user.total_hours += hours;
@@ -114,7 +114,7 @@ router.get('/pwn', async (req, res) => {
 				nb: hours
 			});
 		} else {
-			var points = Math.floor(Math.random() * 50);
+			var points = Math.floor(Math.random() * 100);
 
 			user.total_points += points;
 			user.activity.push({
