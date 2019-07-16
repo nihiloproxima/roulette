@@ -105,7 +105,7 @@ router.get('/pwn', async (req, res) => {
 		last_entry_date = user.activity[user.activity.length - 1].date.getTime();
 		last_try = Date.now() - last_entry_date;
 		console.log("Last try : ", last_try)
-		if (last_try < 21600000) {
+		if (last_entry_date && last_try < 21600000) {
 			res.render(__dirname + '/views/wait', {countDownDate: last_entry_date});
 		} else {
 			// User can play 
