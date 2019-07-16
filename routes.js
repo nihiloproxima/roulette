@@ -84,7 +84,7 @@ router.get('/winners', async (req, res) => {
 			$gt: 0
 		}
 	}, null, { sort: { total_points: -1 } }, (err, docs) => {
-			console.log("DATE :", docs[0].activity[0].date)
+			console.log("DATE :", docs[0].activity[0].date.getTime())
 		res.json(docs);
 	})
 })
