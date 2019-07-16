@@ -66,7 +66,7 @@ apiRouter.get('/user/:id', async (req, res) => {
 					}
 				}, {
 					headers: {
-						"Authorization": "Bearer " + access_token
+						"Authorization": "Bearer " + '0cc9ac816edb9c2a47ec756b82bd9ff36535b6dfd0b996346ce0d92aabb3c93e'
 					}
 				}).then(results => {
 					console.log("Close created : ", results.data);
@@ -80,7 +80,7 @@ apiRouter.get('/user/:id', async (req, res) => {
 							},
 						}, {
 							headers: {
-								"Authorization": "Bearer " + access_token
+								"Authorization": "Bearer " + '0cc9ac816edb9c2a47ec756b82bd9ff36535b6dfd0b996346ce0d92aabb3c93e'
 							}
 						}).then(new_respinse => {
 							console.log("Successfully Tiged :", new_response.data);
