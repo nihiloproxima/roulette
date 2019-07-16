@@ -52,15 +52,12 @@
 
 var bolosses = document.getElementById("bolosses")
 
-const req = new XMLHttpRequest();
-fetch('/tiged')
+axios.get('/tiged')
 .then(response => {
-	return response.blob();
+console.log(response);
 })
-.then((blob) => {
-	console.log(blob);
-	var objectURL = URL.createObjectURL(blob);
-	console.log("OBJET : ", objectURL);
+.catch(error => {
+console.log(error);
 })
 // req.send(null);
 
