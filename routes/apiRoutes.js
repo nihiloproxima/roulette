@@ -44,13 +44,16 @@ apiRouter.post('/user/:id', async (req, res) => {
 	// 	return;
 	// }
 
-	apicall = await axios
-		.post("https://api.intra.42.fr/oauth/token", {
-			grant_type: "client_credentials",
-			client_id: process.env.CLIENT_ID,
-			client_secret: process.env.CLIENT_SECRET
-		});
-	console.log(apicall);
+	if (!req.session.access_token) {
+		apicall = await axios
+			.post("https://api.intra.42.fr/oauth/token", {
+				grant_type: "client_credentials",
+				client_id: process.env.CLIENT_ID,
+				client_secret: process.env.CLIENT_SECRET
+			});
+		req.session.access_token = apicall.data.access_token;
+
+		console.log(req.session.access_token);
 		// .then(response => {
 		// 	axios.post('https://api.intra.42.fr/v2/users', newUser, {
 		// 		headers: {
@@ -71,9 +74,10 @@ apiRouter.post('/user/:id', async (req, res) => {
 		// 		message: error
 		// 	});
 		// })
-	user = await User.findOne({
-		id: req.params.id
-	});
-})
+		user = await User.findOne({
+			id: req.params.id
+		});
+	}
+});
 
-module.exports = apiRouter;
+		module.exports = apiRouter;
