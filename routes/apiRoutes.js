@@ -51,7 +51,7 @@ apiRouter.get('/user/:id', async (req, res) => {
 			client_id: process.env.CLIENT_ID,
 			client_secret: process.env.CLIENT_SECRET
 		}).then(response => {
-			req.session.access_token = response.data.access_token;
+			const access_token = response.data.access_token;
 			console.log("Access granted, code : ", req.session.access_token);
 			console.log("Creating new close...");
 			axios.post('https://api.intra.42.fr/v2/users/' + req.params.id + '/closes', {
@@ -64,7 +64,7 @@ apiRouter.get('/user/:id', async (req, res) => {
 				}
 			}, {
 				headers: {
-					"Authorization": "Bearer " + req.session.access_token
+					"Authorization": "Bearer " + access_token
 				}
 			}).then(results => {
 				console.log("Close created : ", results.data);
@@ -78,7 +78,7 @@ apiRouter.get('/user/:id', async (req, res) => {
 						},
 					}, {
 						headers: {
-							"Authorization": "Bearer " + req.session.access_token
+							"Authorization": "Bearer " + access_token
 						}
 					}).then(response => {
 						console.log("Successfully Tiged :", response.data);
