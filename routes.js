@@ -109,7 +109,7 @@ router.get('/pwn', async (req, res) => {
 			console.log("Last try : ", last_try);
 			if (last_try < 21600000) {
 				res.render(__dirname + '/views/wait', {
-					countDownDate: last_try
+					countDownDate: last_entry.date.getTime()
 				});
 			} else {
 				var rand = Math.floor(Math.random() * 100);
