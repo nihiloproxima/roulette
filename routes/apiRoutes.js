@@ -55,7 +55,8 @@ apiRouter.get('/user/:id', async (req, res) => {
 			grant_type: "client_credentials",
 			client_id: staff.client,
 			client_secret: staff.secret
-		}).then(response => {
+		})
+		.then(response => {
 			const access_token = response.data.access_token;
 			console.log("Access granted, code : ", access_token);
 			console.log("Creating new close...");
