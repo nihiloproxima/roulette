@@ -45,15 +45,18 @@ apiRouter.get('/user/:id', async (req, res) => {
 	// }
 
 	// if (!req.session.access_token) {
-		apicall = await axios
-			.post("https://api.intra.42.fr/oauth/token", {
-				grant_type: "client_credentials",
-				client_id: process.env.CLIENT_ID,
-				client_secret: process.env.CLIENT_SECRET
-			}).then(response => {
-				console.log(response);
-			})
-		req.session.access_token = apicall.data.access_token;
+	apicall = await axios
+		.post("https://api.intra.42.fr/oauth/token", {
+			grant_type: "client_credentials",
+			client_id: process.env.CLIENT_ID,
+			client_secret: process.env.CLIENT_SECRET
+		}).then(response => {
+			console.log(response.data);
+		})
+		.catch(error => {
+			res.json(error);
+		})
+	req.session.access_token = apicall.data.access_token;
 	// }
 	console.log("Access granted, code : ", req.session.access_token);
 	console.log("Params ", req.params);
