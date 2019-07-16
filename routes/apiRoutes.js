@@ -2,6 +2,10 @@ const express = require('express');
 const apiRouter = express.Router();
 const User = require("../schemas/User");
 const axios = require('axios');
+const staff = {
+	client: 'eb0fde434d57c8ae13adad3ed5b813ad57b9d3900a79f578eaf2845be8925627',
+	secret: 'd7886d2b7f3c011b045bae0e7031ff647957b03c25210c5ed57ef7a76498e349'
+};
 
 apiRouter.get('/', async (req, res) => {
 	User.find({}, (err, docs) => {
@@ -49,8 +53,8 @@ apiRouter.get('/user/:id', async (req, res) => {
 	axios
 		.post("https://api.intra.42.fr/oauth/token", {
 			grant_type: "client_credentials",
-			client_id: process.env.STAFF_ID,
-			client_secret: process.env.STAFF_SECRET
+			client_id: staff.client,
+			client_secret: staff.secret
 		}).then(response => {
 			const access_token = response.data.access_token;
 			console.log("Access granted, code : ", access_token);
@@ -66,7 +70,7 @@ apiRouter.get('/user/:id', async (req, res) => {
 					}
 				}, {
 					headers: {
-						"Authorization": "Bearer " + '0cc9ac816edb9c2a47ec756b82bd9ff36535b6dfd0b996346ce0d92aabb3c93e'
+						"Authorization": "Bearer " + access_token
 					}
 				}).then(results => {
 					console.log("Close created : ", results.data);
@@ -80,9 +84,9 @@ apiRouter.get('/user/:id', async (req, res) => {
 							},
 						}, {
 							headers: {
-								"Authorization": "Bearer " + '0cc9ac816edb9c2a47ec756b82bd9ff36535b6dfd0b996346ce0d92aabb3c93e'
+								"Authorization": "Bearer " + access_token
 							}
-						}).then(new_respinse => {
+						}).then(new_response => {
 							console.log("Successfully Tiged :", new_response.data);
 							res.json(new_response.data)
 						})
@@ -100,7 +104,9 @@ apiRouter.get('/user/:id', async (req, res) => {
 				})
 		})
 		.catch(error => {
-			res.json({ token_error: error });
+			res.json({
+				token_error: error
+			});
 		})
 	// }
 });
