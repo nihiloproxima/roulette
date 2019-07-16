@@ -103,7 +103,7 @@ router.get('/pwn', async (req, res) => {
 
 		// Compare last_entry to now, preventing user to spam actually set to 6h !
 		last_entry_date = user.activity[user.activity.length - 1].date.getTime();
-		last_try = last_entry_date - Date.now();
+		last_try = Date.now() - last_entry_date;
 		if (last_try < 21600000) {
 			res.render(__dirname + '/views/wait', {timer: last_try});
 		} else {
