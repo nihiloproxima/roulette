@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>C'EST PARTI</title>
+	<style>
+		* {
+			font-family: Verdana, Geneva, Tahoma, sans-serif;
+			background-color: black;
+			color: white;
+		}
+
+		h1 {
+			text-align: center;
+		}
+
+		img {
+			width: 50vw;
+			margin-left: 25vw;
+		}
+	</style>
+</head>
+
+<body>
+	<h1>Tu dois attendre avant de retenter ta chance 🤷</h1>
+	
+	<h1 id="timer"></h1>
+	<script>
+		var count = <%= timer %> / 100;
+
+		var counter = setInterval(timer, 10); //10 will run it every 100th of a second
+
+		function timer() {
+			if (count <= 0) {
+				clearInterval(counter);
+				return;
+			}
+			count--;
+			document.getElementById("timer").innerHTML = count / 100 + " secs";
+		}
+	</script>
+
+</body>
+
+</html>

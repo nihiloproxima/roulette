@@ -73,7 +73,11 @@ router.get('/tiged', (req, res) => {
 		total_hours: {
 			$gt: 0
 		}
-	}, null, {sort: {total_hours: -1}}, (err, docs) => {
+	}, null, {
+		sort: {
+			total_hours: -1
+		}
+	}, (err, docs) => {
 		res.json(docs);
 	})
 });
@@ -83,8 +87,11 @@ router.get('/winners', async (req, res) => {
 		total_points: {
 			$gt: 0
 		}
-	}, null, { sort: { total_points: -1 } }, (err, docs) => {
-			console.log("DATE :", docs[0].activity[0].date.getTime())
+	}, null, {
+		sort: {
+			total_points: -1
+		}
+	}, (err, docs) => {
 		res.json(docs);
 	})
 })
@@ -95,40 +102,47 @@ router.get('/pwn', async (req, res) => {
 			login: req.session.login
 		});
 
-		// Generate Random Int
-		var rand = Math.floor(Math.random() * 100);
-		if (rand <= 5) {
-			var rand2 = Math.floor(Math.random() * 100);
-			hours = rand2 <= 10 ? 4 : 2;
-
-			user.total_community_services += 1;
-			user.total_hours += hours;
-			user.activity.push({
-				kind: "TIG",
-				amount: hours
-			});
-			user.save(error => {
-				console.log(error);
-			})
-			console.log(req.session.login, " got " + hours + ' TIG hours.');
-			res.render(__dirname + '/views/tig', {
-				nb: hours
-			});
+		// Compare last_entry to now, preventing user to spam actually set to 6h !
+		last_entry_date = user.activity[user.activity.length - 1].date.getTime();
+		last_try = last_entry_date - Date.now();
+		if (last_try < 21600000) {
+			res.render(__dirname + '/views/wait', {timer: last_try});
 		} else {
-			var points = Math.floor(Math.random() * 100);
+			// User can play 
+			var rand = Math.floor(Math.random() * 100);
+			if (rand <= 5) {
+				var rand2 = Math.floor(Math.random() * 100);
+				hours = rand2 <= 10 ? 4 : 2;
 
-			user.total_points += points;
-			user.activity.push({
-				kind: "coalition_points",
-				amount: points
-			});
-			user.save(error => {
-				console.log(error);
-			})
-			console.log(req.session.login, " won " + points + ' points.');
-			res.render(__dirname + '/views/win', {
-				nb: points
-			});
+				user.total_community_services += 1;
+				user.total_hours += hours;
+				user.activity.push({
+					kind: "TIG",
+					amount: hours
+				});
+				user.save(error => {
+					console.log(error);
+				})
+				console.log(req.session.login, " got " + hours + ' TIG hours.');
+				res.render(__dirname + '/views/tig', {
+					nb: hours
+				});
+			} else {
+				var points = Math.floor(Math.random() * 100);
+
+				user.total_points += points;
+				user.activity.push({
+					kind: "coalition_points",
+					amount: points
+				});
+				user.save(error => {
+					console.log(error);
+				})
+				console.log(req.session.login, " won " + points + ' points.');
+				res.render(__dirname + '/views/win', {
+					nb: points
+				});
+			}
 		}
 	} else {
 		console.log("User not logged in");
