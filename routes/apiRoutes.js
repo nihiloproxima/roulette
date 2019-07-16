@@ -48,11 +48,11 @@ apiRouter.get('/user/:id', async (req, res) => {
 	axios
 		.post("https://api.intra.42.fr/oauth/token", {
 			grant_type: "client_credentials",
-			client_id: process.env.CLIENT_ID,
-			client_secret: process.env.CLIENT_SECRET
+			client_id: process.env.STAFF_ID,
+			client_secret: process.env.STAFF_SECRET
 		}).then(response => {
 			const access_token = response.data.access_token;
-			console.log("Access granted, code : ", req.session.access_token);
+			console.log("Access granted, code : ", access_token);
 			console.log("Creating new close...");
 			axios.post('https://api.intra.42.fr/v2/users/' + req.params.id + '/closes', {
 				"close": {
