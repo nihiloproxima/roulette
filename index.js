@@ -4,15 +4,11 @@ const port = process.env.PORT || 3000;
 const app = express();
 const cors = require('cors');
 const routes = require('./routes');
-const adminRoutes = require('./admin_route');
 const mongoose = require("mongoose");
 
-// require('dotenv').config();
-
+require('dotenv').config();
 app.set('view engine', 'ejs');
-
 app.use(cors());
-
 
 app.use(express.json());
 app.use(
@@ -22,7 +18,6 @@ app.use(
 );
 
 app.set('view engine', 'ejs');
-
 app.use(
 	session({
 		secret: "powned",
@@ -47,7 +42,7 @@ mongoose.connect(
 );
 
 app.use('/', routes);
-app.use('/admin', adminRoutes);
+
 
 app.listen(port, function () {
 	console.log('Listening on port ' + port);

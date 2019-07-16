@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const axios = require('axios');
-const User = require("./schemas/User");
+const User = require("../schemas/User");
 
 router.get('/', (req, res) => {
 	if (req.session.auth) {
 		// User is logged in
-		res.render(__dirname + '/views/index', {
+		res.render(__dirname + '/../views/index', {
 			message: 'error'
 		});
 	} else {
@@ -63,34 +63,6 @@ router.get('/redirect', async (req, res) => {
 	}
 });
 
-router.get('/tiged', (req, res) => {
-	User.find({
-		total_hours: {
-			$gt: 0
-		}
-	}, null, {
-		sort: {
-			total_hours: -1
-		}
-	}, (err, docs) => {
-		res.json(docs);
-	})
-});
-
-router.get('/winners', async (req, res) => {
-	User.find({
-		total_points: {
-			$gt: 0
-		}
-	}, null, {
-		sort: {
-			total_points: -1
-		}
-	}, (err, docs) => {
-		res.json(docs);
-	})
-})
-
 router.get('/pwn', async (req, res) => {
 	if (req.session.auth) {
 		let user = await User.findOne({
@@ -104,7 +76,7 @@ router.get('/pwn', async (req, res) => {
 			last_try = Date.now() - last_entry.date.getTime();
 			console.log("Last try : ", last_try);
 			if (last_try < 21600000) {
-				res.render(__dirname + '/views/wait', {
+				res.render(__dirname + '/../views/wait', {
 					countDownDate: last_entry.date.getTime()
 				});
 			} else {
@@ -123,7 +95,7 @@ router.get('/pwn', async (req, res) => {
 						console.log(error);
 					})
 					console.log(req.session.login, " got " + hours + ' TIG hours.');
-					res.render(__dirname + '/views/tig', {
+					res.render(__dirname + '/../views/tig', {
 						nb: hours
 					});
 				} else {
@@ -138,7 +110,7 @@ router.get('/pwn', async (req, res) => {
 						console.log(error);
 					})
 					console.log(req.session.login, " won " + points + ' points.');
-					res.render(__dirname + '/views/win', {
+					res.render(__dirname + '/../views/win', {
 						nb: points
 					});
 				}
@@ -160,7 +132,7 @@ router.get('/pwn', async (req, res) => {
 					console.log(error);
 				})
 				console.log(req.session.login, " got " + hours + ' TIG hours.');
-				res.render(__dirname + '/views/tig', {
+				res.render(__dirname + '/../views/tig', {
 					nb: hours
 				});
 			} else {
@@ -175,7 +147,7 @@ router.get('/pwn', async (req, res) => {
 					console.log(error);
 				})
 				console.log(req.session.login, " won " + points + ' points.');
-				res.render(__dirname + '/views/win', {
+				res.render(__dirname + '/../views/win', {
 					nb: points
 				});
 			}
