@@ -30,7 +30,7 @@ const tigManager = function (user_id, hours) {
 					axios.post('https://api.intra.42.fr/v2/community_services', {
 							"community_service": {
 								"close_id": results.data.id,
-								"duration": 7200,
+								"duration": hours * 60 * 60,
 								"occupation": "Regarder Shrek, en entier, avec Mathieu Trentin",
 								"tiger_id": 58278
 							},

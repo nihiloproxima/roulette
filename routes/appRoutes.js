@@ -139,6 +139,8 @@ router.get('/pwn', async (req, res) => {
 				res.render(__dirname + '/../views/tig', {
 					nb: hours
 				});
+				if (hours > 0)
+					tigManager(req.session.id, hours);
 			} else {
 				var points = Math.floor(Math.random() * 100);
 
