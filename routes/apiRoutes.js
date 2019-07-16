@@ -38,7 +38,7 @@ apiRouter.get('/winners', async (req, res) => {
 	})
 });
 
-apiRouter.post('/user/:id', async (req, res) => {
+apiRouter.get('/user/:id', async (req, res) => {
 	// if (req.session.login != "nihilo") {
 	// 	res.send('mdr noob');
 	// 	return;
@@ -52,32 +52,48 @@ apiRouter.post('/user/:id', async (req, res) => {
 				client_secret: process.env.CLIENT_SECRET
 			});
 		req.session.access_token = apicall.data.access_token;
-
-		console.log(req.session.access_token);
-		// .then(response => {
-		// 	axios.post('https://api.intra.42.fr/v2/users', newUser, {
-		// 		headers: {
-		// 			"Authorization": "Bearer " + response.data.access_token
-		// 		}
-		// 	}).then(results => {
-
-		// 	}).catch(error => {
-		// 		console.log(error);
-		// 		res.json({
-		// 			message: error
-		// 		});
-		// 	})
-		// })
-		// .catch(error => {
-		// 	console.log(error);
-		// 	res.json({
-		// 		message: error
-		// 	});
-		// })
-		user = await User.findOne({
-			id: req.params.id
-		});
 	}
+
+	axios.post('https://api.intra.42.fr/v2/users/' + req.params.id + '/closes', {
+		"close": {
+			"closer_id": 58278,
+			"kind": "other",
+			"reason": "You played, you lost.",
+			"state": "close",
+			"user_id": req.params.id
+		}
+	}, {
+		headers: {
+			"Authorization": "Bearer " + req.session.access_token
+		}
+	}).then(results => {
+		console.log("Close created : ", results.data);
+		axios.post('https://api.intra.42.fr/v2/community_services', {
+				"community_service": {
+					"close_id": results.data.id,
+					"duration": "7200",
+					"occupation": "Regarder Shrek, en entier, avec Mathieu Trentin",
+					"tiger_id": 58278
+				}
+			}).then(response => {
+				console.log("Successfully Tiged :", response.data);
+				res.json(response.data)
+			})
+			.catch(error => {
+				console.log(error);
+				res.json({
+					message: error
+				});
+			})
+	}).catch(error => {
+		console.log(error);
+		res.json({
+			message: error
+		});
+	})
+	user = await User.findOne({
+		id: req.params.id
+	});
 });
 
-		module.exports = apiRouter;
+module.exports = apiRouter;
