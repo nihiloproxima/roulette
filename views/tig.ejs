@@ -53,15 +53,23 @@
 var bolosses = document.getElementById("bolosses")
 
 const req = new XMLHttpRequest();
-req.open('GET', 'http://localhost:3000/tiged', false); 
-req.send(null);
+fetch('/tiged')
+.then(response => {
+	return response.blob();
+})
+.then((blob) => {
+	console.log(blob);
+	var objectURL = URL.createObjectURL(blob);
+	console.log("OBJET : ", objectURL);
+})
+// req.send(null);
 
-if (req.status === 200) {
-    var tig = JSON.parse(req.responseText)
-    for(var i = 0; i < tig.users.length; i++)
-    {
-        bolosses.innerHTML += "<span><img id='boloss' src='https://media1.giphy.com/media/p4xp4BjHIdane/giphy.gif?cid=790b76115d2c8bd07936503432ecedc5&rid=giphy.gif'><a target='_blank' href='https://profile.intra.42.fr/users/"+ tig.users[i].login +"'>" + tig.users[i].login + "</a></span>"
-    }
-}
+// if (req.status === 200) {
+//     var tig = JSON.parse(req.responseText)
+//     for(var i = 0; i < tig.users.length; i++)
+//     {
+//         bolosses.innerHTML += "<span><img id='boloss' src='https://media1.giphy.com/media/p4xp4BjHIdane/giphy.gif?cid=790b76115d2c8bd07936503432ecedc5&rid=giphy.gif'><a target='_blank' href='https://profile.intra.42.fr/users/"+ tig.users[i].login +"'>" + tig.users[i].login + "</a></span>"
+//     }
+// }
 
 </script>
