@@ -7,7 +7,7 @@ const routes = require('./routes');
 const adminRoutes = require('./admin_route');
 const mongoose = require("mongoose");
 
-// require('dotenv').config();
+require('dotenv').config();
 
 app.set('view engine', 'ejs');
 

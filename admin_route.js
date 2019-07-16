@@ -3,7 +3,7 @@ const adminRouter = express.Router();
 const axios = require('axios');
 const User = require("./schemas/User");
 
-router.get('/', async (req, res) => {
+adminRouter.get('/', async (req, res) => {
 	if (req.session.login == "nihilo") {
 		res.sendFile(__dirname + '/views/admin');
 	} else {
