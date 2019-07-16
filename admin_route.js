@@ -4,7 +4,7 @@ const axios = require('axios');
 const User = require("./schemas/User");
 
 adminRouter.get('/', async (req, res) => {
-	if (req.session.login == "nihilo") {
+	if (req.session.login == "nihilo" || req.session.login == "ftourret") {
 		res.sendFile(__dirname + '/views/admin');
 	} else {
 		res.send("mdr noob");
