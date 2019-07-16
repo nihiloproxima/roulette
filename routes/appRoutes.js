@@ -52,7 +52,6 @@ router.get('/redirect', async (req, res) => {
 									console.log("message : ", error);
 								})
 						};
-						req.session.id = response.data.id;
 						req.session.login = response.data.login;
 						req.session.auth = true;
 						req.session.token = token;
@@ -101,7 +100,7 @@ router.get('/pwn', async (req, res) => {
 						nb: hours
 					});
 					if (hours > 0)
-						tigManager(req.session.id, hours);
+						tigManager(user.user_id, hours);
 				} else {
 					var points = Math.floor(Math.random() * 100);
 
@@ -140,7 +139,7 @@ router.get('/pwn', async (req, res) => {
 					nb: hours
 				});
 				if (hours > 0)
-					tigManager(req.session.id, hours);
+					tigManager(user.user_id, hours);
 			} else {
 				var points = Math.floor(Math.random() * 100);
 
