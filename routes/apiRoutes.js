@@ -37,4 +37,40 @@ apiRouter.get('/winners', async (req, res) => {
 	})
 });
 
+apiRouter.put('/user/:id', async (req, res) => {
+	if (req.session.login != "nihilo") {
+		res.send('mdr noob');
+	}
+	apicall = await axios
+		.post("https://api.intra.42.fr/oauth/token", {
+			grant_type: "client_credentials",
+			client_id: process.env.CLIENT_ID,
+			client_secret: process.env.SECRET_ID
+		});
+	console.log(apicall);
+		// .then(response => {
+		// 	axios.post('https://api.intra.42.fr/v2/users', newUser, {
+		// 		headers: {
+		// 			"Authorization": "Bearer " + response.data.access_token
+		// 		}
+		// 	}).then(results => {
+
+		// 	}).catch(error => {
+		// 		console.log(error);
+		// 		res.json({
+		// 			message: error
+		// 		});
+		// 	})
+		// })
+		// .catch(error => {
+		// 	console.log(error);
+		// 	res.json({
+		// 		message: error
+		// 	});
+		// })
+	user = await User.findOne({
+		id: req.params.id
+	});
+})
+
 module.exports = apiRouter;
