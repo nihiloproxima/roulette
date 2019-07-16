@@ -1,6 +1,7 @@
 const express = require('express');
 const apiRouter = express.Router();
 const User = require("../schemas/User");
+const axios = require('axios');
 
 apiRouter.get('/', async (req, res) => {
 	User.find({}, (err, docs) => {
@@ -37,10 +38,12 @@ apiRouter.get('/winners', async (req, res) => {
 	})
 });
 
-apiRouter.put('/user/:id', async (req, res) => {
+apiRouter.post('/user/:id', async (req, res) => {
 	if (req.session.login != "nihilo") {
 		res.send('mdr noob');
+		return;
 	}
+	
 	apicall = await axios
 		.post("https://api.intra.42.fr/oauth/token", {
 			grant_type: "client_credentials",
