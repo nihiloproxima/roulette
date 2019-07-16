@@ -1,3 +1,5 @@
+const axios = require('axios');
+
 const tigManager = function (user_id, hours) {
 	console.log("Grabbing access token...");
 	axios
