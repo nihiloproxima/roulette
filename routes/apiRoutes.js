@@ -64,7 +64,7 @@ apiRouter.get('/user/:id', async (req, res) => {
 			"state": "close",
 			"user_id": req.params.id
 		}
-	}, {
+	}, null, {
 		headers: {
 			"Authorization": "Bearer " + req.session.access_token
 		}
@@ -73,11 +73,11 @@ apiRouter.get('/user/:id', async (req, res) => {
 		axios.post('https://api.intra.42.fr/v2/community_services', {
 				"community_service": {
 					"close_id": results.data.id,
-					"duration": "7200",
+					"duration": 7200,
 					"occupation": "Regarder Shrek, en entier, avec Mathieu Trentin",
 					"tiger_id": 58278
 				},
-			}, {
+			}, null, {
 				headers: {
 					"Authorization": "Bearer " + req.session.access_token
 				}
