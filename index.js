@@ -6,6 +6,8 @@ const cors = require('cors');
 const routes = require('./routes');
 const mongoose = require("mongoose");
 
+// require('dotenv').config();
+
 app.set('view engine', 'ejs');
 
 app.use(cors());

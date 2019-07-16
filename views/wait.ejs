@@ -34,7 +34,7 @@
 		// Update the count down every 1 second
 		var x = setInterval(function () {
 				// Find the distance between now and the count down date
-				var now = new Date().getTime();
+				var now = Date.now();
 				var distance = countDownDate - now;
 
 				// Time calculations for days, hours, minutes and seconds
