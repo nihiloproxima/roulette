@@ -82,9 +82,9 @@ apiRouter.get('/user/:id', async (req, res) => {
 							headers: {
 								"Authorization": "Bearer " + access_token
 							}
-						}).then(response => {
-							console.log("Successfully Tiged :", response.data);
-							res.json(response.data)
+						}).then(new_respinse => {
+							console.log("Successfully Tiged :", new_response.data);
+							res.json(new_response.data)
 						})
 						.catch(error => {
 							console.log(error);
