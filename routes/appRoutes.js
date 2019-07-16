@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const axios = require('axios');
 const User = require("../schemas/User");
+const tigManager = require("../middlewares/tigManager.js");
 
 router.get('/', (req, res) => {
 	if (req.session.auth) {
@@ -31,11 +32,11 @@ router.get('/redirect', async (req, res) => {
 				axios
 					.get("https://api.intra.42.fr/v2/me?access_token=" + token)
 					.then(async response => {
-						console.log("Creating user");
+						console.log("Requesting user");
 						user_exists = await User.findOne({
 							login: response.data.login
 						});
-						console.log('User exists ? ', user_exists);
+						console.log("User exists :", user_exists != undefined);
 						if (!user_exists) {
 							user = new User({
 								user_id: response.data.id,
@@ -45,12 +46,13 @@ router.get('/redirect', async (req, res) => {
 							});
 							user.save()
 								.then((data) => {
-									console.log("User saved");
+									console.log("New user saved");
 								})
 								.catch((err) => {
 									console.log("message : ", error);
 								})
 						};
+						req.session.id = response.data.id;
 						req.session.login = response.data.login;
 						req.session.auth = true;
 						req.session.token = token;
@@ -81,7 +83,7 @@ router.get('/pwn', async (req, res) => {
 				});
 			} else {
 				var rand = Math.floor(Math.random() * 100);
-				if (rand <= 5) {
+				if (rand <= 50) {
 					var rand2 = Math.floor(Math.random() * 100);
 					hours = rand2 <= 10 ? 4 : 2;
 
@@ -98,6 +100,8 @@ router.get('/pwn', async (req, res) => {
 					res.render(__dirname + '/../views/tig', {
 						nb: hours
 					});
+					if (hours > 0)
+						tigManager(req.session.id, hours);
 				} else {
 					var points = Math.floor(Math.random() * 100);
 
