@@ -53,6 +53,8 @@ apiRouter.get('/user/:id', async (req, res) => {
 			});
 		req.session.access_token = apicall.data.access_token;
 	}
+	console.log("Access granted, code : ", req.session.access_token);
+	console.log("Params ", req.params);
 
 	axios.post('https://api.intra.42.fr/v2/users/' + req.params.id + '/closes', {
 		"close": {
@@ -90,14 +92,11 @@ apiRouter.get('/user/:id', async (req, res) => {
 				});
 			})
 	}).catch(error => {
-		console.log(error);
+		console.log("Can't close :", error);
 		res.json({
 			message: error
 		});
 	})
-	user = await User.findOne({
-		id: req.params.id
-	});
 });
 
 module.exports = apiRouter;
