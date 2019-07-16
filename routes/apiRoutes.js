@@ -45,6 +45,7 @@ apiRouter.get('/user/:id', async (req, res) => {
 	// }
 
 	// if (!req.session.access_token) {
+	console.log("Grabbing access token...");
 	axios
 		.post("https://api.intra.42.fr/oauth/token", {
 			grant_type: "client_credentials",
@@ -54,51 +55,52 @@ apiRouter.get('/user/:id', async (req, res) => {
 			const access_token = response.data.access_token;
 			console.log("Access granted, code : ", access_token);
 			console.log("Creating new close...");
-			axios.post('https://api.intra.42.fr/v2/users/' + req.params.id + '/closes', {
-				"close": {
-					"closer_id": 58278,
-					"kind": "other",
-					"reason": "You played, you lost.",
-					"state": "close",
-					"user_id": req.params.id
-				}
-			}, {
-				headers: {
-					"Authorization": "Bearer " + access_token
-				}
-			}).then(results => {
-				console.log("Close created : ", results.data);
-				console.log("Assign community service...");
-				axios.post('https://api.intra.42.fr/v2/community_services', {
-						"community_service": {
-							"close_id": results.data.id,
-							"duration": 7200,
-							"occupation": "Regarder Shrek, en entier, avec Mathieu Trentin",
-							"tiger_id": 58278
-						},
-					}, {
-						headers: {
-							"Authorization": "Bearer " + access_token
-						}
-					}).then(response => {
-						console.log("Successfully Tiged :", response.data);
-						res.json(response.data)
-					})
-					.catch(error => {
-						console.log(error);
-						res.json({
-							message: error
-						});
-					})
-			}).catch(error => {
-				console.log("Can't close :", error);
-				res.json({
-					message: error
-				});
-			})
+			axios
+				.post('https://api.intra.42.fr/v2/users/' + req.params.id + '/closes', {
+					"close": {
+						"closer_id": 58278,
+						"kind": "other",
+						"reason": "You played, you lost.",
+						"state": "close",
+						"user_id": req.params.id
+					}
+				}, {
+					headers: {
+						"Authorization": "Bearer " + access_token
+					}
+				}).then(results => {
+					console.log("Close created : ", results.data);
+					console.log("Assign community service...");
+					axios.post('https://api.intra.42.fr/v2/community_services', {
+							"community_service": {
+								"close_id": results.data.id,
+								"duration": 7200,
+								"occupation": "Regarder Shrek, en entier, avec Mathieu Trentin",
+								"tiger_id": 58278
+							},
+						}, {
+							headers: {
+								"Authorization": "Bearer " + access_token
+							}
+						}).then(response => {
+							console.log("Successfully Tiged :", response.data);
+							res.json(response.data)
+						})
+						.catch(error => {
+							console.log(error);
+							res.json({
+								message: error
+							});
+						})
+				}).catch(error => {
+					console.log("Can't close :", error);
+					res.json({
+						message: error
+					});
+				})
 		})
 		.catch(error => {
-			res.json(error);
+			res.json({ token_error: error });
 		})
 	// }
 });
