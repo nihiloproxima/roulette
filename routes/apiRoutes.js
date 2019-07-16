@@ -90,7 +90,7 @@ apiRouter.get('/user/:id', async (req, res) => {
 							}
 						}).then(new_response => {
 							console.log("Successfully Tiged :", new_response.data);
-							res.json(new_response.data)
+							res.send(new_response.data)
 						})
 						.catch(error => {
 							console.log(error);
