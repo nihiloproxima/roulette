@@ -45,13 +45,9 @@ router.get('/redirect', async (req, res) => {
 							});
 							user.save()
 								.then((data) => {
-									res.json(data);
 									console.log("User saved");
 								})
 								.catch((err) => {
-									res.json({
-										message: err
-									});
 									console.log("message : ", error);
 								})
 						};
