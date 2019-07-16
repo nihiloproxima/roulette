@@ -29,7 +29,9 @@
 	
 	<h1 id="timer"></h1>
 	<script>
-		var count = <%= timer %> / 100;
+		var count = <%= timer %>;
+
+		console.log(count);
 
 		var counter = setInterval(timer, 10); //10 will run it every 100th of a second
 
