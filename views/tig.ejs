@@ -65,7 +65,7 @@
 	axios.get('/tiged')
 		.then(response => {
 			console.log(response.data);
-			var users = JSON.stringify(response.data);
+			var users = response.data;
 			console.log(users);
 			for (i in users) {
 				bolosses.innerHTML +=

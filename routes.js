@@ -131,6 +131,7 @@ router.get('/pwn', async (req, res) => {
 		}
 	} else {
 		console.log("User not logged in");
+		res.redirect('/');
 	}
 })
 
