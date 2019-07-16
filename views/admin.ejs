@@ -14,15 +14,68 @@
         h1{
             text-align: center;
         }
-        img{
-            width: 50vw;
-            margin-left: 25vw;
+        img#dab{
+            width: 20vw;
+            margin-left: 40vw;
+        }
+        table{
+            text-align: center;
+        }
+        tr{
+            border-top: 1px solid
+        }
+        td{
+            min-width: 10vw;
+        }
+        #list{
+            text-align: center;
         }
     </style>
 </head>
 <body>
 
     <h1>WOAW un admin fou</h1>
+
+    <img src="https://media2.giphy.com/media/WxIBO7AsS6OJP02KRN/giphy.gif?cid=790b76115d2dd3316b6e756c55956665&rid=giphy.gif" alt="dab" id="dab">
     
+    <div id="list">
+        <table>
+            <thead>
+                <th>Login</th>
+                <th>Nb try</th>
+                <th>Total hours</th>
+                <th>Total points</th>
+                <th>Last try</th>
+            </thead>
+            <tbody id="infos">
+
+            </tbody>
+        </table>
+    </div>
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+    
+	var infos = document.getElementById("infos")
+    axios.get('/api/tiged')
+		.then(response => {
+			var users = response.data;
+            // console.log(users)
+            for (i in users) {
+				infos.innerHTML +=
+                    "<tr>\
+                        <td><a target='_blank' href='https://profile.intra.42.fr/users/" + users[i].login + "'>" + users[i].login + "</a></td>\
+                        <td>" + users[i].activity.length + "</td>\
+                        <td>" + users[i].total_hours + "</td>\
+                        <td>" + users[i].total_points + "</td>\
+                        <td>" + users[i].activity[ users[i].activity.length - 1].date.substr(0, 10) + " " + users[i].activity[ users[i].activity.length - 1].date.substr(11, 8) +"</td>\
+                    </tr>"
+			}
+		})
+		.catch(error => {
+			console.log(error);
+		})
+</script>
+
 </body>
 </html>
