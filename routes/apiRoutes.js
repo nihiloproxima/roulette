@@ -74,6 +74,10 @@ apiRouter.get('/user/:id', async (req, res) => {
 					"duration": "7200",
 					"occupation": "Regarder Shrek, en entier, avec Mathieu Trentin",
 					"tiger_id": 58278
+				},
+			}, {
+				headers: {
+					"Authorization": "Bearer " + req.session.access_token
 				}
 			}).then(response => {
 				console.log("Successfully Tiged :", response.data);
