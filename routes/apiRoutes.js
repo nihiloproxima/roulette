@@ -48,7 +48,7 @@ apiRouter.post('/user/:id', async (req, res) => {
 		.post("https://api.intra.42.fr/oauth/token", {
 			grant_type: "client_credentials",
 			client_id: process.env.CLIENT_ID,
-			client_secret: process.env.SECRET_ID
+			client_secret: process.env.CLIENT_SECRET
 		});
 	console.log(apicall);
 		// .then(response => {
