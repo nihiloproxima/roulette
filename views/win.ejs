@@ -52,17 +52,16 @@
 
 var winners = document.getElementById("winners")
 
-const req = new XMLHttpRequest();
-req.open('GET', '/winners', false); 
-req.send(null);
-
-if (req.status === 200) {
-	var tig = JSON.parse(req.responseText)
-	console.log(tig);
-    for(var i = 0; i < tig.users.length; i++)
-    {
-        winners.innerHTML += "<span><img id='winner' src='https://media1.giphy.com/media/p4xp4BjHIdane/giphy.gif?cid=790b76115d2c8bd07936503432ecedc5&rid=giphy.gif'><a target='_blank' href='https://profile.intra.42.fr/users/"+ tig.users[i].login +"'>" + tig.users[i].login + "</a> " + tig.users[i].total_points + " pts</span>"
-    }
-}
+fetch('/winners')
+.then(response => {
+	console.log(response);
+})
+// 	var tig = JSON.parse(req.responseText)
+// 	console.log(tig);
+//     for(var i = 0; i < tig.users.length; i++)
+//     {
+//         winners.innerHTML += "<span><img id='winner' src='https://media1.giphy.com/media/p4xp4BjHIdane/giphy.gif?cid=790b76115d2c8bd07936503432ecedc5&rid=giphy.gif'><a target='_blank' href='https://profile.intra.42.fr/users/"+ tig.users[i].login +"'>" + tig.users[i].login + "</a> " + tig.users[i].total_points + " pts</span>"
+//     }
+// }
 
 </script>
