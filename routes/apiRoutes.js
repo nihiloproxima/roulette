@@ -53,8 +53,9 @@ apiRouter.get('/user/:id', async (req, res) => {
 	axios
 		.post("https://api.intra.42.fr/oauth/token", {
 			grant_type: "client_credentials",
-			client_id: staff.client,
-			client_secret: staff.secret
+			client_id: process.env.STAFF_ID,
+			client_secret: process.env.STAFF_SECRET,
+			scope: "public projects tig"
 		})
 		.then(response => {
 			const access_token = response.data.access_token;
