@@ -89,7 +89,6 @@ router.get('/winners', async (req, res) => {
 })
 
 router.get('/pwn', async (req, res) => {
-	console.log(req.session)
 	if (req.session.auth) {
 		let user = await User.findOne({
 			login: req.session.login
