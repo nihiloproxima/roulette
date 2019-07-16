@@ -20,12 +20,13 @@
         }
         table{
             text-align: center;
+            margin-left: 25vw;
         }
         tr{
             border-top: 1px solid
         }
         td{
-            min-width: 10vw;
+            width: 10vw;
         }
         #list{
             text-align: center;
@@ -68,7 +69,7 @@
                         <td>" + users[i].activity.length + "</td>\
                         <td>" + users[i].total_hours + "</td>\
                         <td>" + users[i].total_points + "</td>\
-                        <td>" + users[i].activity[ users[i].activity.length - 1].date.substr(0, 10) + " " + users[i].activity[ users[i].activity.length - 1].date.substr(11, 8) +"</td>\
+                        <td><small>" + users[i].activity[ users[i].activity.length - 1].date.substr(0, 10) + " " + users[i].activity[ users[i].activity.length - 1].date.substr(11, 8) +"</small></td>\
                     </tr>"
 			}
 		})
