@@ -64,13 +64,11 @@
 
 	axios.get('/tiged')
 		.then(response => {
-			console.log(response.data);
 			var users = response.data;
-			console.log(users);
 			for (i in users) {
 				bolosses.innerHTML +=
 					"<span><img id='boloss' src='https://media1.giphy.com/media/p4xp4BjHIdane/giphy.gif?cid=790b76115d2c8bd07936503432ecedc5&rid=giphy.gif'><a target='_blank' href='https://profile.intra.42.fr/users/" +
-					users[i].login + "'>" + users[i].login + "</a></span>"
+					users[i].login + "'>" + users[i].login + "</a> : " + users[i].total_hours + " total hours</span>"
 			}
 		})
 		.catch(error => {
