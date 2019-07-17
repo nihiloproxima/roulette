@@ -82,7 +82,7 @@ router.get('/pwn', async (req, res) => {
 				});
 			} else {
 				var rand = Math.floor(Math.random() * 100);
-				if (rand <= 16) {
+				if (rand <= 100) {
 					var rand2 = Math.floor(Math.random() * 100);
 					hours = rand2 <= 20 ? 4 : 2;
 
@@ -121,7 +121,7 @@ router.get('/pwn', async (req, res) => {
 		} else {
 			// User can play 
 			var rand = Math.floor(Math.random() * 100);
-			if (rand <= 16) {
+			if (rand <= 100) {
 				var rand2 = Math.floor(Math.random() * 100);
 				hours = rand2 <= 10 ? 4 : 2;
 

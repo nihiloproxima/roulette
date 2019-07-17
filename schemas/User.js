@@ -12,6 +12,10 @@ const UserSchema = mongoose.Schema({
 		type: Number,
 		default: 0
 	},
+	total_gages: {
+		type: Number,
+		default: 0
+	},
 	total_hours: {
 		type: Number,
 		default: 0
@@ -23,6 +27,7 @@ const UserSchema = mongoose.Schema({
 	activity: [{
 		kind: String,
 		amount: Number,
+		mission: String,
 		date: {
 			type: Date,
 			default: Date.now
