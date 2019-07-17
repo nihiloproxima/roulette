@@ -42,16 +42,21 @@ apiRouter.get('/gaged', (req, res) => {
 	})
 });
 
-apiRouter.get('/user/:login', (req, res) => {
-	if (req.params.login == "me") {
-		User.findOne({ login: req.session.login }), (err, docs) => {
-			res.json(docs);
-		}
-	} else {
-		User.findOne({ login: req.params.login }, (err, docs) => {
-			res.json(docs);
-		});
+apiRouter.get('/me', (req, res) => {
+	console.log(req.session.login);
+	User.findOne({
+		login: req.session.login
+	}), (err, docs) => {
+		res.json(docs);
 	}
+})
+
+apiRouter.get('/user/:login', (req, res) => {
+	User.findOne({
+		login: req.params.login
+	}, (err, docs) => {
+		res.json(docs);
+	});
 });
 
 apiRouter.get('/winners', async (req, res) => {
