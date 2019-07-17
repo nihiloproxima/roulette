@@ -135,7 +135,7 @@ router.get('/pwn', async (req, res) => {
 							gage: gage
 						});
 					}
-				} else if (rand <= 100) {
+				} else if (rand <= 32) {
 					gage = gages[Math.floor(Math.random() * gages.length)];
 					user.activity.push({
 						kind: "Gage",
@@ -205,7 +205,7 @@ router.get('/pwn', async (req, res) => {
 						gage: gage
 					});
 				}
-			} else if (rand <= 100) {
+			} else if (rand <= 32) {
 				gage = gages[Math.floor(Math.random() * gages.length)];
 				user.activity.push({
 					kind: "Gage",
