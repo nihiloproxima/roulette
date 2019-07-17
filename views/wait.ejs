@@ -13,7 +13,7 @@
 			color: white;
 		}
 
-		h1 {
+		h1, p {
 			text-align: center;
 		}
 
@@ -124,7 +124,7 @@
 			last_entry = response.data.activity[response.data.activity.length - 1];
 			console.log(last_entry);
 			if (last_entry.kind == "Gage") {
-				document.getElementById('gage').innerText = last_entry.mission;
+				document.getElementById('gage').innerText = 'Tu as actuellement un gage à effectuer : <br />' + last_entry.mission;
 			}
 		})
 		.catch(error => {
