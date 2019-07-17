@@ -55,6 +55,7 @@
 				<th>Login</th>
 				<th>Parties</th>
 				<th>TIG</th>
+				<th>Gages</th>
 				<th>Points de coa</th>
 			</thead>
 			<tbody id="infos">
@@ -104,7 +105,8 @@
                         <td><a target='_blank' href='https://profile.intra.42.fr/users/" + users[i].login + "'>" +
 						users[i].login + "</a></td>\
                         <td>" + users[i].activity.length + " parties</td>\
-                        <td>" + users[i].total_hours + "h</td>\
+						<td>" + users[i].total_hours + "h</td>\
+						<td>" + users[i].total_gages + " pts</td>\
                         <td>" + users[i].total_points + " pts</td>\
                     </tr>"
 				}
