@@ -21,6 +21,24 @@
 			width: 50vw;
 			margin-left: 25vw;
 		}
+
+		table {
+			text-align: center;
+			margin-left: 25vw;
+			margin-top: 5vh;
+		}
+
+		tr {
+			border-top: 1px solid
+		}
+
+		td {
+			width: 10vw;
+		}
+
+		#list {
+			text-align: center;
+		}
 	</style>
 </head>
 
@@ -29,16 +47,31 @@
 	<img src="https://media.giphy.com/media/cjhBClBwZAHs3TEzDH/giphy.gif" alt="wait">
 
 	<h1 id="timer"></h1>
+
+	<div id="list">
+		<table>
+			<thead>
+				<th>Login</th>
+				<th>Nb try</th>
+				<th>Total hours</th>
+				<th>Total points</th>
+				<th>Last try</th>
+			</thead>
+			<tbody id="infos">
+
+			</tbody>
+		</table>
+	</div>
+
 	<script>
-		
-		var countDownDate = Math.floor( <%= countDownDate %> ) + 21600000;
-		
+		var countDownDate = Math.floor( < %= countDownDate % > ) + 21600000;
+
 		var x = setInterval(function () {
-			
+
 				var now = Date.now();
 				var distance = countDownDate - now;
 
-				
+
 				var hours = Math.floor(distance / (1000 * 60 * 60));
 				var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
 				var seconds = Math.floor((distance % (1000 * 60)) / 1000);
@@ -49,15 +82,39 @@
 					minutes = '0' + minutes;
 				if (seconds < 10)
 					seconds = '0' + seconds;
-					
+
 				document.getElementById("timer").innerHTML = hours + " : " + minutes + " : " + seconds + "";
-				
+
 				if (distance < 0) {
 					clearInterval(x);
 					document.getElementById("timer").innerHTML = "EXPIRED";
 				}
 			},
 			1000);
+	</script>
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	<script>
+		var infos = document.getElementById("infos")
+		axios.get('/api/tiged')
+			.then(response => {
+				var users = response.data;
+				// console.log(users)
+				for (i in users) {
+					infos.innerHTML +=
+						"<tr>\
+                        <td><a target='_blank' href='https://profile.intra.42.fr/users/" + users[i].login + "'>" +
+						users[i].login + "</a></td>\
+                        <td>" + users[i].activity.length + "</td>\
+                        <td>" + users[i].total_hours + "</td>\
+                        <td>" + users[i].total_points + "</td>\
+                        <td><small>" + users[i].activity[users[i].activity.length - 1].date.substr(0, 10) + " " +
+						users[i].activity[users[i].activity.length - 1].date.substr(11, 8) + "</small></td>\
+                    </tr>"
+				}
+			})
+			.catch(error => {
+				console.log(error);
+			})
 	</script>
 
 </body>
