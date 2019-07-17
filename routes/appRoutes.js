@@ -125,7 +125,7 @@ router.get('/pwn', async (req, res) => {
 							tigManager(user.user_id, hours);
 					} else {
 						res.render(__dirname + '/../views/gage', {
-							gage: gages[Math.floor(Math.random(gages.length - 1))]
+							gage: gages[Math.floor(Math.random() * gages.length)]
 						});
 					}
 				} else if (rand <= 100) {
@@ -175,7 +175,7 @@ router.get('/pwn', async (req, res) => {
 						tigManager(user.user_id, hours);
 				} else {
 					res.render(__dirname + '/../views/gage', {
-						gage: gages[Math.floor(Math.random(gages.length - 1))]
+						gage: gages[Math.floor(Math.random() * gages.length)]
 					});
 				}
 			} else if (rand <= 100) {
