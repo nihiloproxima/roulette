@@ -43,14 +43,12 @@ apiRouter.get('/gaged', (req, res) => {
 });
 
 apiRouter.get('/me', (req, res) => {
-	console.log(req.session.login);
-	User.findOne({
+	console.log("sending user...");
+	let user = await User.findOne({
 		login: req.session.login
-	}), (err, docs) => {
-		if (err)
-			console.log(err);
-		res.json(docs);
-	}
+	});
+	console.log(user);
+	res.json(user);
 })
 
 apiRouter.get('/user/:login', (req, res) => {
