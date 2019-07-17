@@ -130,7 +130,7 @@ router.get('/pwn', async (req, res) => {
 					}
 				} else if (rand <= 100) {
 					res.render(__dirname + '/../views/gage', {
-						gage: gages[Math.floor(Math.random(gages.length - 1))]
+						gage: gages[Math.floor(Math.random() * gages.length)]
 					});
 				} else {
 					var points = Math.floor(Math.random() * 100);
@@ -180,7 +180,7 @@ router.get('/pwn', async (req, res) => {
 				}
 			} else if (rand <= 100) {
 				res.render(__dirname + '/../views/gage', {
-					gage: gages[Math.floor(Math.random(gages.length - 1))]
+					gage: gages[Math.floor(Math.random() * gages.length)]
 				});
 			} else {
 				var points = Math.floor(Math.random() * 100);
