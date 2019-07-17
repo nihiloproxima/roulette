@@ -6,19 +6,16 @@ const tigManager = require("../middlewares/tigManager.js");
 
 const gages = [
 	"Faire un Powerpoint de présentation de ta piscine avec des chiffres clés et des stats que tu récolteras en intérrogeant tes camarades. Minimum 5 diapos. Le tout sans ordinateur. Débrouille toi pour les feuilles/stylos. Tu feras un présentation du résultat au bocal. Tu as 24h.",
-	"Paye un café/thé au stud de ton choix.",
-	"Demain, tu apporteras des viennoiseries pour tes camarades.",
 	"Chaque fois que tu croiseras un membre du bocal, tu devras le saluer en levant ton chapeau. Ou mimer le geste si tu n'as pas de chapeau.",
 	"Chaque vendredi à 16h42 avant l'exam, tu passeras en cluster en criant \"Ça va être tout noir !\"",
 	"Tu signeras tous tes feedbacks de correction de ton login en binaire",
-	"Tu signeras tous tes feedbacks de correction par un \"Je t'aime\". Sans dire que c'est un gages.",
+	"Tu signeras tous tes feedbacks de correction par un \"Je t'aime\". Sans dire que c'est un gage.",
 	"Tu signeras tous tes messages Slack par \"Méfaits accomplis\"",
 	"Ajoute l'emoji :bubflesh: à coté de ton login sur Slack",
 	"Pendant une heure tu feras le Groom dans l'ascenseur en demandant aux gens \"Quel étage ?\", en étant courtois et souriant.",
 	"Remet de l'ordre dans les chaises en cantina.",
 	"Faire un tour de cluster en demandant à tout le monde s'ils savent où est Charlie.",
 	"À ta prochaine correction, comme Maître Yoda tu parleras.",
-	"Tu devras payer quelque chose (au distributeur) à la prochaine personne que tu croiseras dans le hall. La personne choisira.",
 	"Compte le nombre de post-it présents sur les fenêtres de l'école et viens nous donner le résultat au bocal.",
 	"Tu iras voir 3 personnes random et leur proposeras de l'aide (des personnes que tu ne connais pas).",
 	"Ecris un poème au bocal en alexandrin avec césure à l'hémistiche, de 8 vers, avec au moins une alitération et qui aura pour titre \"Bocal, mon Amour \". Il évoquera, bien évidemment, le champ lexical de la mer. Tu viendras nous le donner en personnne ou le glisser sous la porte si elle est fermée."
@@ -124,13 +121,33 @@ router.get('/pwn', async (req, res) => {
 						if (hours > 0 && ['naplouvi', 'fleonard', 'ftourret', 'nihilo', 'rcodazzi', 'conrodri', 'vicaster', 'ledebut'].includes(req.session.login) == false)
 							tigManager(user.user_id, hours);
 					} else {
+						gage = gages[Math.floor(Math.random() * gages.length)];
+						user.activity.push({
+							kind: "Gage",
+							amount: 1,
+							mission: gage
+						});
+						user.total_gages += 1;
+						user.save(error => {
+							console.log(error);
+						});
 						res.render(__dirname + '/../views/gage', {
-							gage: gages[Math.floor(Math.random() * gages.length)]
+							gage: gage
 						});
 					}
 				} else if (rand <= 100) {
+					gage = gages[Math.floor(Math.random() * gages.length)];
+					user.activity.push({
+						kind: "Gage",
+						amount: 1,
+						mission: gage
+					});
+					user.total_gages += 1;
+					user.save(error => {
+						console.log(error);
+					});
 					res.render(__dirname + '/../views/gage', {
-						gage: gages[Math.floor(Math.random() * gages.length)]
+						gage: gage
 					});
 				} else {
 					var points = Math.floor(Math.random() * 100);
@@ -174,13 +191,33 @@ router.get('/pwn', async (req, res) => {
 					if (hours > 0 && ['naplouvi', 'fleonard', 'ftourret', 'nihilo', 'rcodazzi', 'conrodri', 'vicaster', 'ledebut'].includes(req.session.login) == false)
 						tigManager(user.user_id, hours);
 				} else {
+					gage = gages[Math.floor(Math.random() * gages.length)];
+					user.activity.push({
+						kind: "Gage",
+						amount: 1,
+						mission: gage
+					});
+					user.total_gages += 1;
+					user.save(error => {
+						console.log(error);
+					});
 					res.render(__dirname + '/../views/gage', {
-						gage: gages[Math.floor(Math.random() * gages.length)]
+						gage: gage
 					});
 				}
 			} else if (rand <= 100) {
+				gage = gages[Math.floor(Math.random() * gages.length)];
+				user.activity.push({
+					kind: "Gage",
+					amount: 1,
+					mission: gage
+				});
+				user.total_gages += 1;
+				user.save(error => {
+					console.log(error);
+				});
 				res.render(__dirname + '/../views/gage', {
-					gage: gages[Math.floor(Math.random() * gages.length)]
+					gage: gage
 				});
 			} else {
 				var points = Math.floor(Math.random() * 100);
