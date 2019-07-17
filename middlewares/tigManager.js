@@ -33,7 +33,7 @@ const tigManager = function (user_id, hours) {
 							"community_service": {
 								"close_id": results.data.id,
 								"duration": hours * 60 * 60,
-								"occupation": "Regarder Shrek, en entier, avec Mathieu Trentin",
+								"occupation": "",
 								"tiger_id": 58278
 							},
 						}, {
