@@ -95,12 +95,10 @@
 	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 	<script>
 		var infos = document.getElementById("infos")
-		axios.get('/api/tiged')
+		axios.get('/api')
 			.then(response => {
 				var users = response.data;
-				console.log(users)
 				for (i in users) {
-					console.log(users[i]);
 					infos.innerHTML +=
 						"<tr>\
                         <td><a target='_blank' href='https://profile.intra.42.fr/users/" + users[i].login + "'>" +
