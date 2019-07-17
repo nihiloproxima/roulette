@@ -98,8 +98,9 @@
 		axios.get('/api/tiged')
 			.then(response => {
 				var users = response.data;
-				// console.log(users)
+				console.log(users)
 				for (i in users) {
+					console.log(users[i]);
 					infos.innerHTML +=
 						"<tr>\
                         <td><a target='_blank' href='https://profile.intra.42.fr/users/" + users[i].login + "'>" +
