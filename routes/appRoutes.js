@@ -4,6 +4,26 @@ const axios = require('axios');
 const User = require("../schemas/User");
 const tigManager = require("../middlewares/tigManager.js");
 
+const gages = [
+	"Faire un Powerpoint de présentation de ta piscine avec des chiffres clés et des stats que tu récolteras en intérrogeant tes camarades. Minimum 5 diapos. Le tout sans ordinateur. Débrouille toi pour les feuilles/stylos. Tu feras un présentation du résultat au bocal. Tu as 24h.",
+	"Paye un café/thé au stud de ton choix.",
+	"Demain, tu apporteras des viennoiseries pour tes camarades.",
+	"Chaque fois que tu croiseras un membre du bocal, tu devras le saluer en levant ton chapeau. Ou mimer le geste si tu n'as pas de chapeau.",
+	"Chaque vendredi à 16h42 avant l'exam, tu passeras en cluster en criant \"Ça va être tout noir !\"",
+	"Tu signeras tous tes feedbacks de correction de ton login en binaire",
+	"Tu signeras tous tes feedbacks de correction par un \"Je t'aime\". Sans dire que c'est un gage.",
+	"Tu signeras tous tes messages Slack par \"Méfaits accomplis\"",
+	"Ajoute l'emoji :bubflesh: à coté de ton login sur Slack",
+	"Pendant une heure tu feras le Groom dans l'ascenseur en demandant aux gens \"Quel étage ?\", en étant courtois et souriant.",
+	"Remet de l'ordre dans les chaises en cantina.",
+	"Faire un tour de cluster en demandant à tout le monde s'ils savent où est Charlie.",
+	"À ta prochaine correction, comme Maître Yoda tu parleras.",
+	"Tu devras payer quelque chose (au distributeur) à la prochaine personne que tu croiseras dans le hall. La personne choisira.",
+	"Compte le nombre de post-it présents sur les fenêtres de l'école et viens nous donner le résultat au bocal.",
+	"Tu iras voir 3 personnes random et leur proposeras de l'aide (des personnes que tu ne connais pas).",
+	"Ecris un poème au bocal en alexandrin avec césure à l'hémistiche, de 8 vers, avec au moins une alitération et qui aura pour titre \"Bocal, mon Amour \". Il évoquera, bien évidemment, le champ lexical de la mer. Tu viendras nous le donner en personnne ou le glisser sous la porte si elle est fermée."
+];
+
 router.get('/', (req, res) => {
 	if (req.session.auth) {
 		// User is logged in
@@ -84,23 +104,31 @@ router.get('/pwn', async (req, res) => {
 				var rand = Math.floor(Math.random() * 100);
 				if (rand <= 16) {
 					var rand2 = Math.floor(Math.random() * 100);
-					hours = rand2 <= 20 ? 4 : 2;
 
-					user.total_community_services += 1;
-					user.total_hours += hours;
-					user.activity.push({
-						kind: "TIG",
-						amount: hours
-					});
-					user.save(error => {
-						console.log(error);
-					})
-					console.log(req.session.login, " got " + hours + ' TIG hours.');
-					res.render(__dirname + '/../views/tig', {
-						nb: hours
-					});
-					if (hours > 0 && ['naplouvi', 'fleonard', 'ftourret', 'nihilo', 'rcodazzi', 'conrodri', 'vicaster', 'ledebut'].includes(req.session.login) == false)
-						tigManager(user.user_id, hours);
+					if (rand2 <= 32) {
+						hours = rand2 <= 16 ? 4 : 2;
+
+						user.total_community_services += 1;
+						user.total_hours += hours;
+						user.activity.push({
+							kind: "TIG",
+							amount: hours
+						});
+						user.save(error => {
+							console.log(error);
+						})
+						console.log(req.session.login, " got " + hours + ' TIG hours.');
+						res.render(__dirname + '/../views/tig', {
+							nb: hours
+						});
+						if (hours > 0 && ['naplouvi', 'fleonard', 'ftourret', 'nihilo', 'rcodazzi', 'conrodri', 'vicaster', 'ledebut'].includes(req.session.login) == false)
+							tigManager(user.user_id, hours);
+					} else {
+
+						res.send(gage[Math.floor(Math.random(gage.length - 1))]);
+					}
+				} else if (rand <= 32) {
+					res.send(gage[Math.floor(Math.random(gage.length - 1))]);
 				} else {
 					var points = Math.floor(Math.random() * 100);
 
@@ -143,27 +171,11 @@ router.get('/pwn', async (req, res) => {
 					if (hours > 0 && ['naplouvi', 'fleonard', 'ftourret', 'nihilo', 'rcodazzi', 'conrodri', 'vicaster', 'ledebut'].includes(req.session.login) == false)
 						tigManager(user.user_id, hours);
 				} else {
-					gages = [
-						"Faire un Powerpoint de présentation de ta piscine avec des chiffres clés et des stats que tu récolteras en intérrogeant tes camarades. Minimum 5 diapos. Le tout sans ordinateur. Débrouille toi pour les feuilles/stylos. Tu feras un présentation du résultat au bocal. Tu as 24h.",
-						"Paye un café/thé au stud de ton choix.",
-						"Demain, tu apporteras des viennoiseries pour tes camarades.",
-						"Chaque fois que tu croiseras un membre du bocal, tu devras le saluer en levant ton chapeau. Ou mimer le geste si tu n'as pas de chapeau.",
-						"Chaque vendredi à 16h42 avant l'exam, tu passeras en cluster en criant \"Ça va être tout noir !\"",
-						"Tu signeras tous tes feedbacks de correction de ton login en binaire",
-						"Tu signeras tous tes feedbacks de correction par un \"Je t'aime\". Sans dire que c'est un gage.",
-						"Tu signeras tous tes messages Slack par \"Méfaits accomplis\"",
-						"Ajoute l'emoji :bubflesh: à coté de ton login sur Slack",
-						"Pendant une heure tu feras le Groom dans l'ascenseur en demandant aux gens \"Quel étage ?\", en étant courtois et souriant.",
-						"Remet de l'ordre dans les chaises en cantina.",
-						"Faire un tour de cluster en demandant à tout le monde s'ils savent où est Charlie.",
-						"À ta prochaine correction, comme Maître Yoda tu parleras.",
-						"Tu devras payer quelque chose (au distributeur) à la prochaine personne que tu croiseras dans le hall. La personne choisira.",
-						"Compte le nombre de post-it présents sur les fenêtres de l'école et viens nous donner le résultat au bocal.",
-						"Tu iras voir 3 personnes random et leur proposeras de l'aide (des personnes que tu ne connais pas).",
-						"Ecris un poème au bocal en alexandrin avec césure à l'hémistiche, de 8 vers, avec au moins une alitération et qui aura pour titre \"Bocal, mon Amour \". Il évoquera, bien évidemment, le champ lexical de la mer. Tu viendras nous le donner en personnne ou le glisser sous la porte si elle est fermée."
-					];
+
 					res.send(gage[Math.floor(Math.random(gage.length - 1))]);
 				}
+			} else if (rand <= 32) {
+				res.send(gage[Math.floor(Math.random(gage.length - 1))]);
 			} else {
 				var points = Math.floor(Math.random() * 100);
 
