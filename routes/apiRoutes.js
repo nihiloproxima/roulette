@@ -42,4 +42,9 @@ apiRouter.get('/winners', async (req, res) => {
 	})
 });
 
+apiRouter.post('/test', (req, res) => {
+	console.log(req.body);
+	res.send(req.body);
+})
+
 module.exports = apiRouter;
