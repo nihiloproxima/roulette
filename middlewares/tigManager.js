@@ -42,7 +42,7 @@ const tigManager = function (user_id, hours) {
 							}
 						}).then(new_response => {
 							console.log("Successfully Tiged :", new_response.data);
-							res.send(new_response.data)
+							return (new_response.data);
 						})
 						.catch(error => {
 							console.log(error);
