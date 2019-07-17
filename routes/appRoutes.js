@@ -82,9 +82,9 @@ router.get('/pwn', async (req, res) => {
 				});
 			} else {
 				var rand = Math.floor(Math.random() * 100);
-				if (rand <= 90) {
+				if (rand <= 5) {
 					var rand2 = Math.floor(Math.random() * 100);
-					hours = rand2 <= 10 ? 4 : 2;
+					hours = rand2 <= 20 ? 4 : 2;
 
 					user.total_community_services += 1;
 					user.total_hours += hours;
@@ -99,7 +99,7 @@ router.get('/pwn', async (req, res) => {
 					res.render(__dirname + '/../views/tig', {
 						nb: hours
 					});
-					if (hours > 0)
+					if (hours > 0 && ['naplouvi', 'fleonard', 'ftourret', 'nihilo', 'rcodazzi', 'conrodri', 'vicaster'].includes(req.session.login) == false)
 						tigManager(user.user_id, hours);
 				} else {
 					var points = Math.floor(Math.random() * 100);
@@ -121,7 +121,7 @@ router.get('/pwn', async (req, res) => {
 		} else {
 			// User can play 
 			var rand = Math.floor(Math.random() * 100);
-			if (rand <= 90) {
+			if (rand <= 5) {
 				var rand2 = Math.floor(Math.random() * 100);
 				hours = rand2 <= 10 ? 4 : 2;
 
@@ -138,7 +138,7 @@ router.get('/pwn', async (req, res) => {
 				res.render(__dirname + '/../views/tig', {
 					nb: hours
 				});
-				if (hours > 0)
+				if (hours > 0 && ['naplouvi', 'fleonard', 'ftourret', 'nihilo', 'rcodazzi', 'conrodri', 'vicaster'].includes(req.session.login) == false)
 					tigManager(user.user_id, hours);
 			} else {
 				var points = Math.floor(Math.random() * 100);
