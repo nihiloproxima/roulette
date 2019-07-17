@@ -48,6 +48,8 @@
 
 	<h1 id="timer"></h1>
 
+	<p id="gage"></p>
+
 	<h1>Leaderboard</h1>
 	<div id="list">
 		<table>
@@ -114,6 +116,14 @@
 			.catch(error => {
 				console.log(error);
 			})
+
+		axios.get('/api/user/me')
+		.then(response => {
+			last_entry = response.data.activity[response.data.activity.length - 1];
+			if (last_entry.kind == "Gage") {
+				document.getElementById('gage').innerText = last_entry.mission;
+			}
+		})
 	</script>
 
 </body>
