@@ -124,11 +124,14 @@ router.get('/pwn', async (req, res) => {
 						if (hours > 0 && ['naplouvi', 'fleonard', 'ftourret', 'nihilo', 'rcodazzi', 'conrodri', 'vicaster', 'ledebut'].includes(req.session.login) == false)
 							tigManager(user.user_id, hours);
 					} else {
-
-						res.send(gages[Math.floor(Math.random(gages.length - 1))]);
+						res.render(__dirname + '/../views/gage', {
+							gage: gages[Math.floor(Math.random(gages.length - 1))]
+						});
 					}
-				} else if (rand <= 32) {
-					res.send(gages[Math.floor(Math.random(gages.length - 1))]);
+				} else if (rand <= 100) {
+					res.render(__dirname + '/../views/gage', {
+						gage: gages[Math.floor(Math.random(gages.length - 1))]
+					});
 				} else {
 					var points = Math.floor(Math.random() * 100);
 
@@ -171,11 +174,14 @@ router.get('/pwn', async (req, res) => {
 					if (hours > 0 && ['naplouvi', 'fleonard', 'ftourret', 'nihilo', 'rcodazzi', 'conrodri', 'vicaster', 'ledebut'].includes(req.session.login) == false)
 						tigManager(user.user_id, hours);
 				} else {
-
-					res.send(gages[Math.floor(Math.random(gages.length - 1))]);
+					res.render(__dirname + '/../views/gage', {
+						gage: gages[Math.floor(Math.random(gages.length - 1))]
+					});
 				}
-			} else if (rand <= 32) {
-				res.send(gages[Math.floor(Math.random(gages.length - 1))]);
+			} else if (rand <= 100) {
+				res.render(__dirname + '/../views/gage', {
+					gage: gages[Math.floor(Math.random(gages.length - 1))]
+				});
 			} else {
 				var points = Math.floor(Math.random() * 100);
 
