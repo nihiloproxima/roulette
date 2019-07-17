@@ -50,28 +50,28 @@
 		alt="mdr">
 	<img id="haha" src="https://pijnackersebridgeclub.nl/Toernooi/images/8345_In_bewerking.gif" alt="haha">
 	<div id="bolosses">
-		Et c'est le gage ! Tu vas pouvoir nous faire rire
+		Et c'est le gage ! Tu vas pouvoir nous faire rire :
 		<br>
 		<%= gage %>
 		<br>
 	</div>
-<!-- <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
 	var bolosses = document.getElementById("bolosses")
 
-	axios.get('/api/tiged')
+	axios.get('/api/gaged')
 		.then(response => {
 			var users = response.data;
 			for (i in users) {
 				bolosses.innerHTML +=
 					"<span><img id='boloss' src='https://media1.giphy.com/media/p4xp4BjHIdane/giphy.gif?cid=790b76115d2c8bd07936503432ecedc5&rid=giphy.gif'><a target='_blank' href='https://profile.intra.42.fr/users/" +
-					users[i].login + "'>" + users[i].login + "</a> : " + users[i].total_hours + " total hours</span>"
+					users[i].login + "'>" + users[i].login + "</a> : " + users[i].total_gages + " total gages</span>"
 			}
 		})
 		.catch(error => {
 			console.log(error);
 		})
-</script> -->
+</script>
 </body>
 
 </html>

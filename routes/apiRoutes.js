@@ -28,6 +28,26 @@ apiRouter.get('/tiged', (req, res) => {
 	})
 });
 
+apiRouter.get('/gaged', (req, res) => {
+	User.find({
+		total_gages: {
+			$gt: 0
+		}
+	}, null, {
+		sort: {
+			total_gages: -1
+		}
+	}, (err, docs) => {
+		res.json(docs);
+	})
+});
+
+apiRouter.get('/user/:login', (req, res) => {
+	User.findOne({ login: req.params.login }, (err, docs) => {
+		res.json(docs);
+	});
+});
+
 apiRouter.get('/winners', async (req, res) => {
 	User.find({
 		total_points: {
