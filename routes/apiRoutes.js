@@ -42,7 +42,7 @@ apiRouter.get('/gaged', (req, res) => {
 	})
 });
 
-apiRouter.get('/me', (req, res) => {
+apiRouter.get('/me', async (req, res) => {
 	console.log("sending user...");
 	let user = await User.findOne({
 		login: req.session.login
