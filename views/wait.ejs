@@ -24,7 +24,7 @@
 
 		table {
 			text-align: center;
-			margin-left: 25vw;
+			margin-left: 30vw;
 			margin-top: 5vh;
 		}
 
@@ -48,14 +48,14 @@
 
 	<h1 id="timer"></h1>
 
+	<h1>Leaderboard</h1>
 	<div id="list">
 		<table>
 			<thead>
 				<th>Login</th>
-				<th>Nb try</th>
-				<th>Total hours</th>
-				<th>Total points</th>
-				<th>Last try</th>
+				<th>Parties</th>
+				<th>TIG</th>
+				<th>Points de coa</th>
 			</thead>
 			<tbody id="infos">
 
@@ -64,7 +64,7 @@
 	</div>
 
 	<script>
-		var countDownDate = Math.floor( < %= countDownDate % > ) + 21600000;
+		var countDownDate = Math.floor( <%= countDownDate %> ) + 21600000;
 
 		var x = setInterval(function () {
 
@@ -104,11 +104,9 @@
 						"<tr>\
                         <td><a target='_blank' href='https://profile.intra.42.fr/users/" + users[i].login + "'>" +
 						users[i].login + "</a></td>\
-                        <td>" + users[i].activity.length + "</td>\
-                        <td>" + users[i].total_hours + "</td>\
-                        <td>" + users[i].total_points + "</td>\
-                        <td><small>" + users[i].activity[users[i].activity.length - 1].date.substr(0, 10) + " " +
-						users[i].activity[users[i].activity.length - 1].date.substr(11, 8) + "</small></td>\
+                        <td>" + users[i].activity.length + " parties</td>\
+                        <td>" + users[i].total_hours + "h</td>\
+                        <td>" + users[i].total_points + " pts</td>\
                     </tr>"
 				}
 			})
