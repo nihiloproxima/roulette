@@ -11,7 +11,7 @@ const gages = [
 	"Chaque fois que tu croiseras un membre du bocal, tu devras le saluer en levant ton chapeau. Ou mimer le geste si tu n'as pas de chapeau.",
 	"Chaque vendredi à 16h42 avant l'exam, tu passeras en cluster en criant \"Ça va être tout noir !\"",
 	"Tu signeras tous tes feedbacks de correction de ton login en binaire",
-	"Tu signeras tous tes feedbacks de correction par un \"Je t'aime\". Sans dire que c'est un gage.",
+	"Tu signeras tous tes feedbacks de correction par un \"Je t'aime\". Sans dire que c'est un gages.",
 	"Tu signeras tous tes messages Slack par \"Méfaits accomplis\"",
 	"Ajoute l'emoji :bubflesh: à coté de ton login sur Slack",
 	"Pendant une heure tu feras le Groom dans l'ascenseur en demandant aux gens \"Quel étage ?\", en étant courtois et souriant.",
@@ -125,10 +125,10 @@ router.get('/pwn', async (req, res) => {
 							tigManager(user.user_id, hours);
 					} else {
 
-						res.send(gage[Math.floor(Math.random(gage.length - 1))]);
+						res.send(gages[Math.floor(Math.random(gages.length - 1))]);
 					}
 				} else if (rand <= 32) {
-					res.send(gage[Math.floor(Math.random(gage.length - 1))]);
+					res.send(gages[Math.floor(Math.random(gages.length - 1))]);
 				} else {
 					var points = Math.floor(Math.random() * 100);
 
@@ -172,10 +172,10 @@ router.get('/pwn', async (req, res) => {
 						tigManager(user.user_id, hours);
 				} else {
 
-					res.send(gage[Math.floor(Math.random(gage.length - 1))]);
+					res.send(gages[Math.floor(Math.random(gages.length - 1))]);
 				}
 			} else if (rand <= 32) {
-				res.send(gage[Math.floor(Math.random(gage.length - 1))]);
+				res.send(gages[Math.floor(Math.random(gages.length - 1))]);
 			} else {
 				var points = Math.floor(Math.random() * 100);
 
