@@ -47,6 +47,8 @@ apiRouter.get('/me', (req, res) => {
 	User.findOne({
 		login: req.session.login
 	}), (err, docs) => {
+		if (err)
+			console.log(err);
 		res.json(docs);
 	}
 })
