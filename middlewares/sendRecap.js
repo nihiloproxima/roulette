@@ -9,7 +9,6 @@ const sendRecap = async () => {
 		<ul>\
 			<li>Total points : " + users[i].total_points + " </li>\
 			<li>Total TIG : " + users[i].total_tig + " </li>\
-			<li> Total TIG: " + users[i].total_tig + " </li>\
 			<li> Total Gages: " + users[i].total_gages + " </li>\
 		</ul>";
 	}
