@@ -25,7 +25,7 @@ const pointsManager = async function (user_id, points) {
 			console.log("Posting new score...");
 			axios.post('https://api.intra.42.fr/v2/coalitions/' + user.coalition_id + '/scores', {
 				score: {
-					coalition_users_id: user.id,
+					coalitions_user_id: user.id,
 					reason: 'You played, you won.',
 					value: points
 				}
@@ -34,7 +34,7 @@ const pointsManager = async function (user_id, points) {
 					"Authorization": "Bearer " + access_token
 				}
 			}).then(response => {
-				consolee.log(response);
+				console.log(response);
 				console.log("Done.");
 				console.log("Points attribued.")
 				return (0);
