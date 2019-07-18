@@ -14,7 +14,7 @@ const pointsManager = async function (user_id, points) {
 	console.log("Access token granted : ", access_token);
 	if (access_token) {
 		console.log("Grabbing coallition infos and coallition_user");
-		const coalition_user = await axios
+		let coalition_user = await axios
 			.get('https://api.intra.42.fr/v2/coalitions_users?user_id=' + user_id, {
 				headers: {
 					"Authorization": "Bearer " + access_token
