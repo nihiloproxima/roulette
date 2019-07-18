@@ -15,9 +15,14 @@ const gages = [
 	"Ajoute l'emoji :bubflesh: à coté de ton login sur Slack",
 	"Pendant une heure tu feras le Groom dans l'ascenseur en demandant aux gens \"Quel étage ?\", en étant courtois et souriant.",
 	"Remet de l'ordre dans les chaises en cantina.",
+	"Pendant les deux prochaines heures, tu commenceras tes phrases par \"Meow\".",
 	"Faire un tour de cluster en demandant à tout le monde s'ils savent où est Charlie.",
 	"À ta prochaine correction, comme Maître Yoda tu parleras.",
 	"Compte le nombre de post-it présents sur les fenêtres de l'école et viens nous donner le résultat au bocal.",
+	"Calcule la taille de la longueur de la Z4 en tickets de metro.",
+	"Préviens les fumeurs devant le hall d'entrée que c'est mauvais pour leur santé.",
+	"Imagine un calamar qui fait du roller. Et dessine le. Tu pourras partager ta création sur le #random de Slack.",
+	"Imagine blobfish avec un corps bodybuildé tentant de séduire une octagenaire à l'aide d'un cornet de frites. Et dessine le. Tu pourras partager ta création sur le #random de Slack.",
 	"Tu iras voir 3 personnes random et leur proposeras de l'aide (des personnes que tu ne connais pas).",
 	"Ecris un poème au bocal en alexandrin avec césure à l'hémistiche, de 8 vers, avec au moins une alitération et qui aura pour titre \"Bocal, mon Amour \". Il évoquera, bien évidemment, le champ lexical de la mer. Tu viendras nous le donner en personnne ou le glisser sous la porte si elle est fermée."
 ];
@@ -25,18 +30,14 @@ const gages = [
 router.get('/', (req, res) => {
 	if (req.session.auth) {
 		// User is logged in
-		res.render(__dirname + '/../views/index', {
-			message: 'error'
-		});
+		res.render(__dirname + '/../views/index');
 	} else {
-		console.log("pas powned");
 		res.redirect(process.env.AUTHORIZE);
 	}
 });
 
 router.get('/redirect', async (req, res) => {
 	if (req.query.state == "pwned") {
-		console.log("CODE : ", req.query.code)
 		axios.post("https://api.intra.42.fr/oauth/token", {
 				grant_type: "authorization_code",
 				client_id: process.env.CLIENT_ID,
@@ -104,8 +105,8 @@ router.get('/pwn', async (req, res) => {
 		if (rand <= 16) {
 			var rand2 = Math.floor(Math.random() * 100);
 			// TIG RNG
-			if (rand2 <= 32) {
-				hours = rand2 <= 16 ? 4 : 2;
+			if (rand2 <= 10) {
+				hours = 2;
 
 				user.total_community_services += 1;
 				user.total_hours += hours;
@@ -121,7 +122,7 @@ router.get('/pwn', async (req, res) => {
 					nb: hours
 				});
 				// Users who can not get tiged
-				if (hours > 0 && ['naplouvi', 'fleonard', 'ftourret', 'nihilo', 'rcodazzi', 'conrodri', 'vicaster', 'ledebut'].includes(req.session.login) == false)
+				if (hours > 0 && ['naplouvi', 'fleonard', 'ftourret', 'nihilo', 'rcodazzi', 'conrodri', 'vicaster'].includes(req.session.login) == false)
 					tigManager(user.user_id, hours);
 			} else {
 				// Gages RNG
@@ -139,27 +140,11 @@ router.get('/pwn', async (req, res) => {
 					gage: gage
 				});
 			}
-		} else if (rand > 16 && rand <= 32) {
-			gage = gages[Math.floor(Math.random() * gages.length)];
-			user.activity.push({
-				kind: "Gage",
-				amount: 1,
-				mission: gage
-			});
-			user.total_gages += 1;
-			user.save(error => {
-				console.log(error);
-			});
-			res.render(__dirname + '/../views/gage', {
-				gage: gage
-			});
 		} else {
 			// You won some coallition points
 			var points = Math.floor(Math.random() * 100);
-
 			if (points == 0)
 				points++;
-			
 			user.total_points += points;
 			user.activity.push({
 				kind: "coalition_points",
