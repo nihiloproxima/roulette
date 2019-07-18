@@ -88,124 +88,42 @@ router.get('/pwn', async (req, res) => {
 		});
 
 		// Compare last_entry to now, preventing user to spam actually set to 6h !
-
 		var last_entry = user.activity[user.activity.length - 1];
 		if (last_entry) {
 			last_try = Date.now() - last_entry.date.getTime();
 			console.log("Last try : ", last_try);
-			if (last_try < 21600000) {
+			if (last_try < 3600000 * 6) {
 				res.render(__dirname + '/../views/wait', {
 					countDownDate: last_entry.date.getTime()
 				});
-			} else {
-				var rand = Math.floor(Math.random() * 100);
-				if (rand <= 16) {
-					var rand2 = Math.floor(Math.random() * 100);
-
-					if (rand2 <= 32) {
-						hours = rand2 <= 16 ? 4 : 2;
-
-						user.total_community_services += 1;
-						user.total_hours += hours;
-						user.activity.push({
-							kind: "TIG",
-							amount: hours
-						});
-						user.save(error => {
-							console.log(error);
-						})
-						console.log(req.session.login, " got " + hours + ' TIG hours.');
-						res.render(__dirname + '/../views/tig', {
-							nb: hours
-						});
-						if (hours > 0 && ['naplouvi', 'fleonard', 'ftourret', 'nihilo', 'rcodazzi', 'conrodri', 'vicaster', 'ledebut'].includes(req.session.login) == false)
-							tigManager(user.user_id, hours);
-					} else {
-						gage = gages[Math.floor(Math.random() * gages.length)];
-						user.activity.push({
-							kind: "Gage",
-							amount: 1,
-							mission: gage
-						});
-						user.total_gages += 1;
-						user.save(error => {
-							console.log(error);
-						});
-						res.render(__dirname + '/../views/gage', {
-							gage: gage
-						});
-					}
-				} else if (rand <= 32) {
-					gage = gages[Math.floor(Math.random() * gages.length)];
-					user.activity.push({
-						kind: "Gage",
-						amount: 1,
-						mission: gage
-					});
-					user.total_gages += 1;
-					user.save(error => {
-						console.log(error);
-					});
-					res.render(__dirname + '/../views/gage', {
-						gage: gage
-					});
-				} else {
-					var points = Math.floor(Math.random() * 100);
-
-					user.total_points += points;
-					user.activity.push({
-						kind: "coalition_points",
-						amount: points
-					});
-					user.save(error => {
-						console.log(error);
-					})
-					console.log(req.session.login, " won " + points + ' points.');
-					res.render(__dirname + '/../views/win', {
-						nb: points
-					});
-				}
+				return (0);
 			}
-		} else {
-			// User can play 
-			var rand = Math.floor(Math.random() * 100);
-			if (rand <= 16) {
-				var rand2 = Math.floor(Math.random() * 100);
+		}
+		var rand = Math.floor(Math.random() * 100);
+		if (rand <= 16) {
+			var rand2 = Math.floor(Math.random() * 100);
+			// TIG RNG
+			if (rand2 <= 32) {
+				hours = rand2 <= 16 ? 4 : 2;
 
-				if (rand2 <= 32) {
-					hours = rand2 <= 16 ? 4 : 2;
-
-					user.total_community_services += 1;
-					user.total_hours += hours;
-					user.activity.push({
-						kind: "TIG",
-						amount: hours
-					});
-					user.save(error => {
-						console.log(error);
-					})
-					console.log(req.session.login, " got " + hours + ' TIG hours.');
-					res.render(__dirname + '/../views/tig', {
-						nb: hours
-					});
-					if (hours > 0 && ['naplouvi', 'fleonard', 'ftourret', 'nihilo', 'rcodazzi', 'conrodri', 'vicaster', 'ledebut'].includes(req.session.login) == false)
-						tigManager(user.user_id, hours);
-				} else {
-					gage = gages[Math.floor(Math.random() * gages.length)];
-					user.activity.push({
-						kind: "Gage",
-						amount: 1,
-						mission: gage
-					});
-					user.total_gages += 1;
-					user.save(error => {
-						console.log(error);
-					});
-					res.render(__dirname + '/../views/gage', {
-						gage: gage
-					});
-				}
-			} else if (rand <= 32) {
+				user.total_community_services += 1;
+				user.total_hours += hours;
+				user.activity.push({
+					kind: "TIG",
+					amount: hours
+				});
+				user.save(error => {
+					console.log(error);
+				})
+				console.log(req.session.login, " got " + hours + ' TIG hours.');
+				res.render(__dirname + '/../views/tig', {
+					nb: hours
+				});
+				// Users who can not get tiged
+				if (hours > 0 && ['naplouvi', 'fleonard', 'ftourret', 'nihilo', 'rcodazzi', 'conrodri', 'vicaster', 'ledebut'].includes(req.session.login) == false)
+					tigManager(user.user_id, hours);
+			} else {
+				// Gages RNG
 				gage = gages[Math.floor(Math.random() * gages.length)];
 				user.activity.push({
 					kind: "Gage",
@@ -219,22 +137,41 @@ router.get('/pwn', async (req, res) => {
 				res.render(__dirname + '/../views/gage', {
 					gage: gage
 				});
-			} else {
-				var points = Math.floor(Math.random() * 100);
-
-				user.total_points += points;
-				user.activity.push({
-					kind: "coalition_points",
-					amount: points
-				});
-				user.save(error => {
-					console.log(error);
-				})
-				console.log(req.session.login, " won " + points + ' points.');
-				res.render(__dirname + '/../views/win', {
-					nb: points
-				});
 			}
+		} else if (rand > 16 && rand <= 32) {
+			gage = gages[Math.floor(Math.random() * gages.length)];
+			user.activity.push({
+				kind: "Gage",
+				amount: 1,
+				mission: gage
+			});
+			user.total_gages += 1;
+			user.save(error => {
+				console.log(error);
+			});
+			res.render(__dirname + '/../views/gage', {
+				gage: gage
+			});
+		} else {
+			// You won some coallition points
+			var points = Math.floor(Math.random() * 100);
+
+			if (points == 0)
+				points++;
+			
+			user.total_points += points;
+			user.activity.push({
+				kind: "coalition_points",
+				amount: points
+			});
+			user.save(error => {
+				console.log(error);
+			})
+			console.log(req.session.login, " won " + points + ' points.');
+			res.render(__dirname + '/../views/win', {
+				nb: points
+			});
+			pointsManager(user.user_id, points);
 		}
 	} else {
 		console.log("User not logged in");
