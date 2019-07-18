@@ -34,6 +34,7 @@ const pointsManager = async function (user_id, points) {
 					"Authorization": "Bearer " + access_token
 				}
 			}).then(response => {
+				consolee.log(response);
 				console.log("Done.");
 				console.log("Points attribued.")
 				return (0);
