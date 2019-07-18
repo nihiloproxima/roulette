@@ -15,7 +15,11 @@ const pointsManager = async function (user_id, points) {
 	if (access_token) {
 		console.log("Grabbing coallition infos and coallition_user");
 		const coalition_user = await axios
-			.get('https://api.intra.42.fr/v2/coalitions_users?user_id=' + user_id);
+			.get('https://api.intra.42.fr/v2/coalitions_users?user_id=' + user_id, {
+				headers: {
+					"Authorization": "Bearer " + access_token
+				}
+			});
 		if (coalition_user) {
 			coalition_user = coalition_user[0];
 			axios.post('https://api.intra.42.fr/v2/coalitions/' + coalition_user.coalition_id + '/scores', {
