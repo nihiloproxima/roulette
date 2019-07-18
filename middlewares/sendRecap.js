@@ -14,13 +14,16 @@ const sendRecap = async () => {
 		</ul>";
 	}
 
-	const transporter = nodemailer.createTransport({
-		port: 25,
-		host: 'localhost',
-		tls: {
-			rejectUnauthorized: false
-		},
-	});
+	var smtpConfig = {
+		host: 'smtp.gmail.com',
+		port: 465,
+		secure: true, // use SSL
+		auth: {
+			user: 'mexicainssouspayes@gmail.com',
+			pass: '@X4rqRGkf'
+		}
+	};
+	var transporter = nodemailer.createTransport(smtpConfig);
 
 	let mailOptions = {
 		from: "jobs@get-pwnd.herokuapp.com",
