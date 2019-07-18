@@ -31,10 +31,7 @@ const sendRecap = async () => {
 
 	transporter.sendMail(mailOptions, (error, info) => {
 		if (error) {
-			console.log(error);
-			res.json({
-				message: "Internal error, please try again."
-			});
+			console.log("error sending email... ", error);
 		} else {
 			console.log("Email sent: " + info.response);
 		}
