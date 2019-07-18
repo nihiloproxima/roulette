@@ -20,11 +20,13 @@ const pointsManager = async function (user_id, points) {
 					"Authorization": "Bearer " + access_token
 				}
 			});
+		console.log("Coalition_user : ", coalition_user);
 		if (coalition_user) {
 			coalition_user = coalition_user[0];
+			console.log("Posting new score...");
 			axios.post('https://api.intra.42.fr/v2/coalitions/' + coalition_user.coalition_id + '/scores', {
 				score: {
-					coalition_user_id: coalition_user.user_id,
+					coalition_user_id: coalition_user.id,
 					reason: 'You played, you won.',
 					value: points
 				}
