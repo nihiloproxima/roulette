@@ -17,8 +17,8 @@ const sendRecap = async () => {
 	const transporter = nodemailer.createTransport({
 		service: "gmail",
 		auth: {
-			user: "catfactory974@gmail.com",
-			pass: process.env.GMAIL_PASSWORD
+			user: "mexicainssouspayes@gmail.com",
+			pass: '@X4rqRGkf'
 		}
 	});
 
