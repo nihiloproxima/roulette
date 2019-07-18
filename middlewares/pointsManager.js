@@ -23,24 +23,28 @@ const pointsManager = async function (user_id, points) {
 			user = coalition_user.data[0];
 			console.log("Coalition_user : ", user);
 			console.log("Posting new score...");
-			axios.post('https://api.intra.42.fr/v2/coalitions/' + user.coalition_id + '/scores', {
+			var body = {
 				score: {
 					coalition_user_id: user.id,
 					reason: 'You played, you won.',
 					value: points
 				}
-			}, {
-				headers: {
-					"Authorization": "Bearer " + access_token
-				}
-			}).then(response => {
-				console.log("Done.");
-				console.log("Points attribued.")
-				return (0);
-			}).catch(error => {
-				console.log("Problem giving coalition poinnts :", error);
-				return (error);
-			})
+			};
+			console.log("req sent : ", body);
+			// axios.post('https://api.intra.42.fr/v2/coalitions/' + user.coalition_id + '/scores', {
+
+			// }, {
+			// 	headers: {
+			// 		"Authorization": "Bearer " + access_token
+			// 	}
+			// }).then(response => {
+			// 	console.log("Done.");
+			// 	console.log("Points attribued.")
+			// 	return (0);
+			// }).catch(error => {
+			// 	console.log("Problem giving coalition poinnts :", error);
+			// 	return (error);
+			// })
 		} else {
 			console.log("No coalition_user...");
 			return (1);
