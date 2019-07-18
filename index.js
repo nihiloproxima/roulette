@@ -5,6 +5,8 @@ const app = express();
 const cors = require('cors');
 const routes = require('./routes');
 const mongoose = require("mongoose");
+const schedule = require('node-schedule');
+const sendRecap = require('./middlewares/sendRecap');
 
 // require('dotenv').config();
 app.set('view engine', 'ejs');
@@ -42,6 +44,8 @@ mongoose.connect(
 );
 
 app.use('/', routes);
+
+let j = schedule.scheduleJob('* 12 * * *', sendRecap());
 
 
 app.listen(port, function () {
