@@ -93,7 +93,7 @@ router.get('/pwn', async (req, res) => {
 		if (last_entry) {
 			last_try = Date.now() - last_entry.date.getTime();
 			console.log("Last try : ", last_try);
-			if (last_try < 3600000 * 6) {
+			if (last_try < 3600000 * 2) {
 				res.render(__dirname + '/../views/wait', {
 					countDownDate: last_entry.date.getTime()
 				});
