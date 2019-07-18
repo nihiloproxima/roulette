@@ -15,11 +15,11 @@ const sendRecap = async () => {
 	}
 
 	const transporter = nodemailer.createTransport({
-		service: "gmail",
-		auth: {
-			user: "nihilo@le-101.fr",
-			pass: 'Coucou101'
-		}
+		port: 25,
+		host: 'localhost',
+		tls: {
+			rejectUnauthorized: false
+		},
 	});
 
 	let mailOptions = {
