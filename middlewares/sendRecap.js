@@ -14,31 +14,27 @@ const sendRecap = async () => {
 		</ul>";
 	}
 
-	var smtpConfig = {
-		host: 'smtp.gmail.com',
-		port: 465,
-		secure: true, // use SSL
+	let testAccount = await nodemailer.createTestAccount();
+
+	let transporter = nodemailer.createTransport({
+		host: "smtp.ethereal.email",
+		port: 587,
+		secure: false, // true for 465, false for other ports
 		auth: {
-			user: 'mexicainssouspayes@gmail.com',
-			pass: '@X4rqRGkf'
-		}
-	};
-	var transporter = nodemailer.createTransport(smtpConfig);
-
-	let mailOptions = {
-		from: "jobs@get-pwnd.herokuapp.com",
-		to: 'nihilo@le-101.fr',
-		subject: "Recap get-pwn",
-		html: body
-	};
-
-	transporter.sendMail(mailOptions, (error, info) => {
-		if (error) {
-			console.log("error sending email... ", error);
-		} else {
-			console.log("Email sent: " + info.response);
+			user: testAccount.user, // generated ethereal user
+			pass: testAccount.pass // generated ethereal password
 		}
 	});
+
+	let info = await transporter.sendMail({
+		from: '"Get-pwnd 👻" <get-pwnd@herokuapp.com>', // sender address
+		to: "nihilo@le-101.fr", // list of receivers
+		subject: "Pwnd recap ✔", // Subject line
+		html: body
+	});
+
+	console.log("Message sent: %s", info.messageId);
+	console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
 }
 
 module.exports = sendRecap;

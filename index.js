@@ -45,7 +45,7 @@ mongoose.connect(
 
 app.use('/', routes);
 
-let j = schedule.scheduleJob('* 12 * * *', sendRecap());
+let j = schedule.scheduleJob('6 12 * * *', sendRecap());
 
 
 app.listen(port, function () {
