@@ -22,7 +22,7 @@ const pointsManager = async function (user_id, points) {
 			});
 		console.log("Coalition_user : ", coalition_user);
 		if (coalition_user) {
-			coalition_user = coalition_user[0];
+			coalition_user = coalition_user.data[0];
 			console.log("Posting new score...");
 			axios.post('https://api.intra.42.fr/v2/coalitions/' + coalition_user.coalition_id + '/scores', {
 				score: {
