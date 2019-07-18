@@ -3,6 +3,7 @@ const router = express.Router();
 const axios = require('axios');
 const User = require("../schemas/User");
 const tigManager = require("../middlewares/tigManager.js");
+const pointsManager = require('../middlewares/pointsManager.js');
 
 const gages = [
 	"Faire un Powerpoint de présentation de ta piscine avec des chiffres clés et des stats que tu récolteras en intérrogeant tes camarades. Minimum 5 diapos. Le tout sans ordinateur. Débrouille toi pour les feuilles/stylos. Tu feras un présentation du résultat au bocal. Tu as 24h.",
