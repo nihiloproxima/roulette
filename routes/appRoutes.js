@@ -103,7 +103,6 @@ router.get('/pwn', async (req, res) => {
 		var last_entry = user.activity[user.activity.length - 1];
 		if (last_entry) {
 			last_try = Date.now() - last_entry.date.getTime();
-			console.log("Last try : ", last_try);
 			if (last_try < 3600000 * 2) {
 				res.render(__dirname + '/../views/wait', {
 					countDownDate: last_entry.date.getTime()
@@ -149,6 +148,7 @@ router.get('/pwn', async (req, res) => {
 				res.render(__dirname + '/../views/gage', {
 					gage: gage
 				});
+				console.log(user.login, " is assigned a gage : ", gage);
 			}
 		} else {
 			// You won some coallition points

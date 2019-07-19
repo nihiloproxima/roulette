@@ -45,7 +45,7 @@ apiRouter.get('/me', async (req, res) => {
 	let user = await User.findOne({
 		login: req.session.login
 	});
-	console.log(user.login, " stares at the waitinng page.");
+	console.log(user.login, " stares at the waiting page.");
 	res.json(user);
 })
 

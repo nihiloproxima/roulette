@@ -26,7 +26,6 @@ const tokenManager = (req, res, next) => {
 		now = Date.now();
 		token_expiration = (master_token_infos.created_at + master_token_infos.expires_in) * 1000;
 		expiration_date = new Date(token_expiration).toString();
-		console.log("Token expires on ", expiration_date);
 		if (token_expiration - now < 0) {
 			console.log("Master token is expired.");
 			refresh();
