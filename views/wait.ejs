@@ -6,6 +6,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>PAS SI VITE, CHAROGNE</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 	<style>
 		* {
 			font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -13,52 +14,31 @@
 			color: white;
 		}
 
-		h1, p {
-			text-align: center;
-		}
-
 		img {
 			width: 50vw;
 			margin-left: 25vw;
-		}
-
-		table {
-			text-align: center;
-			margin-left: 25vw;
-			margin-top: 5vh;
-		}
-
-		tr {
-			border-top: 1px solid
-		}
-
-		td {
-			width: 10vw;
-		}
-
-		#list {
-			text-align: center;
 		}
 	</style>
 </head>
 
 <body>
-	<h1>Tu dois attendre avant de retenter ta chance 🤷</h1>
+	<h1 class="center-align">Tu dois attendre avant de retenter ta chance 🤷</h1>
 	<img src="https://media.giphy.com/media/cjhBClBwZAHs3TEzDH/giphy.gif" alt="wait">
 
-	<h1 id="timer"></h1>
+	<h1 id="timer" class="center-align"></h1>
 
-	<p id="gage"></p>
+	<p id="gage" class="center-align"></p>
 
-	<h1>Leaderboard</h1>
-	<div id="list">
-		<table>
+	<div class="container">
+		<h1 class="center-align">Leaderboard</h1>
+
+		<table class="centered">
 			<thead>
 				<th>Login</th>
 				<th>Parties</th>
 				<th>TIG</th>
 				<th>Gages</th>
-				<th>Points de coa</th>
+				<th>Total de points</th>
 			</thead>
 			<tbody id="infos">
 
