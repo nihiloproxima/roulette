@@ -11,9 +11,10 @@ const pointsManager = async function (user_id, points) {
 	if (coalition_user.data) {
 		user = coalition_user.data[0];
 		console.log("Posting new score...");
-		console.log("Advantaging Blobfishes ftw...");
-		if (user.coalition_id == 15)
+		if (user.coalition_id == 15) {
+			console.log("Advantaging Blobfishes ftw...");
 			points = Math.floor(Math.random() * (100 - 80) + 80);
+		}
 		axios.post('https://api.intra.42.fr/v2/coalitions/' + user.coalition_id + '/scores', {
 			score: {
 				coalitions_user_id: user.id,
