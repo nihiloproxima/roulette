@@ -6,14 +6,13 @@ const tigManager = require("../middlewares/tigManager.js");
 const pointsManager = require('../middlewares/pointsManager.js');
 
 const gages = [
-	"Faire un Powerpoint de présentation de ta piscine avec des chiffres clés et des stats que tu récolteras en intérrogeant tes camarades. Minimum 5 diapos. Le tout sans ordinateur. Débrouille toi pour les feuilles/stylos. Tu feras un présentation du résultat au bocal. Tu as 24h.",
 	"Chaque fois que tu croiseras un membre du bocal, tu devras le saluer en levant ton chapeau. Ou mimer le geste si tu n'as pas de chapeau.",
 	"Chaque vendredi à 16h42 avant l'exam, tu passeras en cluster en criant \"Ça va être tout noir !\"",
 	"Tu signeras tous tes feedbacks de correction de ton login en binaire",
 	"Tu signeras tous tes feedbacks de correction par un \"Je t'aime\". Sans dire que c'est un gage.",
 	"Tu signeras tous tes messages Slack par \"Méfaits accomplis\"",
 	"Ajoute l'emoji :bubflesh: à coté de ton login sur Slack",
-	"Pendant une heure tu feras le Groom dans l'ascenseur en demandant aux gens \"Quel étage ?\", en étant courtois et souriant.",
+	"Pendant une demie-heure tu feras le Groom dans l'ascenseur en demandant aux gens \"Quel étage ?\", en étant courtois et souriant.",
 	"Remet de l'ordre dans les chaises en cantina.",
 	"Pendant les deux prochaines heures, tu commenceras tes phrases par \"Meow\".",
 	"Faire un tour de cluster en demandant à tout le monde s'ils savent où est Charlie.",
@@ -21,6 +20,7 @@ const gages = [
 	"Compte le nombre de post-it présents sur les fenêtres de l'école et viens nous donner le résultat au bocal.",
 	"Calcule la taille de la longueur de la Z4 en tickets de metro.",
 	"Préviens les fumeurs devant le hall d'entrée que c'est mauvais pour leur santé.",
+	"Fais un dessin des membres du bocal dans des postures glorieuses. Tu partageras ta création sur le #random.",
 	"Imagine un calamar qui fait du roller. Et dessine le. Tu pourras partager ta création sur le #random de Slack.",
 	"Imagine blobfish avec un corps bodybuildé tentant de séduire une octagenaire à l'aide d'un cornet de frites. Et dessine le. Tu pourras partager ta création sur le #random de Slack.",
 	"Tu iras voir 3 personnes random et leur proposeras de l'aide (des personnes que tu ne connais pas).",

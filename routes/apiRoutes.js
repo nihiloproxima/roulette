@@ -3,7 +3,11 @@ const apiRouter = express.Router();
 const User = require("../schemas/User");
 
 apiRouter.get('/', async (req, res) => {
-	User.find({}, (err, docs) => {
+	User.find({}, null, {
+		sort: {
+			total_points: -1
+		}
+	}, (err, docs) => {
 		if (docs)
 			res.json(docs);
 	})
