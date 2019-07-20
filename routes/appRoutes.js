@@ -128,9 +128,10 @@ router.post('/github', async (req, res) => {
 				console.log("file saved!");
 			})
 		} else {
+			var errors = ["Ce que tu dis n'a aucun sens...", "Hein ??!", "Ché po", "Demande à Google au lieu de me faire perdre mon temps", "Bravo ! Nan je dec, c'est pas ça."]
+			var message = errors[Math.floor(Math.random() * errors.length)];
 			res.render(__dirname + '/../views/secret', {
-				error: "Ce n'est pas la réponse que j'attendais..."
-			});
+				error: message
 		}
 	} else {
 		res.redirect('/');
