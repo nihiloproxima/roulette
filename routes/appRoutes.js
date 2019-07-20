@@ -134,7 +134,7 @@ router.post('/github', async (req, res) => {
 				pointsManager(user.user_id, 1000, "You found the secret answer. Congratulations.");
 			}
 		} else {
-			var errors = ["Ce que tu dis n'a aucun sens...", "Hein ??!", "Ché po", "Demande à Google au lieu de me faire perdre mon temps", "Bravo ! Nan je dec, c'est pas ça."];
+			var errors = ["Ce que tu dis n'a aucun sens...", "Nope.", "Demande à ta mère", "Mhhhhhhhh c po ca", "Hein ??!", "Ché po", "Demande à Google au lieu de me faire perdre mon temps", "Bravo ! Nan je dec, c'est pas ça."];
 			var message = errors[Math.floor(Math.random() * errors.length)];
 			res.render(__dirname + '/../views/secret', {
 				error: message
