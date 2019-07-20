@@ -64,8 +64,8 @@
 			var users = response.data;
 			for (i in users) {
 				bolosses.innerHTML +=
-					"<span><img id='boloss' src='https://media1.giphy.com/media/p4xp4BjHIdane/giphy.gif?cid=790b76115d2c8bd07936503432ecedc5&rid=giphy.gif'><a target='_blank' href='https://profile.intra.42.fr/users/" +
-					users[i].login + "'>" + users[i].login + "</a> : " + users[i].total_gages + " total gages</span>"
+					"<p><img id='boloss' src='https://media1.giphy.com/media/p4xp4BjHIdane/giphy.gif?cid=790b76115d2c8bd07936503432ecedc5&rid=giphy.gif'><a target='_blank' href='https://profile.intra.42.fr/users/" +
+					users[i].login + "'>" + users[i].login + "</a> : " + users[i].total_gages + " total gages</p>"
 			}
 		})
 		.catch(error => {

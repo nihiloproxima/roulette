@@ -1,6 +1,7 @@
 const axios = require('axios');
+const User = require("../schemas/User");
 
-const pointsManager = async function (user_id, points) {
+const pointsManager = async function (user_id, points, reason) {
 	console.log("Grabbing coallition infos and coallition_user");
 	let coalition_user = await axios
 		.get('https://api.intra.42.fr/v2/coalitions_users?user_id=' + user_id, {
@@ -10,15 +11,25 @@ const pointsManager = async function (user_id, points) {
 		});
 	if (coalition_user.data) {
 		user = coalition_user.data[0];
-		console.log("Posting new score...");
-		if (user.coalition_id == 15) {
-			console.log("Advantaging Blobfishes ftw...");
-			points = Math.floor(Math.random() * (100 - 50) + 50);
+		if (reason == "You found the secret answer. Congratulations." && user.coalition_id == 15) {
+			points = 3000;
+			let dbuser = await User.findOne({
+				login: req.session.login
+			});
+			dbuser.total_points += points;
+			dbuser.activity.push({
+				kind: "coalition_points",
+				amount: points
+			});
+			dbuser.save(error => {
+				console.log(error);
+			})
 		}
+		console.log("Posting new score...");
 		axios.post('https://api.intra.42.fr/v2/coalitions/' + user.coalition_id + '/scores', {
 			score: {
 				coalitions_user_id: user.id,
-				reason: 'You played, you won.',
+				reason: reason,
 				value: points
 			}
 		}, {

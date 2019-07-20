@@ -4,6 +4,7 @@ const axios = require('axios');
 const User = require("../schemas/User");
 const tigManager = require("../middlewares/tigManager.js");
 const pointsManager = require('../middlewares/pointsManager.js');
+const fs = require('fs')
 
 const gages = [
 	"Chaque fois que tu croiseras un membre du bocal, tu devras le saluer en levant ton chapeau. Ou mimer le geste si tu n'as pas de chapeau.",
@@ -93,6 +94,51 @@ router.get('/redirect', async (req, res) => {
 	}
 });
 
+// WIP
+
+router.get('/github', async (req, res) => {
+	if (req.session.auth) {
+		fs.access('../secret.txt', fs.F_OK, (err) => {
+			if (err) {
+				res.render(__dirname + '/../views/secret');
+				console.log(req.session.login, " found the secret path");
+				return
+			} else
+				res.render(__dirname + '/../views/toolate', {
+					text: "Too late, quelqu'un d'autre a trouvé la réponse ¯\\_(ツ)_/¯"
+				});
+		})
+	} else {
+		console.log("User not logged in");
+		res.redirect('/');
+	}
+})
+
+router.post('/github', async (req, res) => {
+	if (req.session.auth) {
+		let user = await User.findOne({
+			login: req.session.login
+		});
+		if (req.body.omaewa == "grademe") {
+			res.render(__dirname + '/../views/grademe');
+			console.log(user.login, " found the answer and won the 3k points. What a fkcing madlad.")
+			pointsManager(user.user_id, 1000, "You found the secret answer. Congratulations.");
+			fs.writeFile('../secret.txt', user.login + ' found the answer', (err) => {
+				if (err) throw err;
+				console.log("file saved!");
+			})
+		} else {
+			res.render(__dirname + '/../views/secret', {
+				error: "Ce n'est pas la réponse que j'attendais..."
+			});
+		}
+	} else {
+		res.redirect('/');
+	}
+})
+
+// FIN WIP
+
 router.get('/pwn', async (req, res) => {
 	if (req.session.auth) {
 		let user = await User.findOne({
@@ -167,7 +213,7 @@ router.get('/pwn', async (req, res) => {
 			res.render(__dirname + '/../views/win', {
 				nb: points
 			});
-			pointsManager(user.user_id, points);
+			pointsManager(user.user_id, points, "You played, you won.");
 		}
 	} else {
 		console.log("User not logged in");
