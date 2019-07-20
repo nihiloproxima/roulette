@@ -2,9 +2,10 @@ const express = require('express');
 const router = express.Router();
 const axios = require('axios');
 const User = require("../schemas/User");
+const Secret = require("../schemas/Secret");
 const tigManager = require("../middlewares/tigManager.js");
 const pointsManager = require('../middlewares/pointsManager.js');
-const fs = require('fs')
+const fs = require('fs');
 
 const gages = [
 	"Chaque fois que tu croiseras un membre du bocal, tu devras le saluer en levant ton chapeau. Ou mimer le geste si tu n'as pas de chapeau.",
@@ -98,35 +99,40 @@ router.get('/redirect', async (req, res) => {
 
 router.get('/github', async (req, res) => {
 	if (req.session.auth) {
-		fs.access('../secret.txt', fs.F_OK, (err) => {
-			if (err) {
-				res.render(__dirname + '/../views/secret');
-				console.log(req.session.login, " found the secret path");
-				return
-			} else
-				res.render(__dirname + '/../views/toolate', {
-					text: "Too late, quelqu'un d'autre a trouvé la réponse ¯\\_(ツ)_/¯"
-				});
-		})
+		secret = await Secret.findById("5d3321887c213e5998eee82d");
+		if (secret.finish == 0) {
+			res.render(__dirname + '/../views/secret');
+			console.log(req.session.login, " found the secret path");
+			return
+		} else {
+			res.render(__dirname + '/../views/toolate', {
+				text: "Too late, quelqu'un d'autre a trouvé la réponse ¯\\_(ツ)_/¯"
+			});
+		}
 	} else {
 		console.log("User not logged in");
 		res.redirect('/');
 	}
-})
+});
 
 router.post('/github', async (req, res) => {
 	if (req.session.auth) {
 		let user = await User.findOne({
 			login: req.session.login
 		});
-		if (req.body.omaewa == "grademe") {
-			res.render(__dirname + '/../views/grademe');
-			console.log(user.login, " found the answer and won the 3k points. What a fkcing madlad.")
-			pointsManager(user.user_id, 1000, "You found the secret answer. Congratulations.");
-			fs.writeFile('../secret.txt', user.login + ' found the answer', (err) => {
-				if (err) throw err;
-				console.log("file saved!");
+		secret = await Secret.findById("5d3321887c213e5998eee82d");
+		if (req.body.omaewa == "grademe" && secret.finish == 0) {
+			res.render(__dirname + '/../views/win', {
+				nb: "ENORMEMENT DE"
+			});
+			console.log(user.login, " found the answer and won the prize. What a fkcing madlad.")
+			secret.finish = 1;
+			secret.save(error => {
+				console.log(error);
 			})
+			if (req.session.login != "nihilo") {
+				pointsManager(user.user_id, 1000, "You found the secret answer. Congratulations.");
+			}
 		} else {
 			var errors = ["Ce que tu dis n'a aucun sens...", "Hein ??!", "Ché po", "Demande à Google au lieu de me faire perdre mon temps", "Bravo ! Nan je dec, c'est pas ça."];
 			var message = errors[Math.floor(Math.random() * errors.length)];
