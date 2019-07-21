@@ -5,7 +5,6 @@ const User = require("../schemas/User");
 const Secret = require("../schemas/Secret");
 const tigManager = require("../middlewares/tigManager.js");
 const pointsManager = require('../middlewares/pointsManager.js');
-const fs = require('fs');
 
 const gages = [
 	"Chaque fois que tu croiseras un membre du bocal, tu devras le saluer en levant ton chapeau. Ou mimer le geste si tu n'as pas de chapeau.",
@@ -165,45 +164,45 @@ router.get('/pwn', async (req, res) => {
 			}
 		}
 		var rand = Math.floor(Math.random() * 100);
-		if (rand <= 16) {
-			var rand2 = Math.floor(Math.random() * 100);
-			// TIG RNG
-			if (rand2 <= 5) {
-				hours = 2;
+		if (rand <= 10) {
+			// var rand2 = Math.floor(Math.random() * 100);
+			// // TIG RNG
+			// if (rand2 <= 5) {
+			// 	hours = 2;
 
-				user.total_community_services += 1;
-				user.total_hours += hours;
-				user.activity.push({
-					kind: "TIG",
-					amount: hours
-				});
-				user.save(error => {
-					console.log(error);
-				})
-				console.log(req.session.login, " got " + hours + ' TIG hours.');
-				res.render(__dirname + '/../views/tig', {
-					nb: hours
-				});
-				// Users who can not get tiged
-				if (hours > 0 && ['naplouvi', 'fleonard', 'ftourret', 'nihilo', 'rcodazzi', 'conrodri', 'vicaster'].includes(req.session.login) == false)
-					tigManager(user.user_id, hours);
-			} else {
-				// Gages RNG
-				gage = gages[Math.floor(Math.random() * gages.length)];
-				user.activity.push({
-					kind: "Gage",
-					amount: 1,
-					mission: gage
-				});
-				user.total_gages += 1;
-				user.save(error => {
-					console.log(error);
-				});
-				res.render(__dirname + '/../views/gage', {
-					gage: gage
-				});
-				console.log(user.login, " is assigned a gage : ", gage);
-			}
+			// 	user.total_community_services += 1;
+			// 	user.total_hours += hours;
+			// 	user.activity.push({
+			// 		kind: "TIG",
+			// 		amount: hours
+			// 	});
+			// 	user.save(error => {
+			// 		console.log(error);
+			// 	})
+			// 	console.log(req.session.login, " got " + hours + ' TIG hours.');
+			// 	res.render(__dirname + '/../views/tig', {
+			// 		nb: hours
+			// 	});
+			// 	// Users who can not get tiged
+			// 	if (hours > 0 && ['naplouvi', 'fleonard', 'ftourret', 'nihilo', 'rcodazzi', 'conrodri', 'vicaster'].includes(req.session.login) == false)
+			// 		tigManager(user.user_id, hours);
+			// } else {
+			// Gages RNG
+			gage = gages[Math.floor(Math.random() * gages.length)];
+			user.activity.push({
+				kind: "Gage",
+				amount: 1,
+				mission: gage
+			});
+			user.total_gages += 1;
+			user.save(error => {
+				console.log(error);
+			});
+			res.render(__dirname + '/../views/gage', {
+				gage: gage
+			});
+			console.log(user.login, " is assigned a gage : ", gage);
+			// }
 		} else {
 			// You won some coallition points
 			var points = Math.floor(Math.random() * 100);
