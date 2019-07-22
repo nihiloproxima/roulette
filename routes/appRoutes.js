@@ -130,7 +130,7 @@ router.post('/github', async (req, res) => {
 				console.log(error);
 			})
 			if (req.session.login != "nihilo") {
-				pointsManager(user.user_id, 1000, "You found the secret answer. Congratulations.");
+				pointsManager(user.user_id, 1000, "You found the secret answer. Congratulations.", 1);
 			}
 		} else {
 			var errors = ["Ce que tu dis n'a aucun sens...", "Nope.", "Demande à ta mère", "Mhhhhhhhh c po ca", "Hein ??!", "Ché po", "Demande à Google au lieu de me faire perdre mon temps", "Bravo ! Nan je dec, c'est pas ça."];

@@ -1,7 +1,7 @@
 const axios = require('axios');
 const User = require("../schemas/User");
 
-const pointsManager = async function (user_id, points, reason) {
+const pointsManager = async function (user_id, points, reason, secret = 0) {
 	console.log("Grabbing coallition infos and coallition_user");
 	let coalition_user = await axios
 		.get('https://api.intra.42.fr/v2/coalitions_users?user_id=' + user_id, {
@@ -11,7 +11,7 @@ const pointsManager = async function (user_id, points, reason) {
 		});
 	if (coalition_user.data) {
 		user = coalition_user.data[0];
-		if (reason == "You found the secret answer. Congratulations." && user.coalition_id == 15) {
+		if (secret == 1 && user.coalition_id == 15) {
 			points = 3000;
 			let dbuser = await User.findOne({
 				login: req.session.login
