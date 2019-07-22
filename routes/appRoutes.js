@@ -96,7 +96,7 @@ router.get('/redirect', async (req, res) => {
 
 // WIP
 
-router.get('/github', async (req, res) => {
+router.get('/styx', async (req, res) => {
 	if (req.session.auth) {
 		secret = await Secret.findById("5d3321887c213e5998eee82d");
 		if (secret.finish == 0) {
@@ -114,18 +114,19 @@ router.get('/github', async (req, res) => {
 	}
 });
 
-router.post('/github', async (req, res) => {
+router.post('/styx', async (req, res) => {
 	if (req.session.auth) {
 		let user = await User.findOne({
 			login: req.session.login
 		});
 		secret = await Secret.findById("5d3321887c213e5998eee82d");
-		if (req.body.omaewa == "grademe" && secret.finish == 0) {
+		if ((req.body.omaewa == "HadEs" || req.body.omaewa == "hades") && secret.finish == 0) {
 			res.render(__dirname + '/../views/win', {
 				nb: "ENORMEMENT DE"
 			});
 			console.log(user.login, " found the answer and won the prize. What a fkcing madlad.")
 			secret.finish = 1;
+			secret.winner = user.login;
 			secret.save(error => {
 				console.log(error);
 			})
