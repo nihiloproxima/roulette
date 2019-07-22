@@ -105,7 +105,7 @@ router.get('/styx', async (req, res) => {
 			return
 		} else {
 			res.render(__dirname + '/../views/toolate', {
-				text: "Too late, quelqu'un d'autre a trouvé la réponse ¯\\_(ツ)_/¯"
+				text: "Too late, " + secret.winner + " a trouvé la réponse ¯\\_(ツ)_/¯"
 			});
 		}
 	} else {
