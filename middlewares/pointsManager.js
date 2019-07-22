@@ -11,37 +11,39 @@ const pointsManager = async function (user_id, points, reason, secret = 0) {
 		});
 	if (coalition_user.data) {
 		user = coalition_user.data[0];
-		if (secret == 1 && user.coalition_id == 15) {
-			points = 3000;
-			let dbuser = await User.findOne({
-				login: req.session.login
-			});
-			dbuser.total_points += points;
-			dbuser.activity.push({
-				kind: "coalition_points",
-				amount: points
-			});
-			dbuser.save(error => {
-				console.log(error);
+		if (user.coalition_id == 15 || user.coalition_id == 16 || user.coalition_id == 17) {
+			if (secret == 1 && user.coalition_id == 15) {
+				points = 3000;
+				let dbuser = await User.findOne({
+					login: req.session.login
+				});
+				dbuser.total_points += points;
+				dbuser.activity.push({
+					kind: "coalition_points",
+					amount: points
+				});
+				dbuser.save(error => {
+					console.log(error);
+				})
+			}
+			console.log("Posting new score...");
+			axios.post('https://api.intra.42.fr/v2/coalitions/' + user.coalition_id + '/scores', {
+				score: {
+					coalitions_user_id: user.id,
+					reason: reason,
+					value: points
+				}
+			}, {
+				headers: {
+					"Authorization": "Bearer " + master_token_infos.access_token
+				}
+			}).then(() => {
+				console.log("Done. Points attribued.")
+			}).catch(error => {
+				console.log("Problem giving coalition poinnts :", error);
+				return (error);
 			})
 		}
-		console.log("Posting new score...");
-		axios.post('https://api.intra.42.fr/v2/coalitions/' + user.coalition_id + '/scores', {
-			score: {
-				coalitions_user_id: user.id,
-				reason: reason,
-				value: points
-			}
-		}, {
-			headers: {
-				"Authorization": "Bearer " + master_token_infos.access_token
-			}
-		}).then(() => {
-			console.log("Done. Points attribued.")
-		}).catch(error => {
-			console.log("Problem giving coalition poinnts :", error);
-			return (error);
-		})
 	} else {
 		console.log("No coalition_user...");
 		return (1);
