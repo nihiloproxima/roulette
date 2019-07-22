@@ -116,6 +116,7 @@ router.get('/styx', async (req, res) => {
 
 router.post('/styx', async (req, res) => {
 	if (req.session.auth) {
+		console.log(req.session.login, " tried : ", req.body.omaewa);
 		let user = await User.findOne({
 			login: req.session.login
 		});
