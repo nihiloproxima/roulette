@@ -2,6 +2,7 @@ const axios = require('axios');
 const User = require("../schemas/User");
 
 const pointsManager = async function (user_id, points, reason, secret = 0) {
+	let username = "";
 	console.log("Grabbing coallition infos and coallition_user");
 	let coalition_user = await axios
 		.get('https://api.intra.42.fr/v2/coalitions_users?user_id=' + user_id, {
@@ -17,6 +18,7 @@ const pointsManager = async function (user_id, points, reason, secret = 0) {
 				let dbuser = await User.findOne({
 					user_id: user_id
 				});
+				username = dbuser.login;
 				dbuser.total_points += points;
 				dbuser.activity.push({
 					kind: "coalition_points",
@@ -38,7 +40,7 @@ const pointsManager = async function (user_id, points, reason, secret = 0) {
 					"Authorization": "Bearer " + master_token_infos.access_token
 				}
 			}).then(() => {
-				console.log("Done. " + points + " points attribued to " + dbuser.login)
+				console.log("Done. " + points + " points attribued to " + username)
 			}).catch(error => {
 				console.log("Problem giving coalition points :", error);
 				return (error);
