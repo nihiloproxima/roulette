@@ -38,9 +38,9 @@ const pointsManager = async function (user_id, points, reason, secret = 0) {
 					"Authorization": "Bearer " + master_token_infos.access_token
 				}
 			}).then(() => {
-				console.log("Done. " + points + " points attribued to " + req.session.login)
+				console.log("Done. " + points + " points attribued to " + dbuser.login)
 			}).catch(error => {
-				console.log("Problem giving coalition poinnts :", error);
+				console.log("Problem giving coalition points :", error);
 				return (error);
 			})
 		}
