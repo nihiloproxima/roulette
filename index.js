@@ -6,8 +6,6 @@ const cors = require('cors');
 const routes = require('./routes');
 const mongoose = require("mongoose");
 const tokenManager = require('./middlewares/tokenManager');
-
-// require('dotenv').config();
 require('dotenv').config();
 app.set('view engine', 'ejs');
 app.use(cors());
@@ -43,6 +41,7 @@ app.use(tokenManager);
 
 
 app.use('/', routes);
+console.log(process.ENV);
 
 app.listen(port, function () {
 	console.log('Listening on port ' + port);
