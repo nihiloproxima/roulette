@@ -18,6 +18,7 @@ const pointsManager = async function (user_id, points, reason, secret = 0) {
 					user_id: user_id
 				});
 				console.log("Giving " + points + " points to " + dbuser.login);
+				
 				dbuser.total_points += points;
 				dbuser.activity.push({
 					kind: "coalition_points",
