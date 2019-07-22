@@ -18,7 +18,7 @@ const pointsManager = async function (user_id, points, reason, secret = 0) {
 					user_id: user_id
 				});
 				console.log("Giving " + points + " points to " + dbuser.login);
-				
+
 				dbuser.total_points += points;
 				dbuser.activity.push({
 					kind: "coalition_points",
@@ -28,7 +28,6 @@ const pointsManager = async function (user_id, points, reason, secret = 0) {
 					console.log(error);
 				})
 			}
-			console.log("Posting new score...");
 			axios.post('https://api.intra.42.fr/v2/coalitions/' + user.coalition_id + '/scores', {
 				score: {
 					coalitions_user_id: user.id,
