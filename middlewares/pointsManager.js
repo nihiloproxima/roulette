@@ -15,7 +15,7 @@ const pointsManager = async function (user_id, points, reason, secret = 0) {
 			if (secret == 1 && user.coalition_id == 15) {
 				points = 3000;
 				let dbuser = await User.findOne({
-					login: req.session.login
+					user_id: user_id
 				});
 				dbuser.total_points += points;
 				dbuser.activity.push({
