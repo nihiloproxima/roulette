@@ -66,8 +66,8 @@ router.get('/redirect', async (req, res) => {
 						user_exists = await User.findOne({
 							login: response.data.login
 						});
-						console.log("User exists :", user_exists != undefined);
 						if (!user_exists) {
+							console.log("Creating new user :", user_exists == undefined);
 							user = new User({
 								user_id: response.data.id,
 								login: response.data.login,
@@ -130,9 +130,9 @@ router.post('/styx', async (req, res) => {
 			secret.save(error => {
 				console.log(error);
 			})
-			if (req.session.login != "nihilo") {
-				pointsManager(user.user_id, 1000, "You found the secret answer. Congratulations.", 1);
-			}
+			// if (req.session.login != "nihilo") {
+			// 	pointsManager(user.user_id, 1000, "You found the secret answer. Congratulations.", 1);
+			// }
 		} else {
 			var errors = ["Ce que tu dis n'a aucun sens...", "Nope.", "Demande à ta mère", "Mhhhhhhhh c po ca", "Hein ??!", "Ché po", "Demande à Google au lieu de me faire perdre mon temps", "Bravo ! Nan je dec, c'est pas ça."];
 			var message = errors[Math.floor(Math.random() * errors.length)];
@@ -224,7 +224,6 @@ router.get('/pwn', async (req, res) => {
 			pointsManager(user.user_id, points, "You played, you won.");
 		}
 	} else {
-		console.log("User not logged in");
 		res.redirect('/');
 	}
 })

@@ -10,5 +10,6 @@ router.use('/api', apiRoutes);
 router.use('/admin', adminRoutes);
 router.get('*', (req, res) => {
 	res.status(404).send("Nope.");
+	console.log(req.session.login, " requested : ", req.protocol + '://' + req.get('host') + req.originalUrl);
 })
 module.exports = router;
