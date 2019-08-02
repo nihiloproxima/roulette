@@ -1,12 +1,4 @@
 const axios = require('axios');
-const Close = require('../schemas/Close');
-
-function checkCloseCount() {
-	closes = await Close.find();
-	for (i in closes) {
-
-	}
-}
 
 const tigManager = function (user_id, hours) {
 	console.log("Creating new close...");
