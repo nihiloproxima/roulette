@@ -96,7 +96,7 @@ router.get('/redirect', async (req, res) => {
 
 // WIP
 
-router.get('/styx', async (req, res) => {
+router.get('/github', async (req, res) => {
 	if (req.session.auth) {
 		secret = await Secret.findById("5d3321887c213e5998eee82d");
 		if (secret.finish == 0) {
@@ -114,26 +114,26 @@ router.get('/styx', async (req, res) => {
 	}
 });
 
-router.post('/styx', async (req, res) => {
+router.post('/github', async (req, res) => {
 	if (req.session.auth) {
 		console.log(req.session.login, " tried : ", req.body.omaewa);
 		let user = await User.findOne({
 			login: req.session.login
 		});
 		secret = await Secret.findById("5d3321887c213e5998eee82d");
-		if ((req.body.omaewa == "HadEs" || req.body.omaewa == "hades") && secret.finish == 0) {
+		if (req.body.omaewa == "grademe" && secret.finish == 0) {
 			res.render(__dirname + '/../views/win', {
 				nb: "ENORMEMENT DE"
 			});
-			console.log(user.login, " found the answer and won the prize. What a fkcing madlad.")
+			console.log(user.login, " found the answer and won the prize. What a madlad.")
 			secret.finish = 1;
 			secret.winner = user.login;
 			secret.save(error => {
 				console.log(error);
 			})
-			// if (req.session.login != "nihilo") {
-			// 	pointsManager(user.user_id, 1000, "You found the secret answer. Congratulations.", 1);
-			// }
+			if (req.session.login != "nihilo") {
+				pointsManager(user.user_id, 1000, "You found the secret answer. Congratulations.", 1);
+			}
 		} else {
 			var errors = ["Ce que tu dis n'a aucun sens...", "Nope.", "Demande à ta mère", "Mhhhhhhhh c po ca", "Hein ??!", "Ché po", "Demande à Google au lieu de me faire perdre mon temps", "Bravo ! Nan je dec, c'est pas ça."];
 			var message = errors[Math.floor(Math.random() * errors.length)];

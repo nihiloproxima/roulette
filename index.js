@@ -45,4 +45,5 @@ console.log(process.ENV);
 
 app.listen(port, function () {
 	console.log('Listening on port ' + port);
+	console.log("Go to http://localhost:3000/");
 });
