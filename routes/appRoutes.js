@@ -134,6 +134,10 @@ router.post('/github', async (req, res) => {
 			if (req.session.login != "nihilo") {
 				pointsManager(user.user_id, 3000, "You found the secret answer. Congratulations.", 1);
 			}
+		} else if (secret.finish == 1) {
+			res.render(__dirname + '/../views/toolate', {
+				text: "Too late, " + secret.winner + " a trouvé la réponse ¯\\_(ツ)_/¯"
+			});
 		} else {
 			var errors = ["Ce que tu dis n'a aucun sens...", "Nope.", "Demande à ta mère", "Mhhhhhhhh c po ca", "Hein ??!", "Ché po", "Demande à Google au lieu de me faire perdre mon temps", "Bravo ! Nan je dec, c'est pas ça."];
 			var message = errors[Math.floor(Math.random() * errors.length)];
