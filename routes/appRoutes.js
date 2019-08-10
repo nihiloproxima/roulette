@@ -112,7 +112,7 @@ router.get('/ariane', async (req, res) => {
 
 router.post('/ariane', async (req, res) => {
 	if (req.session.auth) {
-		console.log(req.session.login, " tried : ", req.body.omaewa);
+		console.log(req.session.login, " tried : ", req.body.whoami);
 		let user = await User.findOne({
 			login: req.session.login
 		});
