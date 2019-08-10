@@ -117,7 +117,6 @@ router.post('/ariane', async (req, res) => {
 			login: req.session.login
 		});
 		secret = await Secret.findById("5d3321887c213e5998eee82d");
-		console.log(secret.finish);
 		if (secret.finish == 1) {
 			res.render(__dirname + '/../views/toolate', {
 				text: "Too late, " + secret.winner + " a trouvé la réponse ¯\\_(ツ)_/¯"
