@@ -12,7 +12,6 @@ const gages = [
 	"Tu signeras tous tes feedbacks de correction par un \"Je t'aime\"",
 	"Tu signeras tous tes messages Slack par \"Méfaits accomplis\"",
 	"Ajoute l'emoji :bubflesh: à coté de ton login sur Slack",
-	"Pendant une demie-heure tu feras le Groom dans l'ascenseur en demandant aux gens \"Quel étage ?\", en étant courtois et souriant.",
 	"Remet de l'ordre dans les chaises en cantina.",
 	"Explique à tes camarades comment faire un cake au chocolat sans parler",
 	"Tu as interdiction de parler jusqu'à ce que quelqu'un prononce ton login.",
@@ -26,7 +25,6 @@ const gages = [
 	"Parle une autre langue jusqu'à la prochaine roulette tout en faisant semblant de ne pas comprendre ce que disent les autres",
 	"Cherche Charlie dans l'école.",
 	"À ta prochaine correction, comme Maître Yoda tu parleras.",
-	"Compte le nombre de post-it présents sur les fenêtres de l'école et viens nous donner le résultat au bocal.",
 	"Préviens les fumeurs devant le hall d'entrée que c'est mauvais pour leur santé.",
 	"Fais un dessin des membres du bocal dans des postures glorieuses. Tu partageras ta création sur le #random.",
 	"Imagine un calamar qui fait du roller. Et dessine le. Tu pourras partager ta création sur le #random de Slack.",
@@ -90,9 +88,7 @@ router.get('/redirect', async (req, res) => {
 	}
 });
 
-// WIP
-
-router.get('/ariane', async (req, res) => {
+router.get('/styx', async (req, res) => {
 	if (req.session.auth) {
 		secret = await Secret.findById("5d3321887c213e5998eee82d");
 		if (secret.finish == 0) {
@@ -110,7 +106,7 @@ router.get('/ariane', async (req, res) => {
 	}
 });
 
-router.post('/ariane', async (req, res) => {
+router.post('/styx', async (req, res) => {
 	if (req.session.auth) {
 		console.log(req.session.login, " tried : ", req.body.whoami);
 		let user = await User.findOne({
@@ -121,15 +117,7 @@ router.post('/ariane', async (req, res) => {
 			res.render(__dirname + '/../views/toolate', {
 				text: "Too late, " + secret.winner + " a trouvé la réponse ¯\\_(ツ)_/¯"
 			});
-		} else if (["blackhole", "Blackhole", "trou noir"].includes(req.body.whoami)) {
-			res.render(__dirname + '/../views/secret', {
-				error: "Non, sinon la question aurait été : quel avenir t'attend à 42"
-			})
-		} else if (["adele", "nihilo", "vico", "clarisse", "cyril", "lazare", "sandrine"].includes(req.body.whoami)) {
-			res.render(__dirname + '/../views/secret', {
-				error: "J'espère que tu as un plan B pour après la piscine"
-			})
-		} else if ((req.body.whoami == "gargantua" || req.body.whoami == "Gargantua") && secret.finish == 0) {
+		} else if ((["Hades", "hades", "hadès", "Hadès"].includes(req.body.whoami)) && secret.finish == 0) {
 			res.render(__dirname + '/../views/win', {
 				nb: "ENORMEMENT de"
 			});
@@ -139,9 +127,9 @@ router.post('/ariane', async (req, res) => {
 			secret.save(error => {
 				console.log(error);
 			})
-			// if (req.session.login != "nihilo") {
-			// 	pointsManager(user.user_id, 3000, "You found the secret answer. Congratulations.", 1);
-			// }
+			if (req.session.login != "nihilo") {
+				pointsManager(user.user_id, 1000, "You found the secret answer. Congratulations.", 1);
+			}
 		} else {
 			var errors = ["Allez un petit effort...", "T'es sûr(e) que tu sais lire ?", "How can you talk without a brain?", "Si on envoyait les cons sur orbite t'aurais pas fini de tourner...", "Ce que tu dis n'a aucun sens...", "Nope.", "Demande à ta mère", "Mhhhhhhhh c po ca", "Hein ??!", "Ché po trop mais à mon avis c'est pas ça", "Demande à Google au lieu de me faire perdre mon temps", "Bravo ! Nan je dec, c'est pas ça."];
 			var message = errors[Math.floor(Math.random() * errors.length)];
