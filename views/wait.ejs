@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<!-- t-y-s-x-->
-
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -44,7 +42,7 @@
 				<th>Gages</th>
 				<th>Total de points</th>
 			</thead>
-			<tbody id="infos">
+			<tbody id="schwifty">
 
 			</tbody>
 		</table>
@@ -81,7 +79,7 @@
 	</script>
 	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 	<script>
-		var infos = document.getElementById("infos")
+		var infos = document.getElementById("schwifty")
 		axios.get('/api')
 			.then(response => {
 				var users = response.data;

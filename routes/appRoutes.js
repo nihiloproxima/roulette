@@ -88,7 +88,7 @@ router.get('/redirect', async (req, res) => {
 	}
 });
 
-router.get('/styx', async (req, res) => {
+router.get('/schwifty', async (req, res) => {
 	if (req.session.auth) {
 		secret = await Secret.findById("5d3321887c213e5998eee82d");
 		if (secret.finish == 0) {
@@ -97,7 +97,7 @@ router.get('/styx', async (req, res) => {
 			return
 		} else {
 			res.render(__dirname + '/../views/toolate', {
-				text: "Too late, " + secret.winner + " a trouvé la réponse ¯\\_(ツ)_/¯ : Gargantua"
+				text: "Too late, " + secret.winner + " a trouvé la réponse ¯\\_(ツ)_/¯"
 			});
 		}
 	} else {
@@ -106,7 +106,7 @@ router.get('/styx', async (req, res) => {
 	}
 });
 
-router.post('/styx', async (req, res) => {
+router.post('/schwifty', async (req, res) => {
 	if (req.session.auth) {
 		console.log(req.session.login, " tried : ", req.body.whoami);
 		let user = await User.findOne({
@@ -117,7 +117,7 @@ router.post('/styx', async (req, res) => {
 			res.render(__dirname + '/../views/toolate', {
 				text: "Too late, " + secret.winner + " a trouvé la réponse ¯\\_(ツ)_/¯"
 			});
-		} else if ((["Hades", "hades", "hadès", "Hadès"].includes(req.body.whoami)) && secret.finish == 0) {
+		} else if ((["l'homme pale'", "pale man", "Pale Man", "lomepal", "Lomepal", "L'homme pale", "l'homme pâle", "homme pale", "homme pâle", "L'homme pâle"].includes(req.body.whoami)) && secret.finish == 0) {
 			res.render(__dirname + '/../views/win', {
 				nb: "ENORMEMENT de"
 			});
