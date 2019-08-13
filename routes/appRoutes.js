@@ -165,7 +165,7 @@ router.get('/pwn', async (req, res) => {
 		if (rand <= 10) {
 			var rand2 = Math.floor(Math.random() * 100);
 			// TIG RNG
-			if (rand2 <= 3) {
+			if (rand2 <= 10) {
 				hours = 2;
 
 				user.total_community_services += 1;
