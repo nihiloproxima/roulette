@@ -12,8 +12,7 @@ const pointsManager = async function (user_id, points, reason, secret = 0) {
 	if (coalition_user.data) {
 		user = coalition_user.data[0];
 		if (user.coalition_id == 15 || user.coalition_id == 16 || user.coalition_id == 17) {
-			if (secret == 1 && user.coalition_id == 15) {
-				points = 3000;
+			if (secret == 1) {
 				let dbuser = await User.findOne({
 					user_id: user_id
 				});

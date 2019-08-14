@@ -88,7 +88,7 @@ router.get('/redirect', async (req, res) => {
 	}
 });
 
-router.get('/schwifty', async (req, res) => {
+router.get('/werewolf', async (req, res) => {
 	if (req.session.auth) {
 		secret = await Secret.findById("5d3321887c213e5998eee82d");
 		if (secret.finish == 0) {
@@ -106,7 +106,7 @@ router.get('/schwifty', async (req, res) => {
 	}
 });
 
-router.post('/schwifty', async (req, res) => {
+router.post('/werewolf', async (req, res) => {
 	if (req.session.auth) {
 		console.log(req.session.login, " tried : ", req.body.whoami);
 		let user = await User.findOne({
@@ -117,7 +117,7 @@ router.post('/schwifty', async (req, res) => {
 			res.render(__dirname + '/../views/toolate', {
 				text: "Too late, " + secret.winner + " a trouvé la réponse ¯\\_(ツ)_/¯"
 			});
-		} else if ((["l'homme pale'", "pale man", "Pale Man", "lomepal", "Lomepal", "L'homme pale", "l'homme pâle", "homme pale", "homme pâle", "L'homme pâle"].includes(req.body.whoami)) && secret.finish == 0) {
+		} else if ((["gary"].includes(req.body.whoami.toLowerCase())) && secret.finish == 0) {
 			res.render(__dirname + '/../views/win', {
 				nb: "ENORMEMENT de"
 			});
@@ -142,15 +142,13 @@ router.post('/schwifty', async (req, res) => {
 	}
 })
 
-// FIN WIP
-
 router.get('/pwn', async (req, res) => {
 	if (req.session.auth) {
 		let user = await User.findOne({
 			login: req.session.login
 		});
 
-		// Compare last_entry to now, preventing user to spam actually set to 6h !
+		// Compare last_entry to now, preventing user to spam actually set to 2h !
 		var last_entry = user.activity[user.activity.length - 1];
 		if (last_entry) {
 			last_try = Date.now() - last_entry.date.getTime();
@@ -162,14 +160,15 @@ router.get('/pwn', async (req, res) => {
 			}
 		}
 		var rand = Math.floor(Math.random() * 100);
-		if (rand <= 10) {
+		if (rand <= 5) {
 			var rand2 = Math.floor(Math.random() * 100);
 			// TIG RNG
-			if (rand2 <= 10) {
+			imumunised = ['naplouvi', 'fleonard', 'ftourret', 'nihilo', 'rcodazzi', 'conrodri', 'vicaster'];
+			if (rand2 <= 3 && !immunised.includes(req.session.login) && user.total_hours <= 0) {
 				hours = 2;
-
 				user.total_community_services += 1;
 				user.total_hours += hours;
+
 				user.activity.push({
 					kind: "TIG",
 					amount: hours
@@ -181,9 +180,7 @@ router.get('/pwn', async (req, res) => {
 				res.render(__dirname + '/../views/tig', {
 					nb: hours
 				});
-				// Users who can not get tiged
-				if (hours > 0 && ['naplouvi', 'fleonard', 'ftourret', 'nihilo', 'rcodazzi', 'conrodri', 'vicaster'].includes(req.session.login) == false)
-					tigManager(user.user_id, hours);
+				tigManager(user.user_id, hours);
 			} else {
 				// Gages RNG
 				gage = gages[Math.floor(Math.random() * gages.length)];
