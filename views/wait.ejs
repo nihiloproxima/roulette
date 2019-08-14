@@ -43,7 +43,7 @@
 				<th>Gages</th>
 				<th>Total de points</th>
 			</thead>
-			<tbody>
+			<tbody id="infos">
 
 			</tbody>
 		</table>
@@ -80,7 +80,7 @@
 	</script>
 	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 	<script>
-		var infos = document.getElementById("schwifty")
+		var infos = document.getElementById("infos")
 		axios.get('/api')
 			.then(response => {
 				var users = response.data;
