@@ -88,7 +88,7 @@ router.get('/redirect', async (req, res) => {
 	}
 });
 
-router.get('/werewolf', async (req, res) => {
+router.get('/hal', async (req, res) => {
 	if (req.session.auth) {
 		secret = await Secret.findById("5d3321887c213e5998eee82d");
 		if (secret.finish == 0) {
@@ -96,6 +96,7 @@ router.get('/werewolf', async (req, res) => {
 			console.log(req.session.login, " found the secret path");
 			return
 		} else {
+			console.log(req.session.login, " found the secret path but too late.")
 			res.render(__dirname + '/../views/toolate', {
 				text: "Too late, " + secret.winner + " a trouvé la réponse ¯\\_(ツ)_/¯"
 			});
@@ -106,7 +107,7 @@ router.get('/werewolf', async (req, res) => {
 	}
 });
 
-router.post('/werewolf', async (req, res) => {
+router.post('/secret', async (req, res) => {
 	if (req.session.auth) {
 		console.log(req.session.login, " tried : ", req.body.whoami);
 		let user = await User.findOne({
@@ -117,7 +118,7 @@ router.post('/werewolf', async (req, res) => {
 			res.render(__dirname + '/../views/toolate', {
 				text: "Too late, " + secret.winner + " a trouvé la réponse ¯\\_(ツ)_/¯"
 			});
-		} else if ((["gary"].includes(req.body.whoami.toLowerCase())) && secret.finish == 0) {
+		} else if ((["narcissa"].includes(req.body.whoami.toLowerCase())) && secret.finish == 0) {
 			res.render(__dirname + '/../views/win', {
 				nb: "ENORMEMENT de"
 			});
@@ -128,7 +129,7 @@ router.post('/werewolf', async (req, res) => {
 				console.log(error);
 			})
 			if (req.session.login != "nihilo") {
-				pointsManager(user.user_id, 1000, "You found the secret answer. Congratulations.", 1);
+				pointsManager(user.user_id, 3000, "You found the secret answer. Congratulations.", 1);
 			}
 		} else {
 			var errors = ["Allez un petit effort...", "T'es sûr(e) que tu sais lire ?", "How can you talk without a brain?", "Si on envoyait les cons sur orbite t'aurais pas fini de tourner...", "Ce que tu dis n'a aucun sens...", "Nope.", "Demande à ta mère", "Mhhhhhhhh c po ca", "Hein ??!", "Ché po trop mais à mon avis c'est pas ça", "Demande à Google au lieu de me faire perdre mon temps", "Bravo ! Nan je dec, c'est pas ça."];
