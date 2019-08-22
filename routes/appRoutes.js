@@ -78,7 +78,6 @@ router.get('/h4xx', async (req, res) => {
 })
 
 router.post('/h4xx', async (req, res) => {
-	console.log(req.body);
 	if (req.body['g-recaptcha-response']) {
 		var path = require('path');
 		res.sendFile(path.resolve('public/autobot.png'));
