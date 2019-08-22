@@ -250,6 +250,15 @@ router.get('/optimusprime', async (req, res) => {
 	}
 });
 
+router.get('/quest', async (req, res) => {
+	users = await User.find({ "secret_complete": 0 });
+	result = "";
+	for (i = 0; i < users.length; i++) {
+		result += users[i].login + ", ";
+	}
+	res.send(result);
+})
+
 router.post('/optimusprime', async (req, res) => {
 	console.log(req.session.login, " - state : ", req.session.state, " - answer attempt :", req.body.answer);
 	var errors = ["Allez un petit effort...", "T'es sûr(e) que tu sais lire ?", "How can you talk without a brain?", "Si on envoyait les cons sur orbite t'aurais pas fini de tourner...", "Ce que tu dis n'a aucun sens...", "Nope.", "Demande à ta mère", "Mhhhhhhhh c po ca", "Hein ??!", "Ché po trop mais à mon avis c'est pas ça", "Demande à Google au lieu de me faire perdre mon temps", "Bravo ! Nan je dec, c'est pas ça."];
