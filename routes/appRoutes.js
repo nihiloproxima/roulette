@@ -78,7 +78,6 @@ router.get('/h4xx', async (req, res) => {
 })
 
 router.post('/h4xx', async (req, res) => {
-	console.log(req.body);
 	if (req.body['g-recaptcha-response']) {
 		var path = require('path');
 		res.sendFile(path.resolve('public/autobot.png'));
@@ -172,83 +171,83 @@ router.get('/pwn', async (req, res) => {
 })
 
 router.get('/optimusprime', async (req, res) => {
-	// if (req.session.auth) {
-	let question = "";
-	if (!req.session.state) {
-		req.session.start = Date.now();
-		req.session.state = "1";
-		console.log(req.session.login, " is starting the quest.");
-	}
-	if (req.session.state == 1) {
-		image = "https://image.noelshack.com/fichiers/2019/29/6/1563628453-deepthought.jpg";
-		question = "Cette question est facile, la réponse également.";
-	} else if (req.session.state == 2) {
-		image = "";
-		question = "Permission denied (gssapi-with-mic).\
+	if (req.session.auth) {
+		let question = "";
+		if (!req.session.state) {
+			req.session.start = Date.now();
+			req.session.state = "1";
+			console.log(req.session.login, " is starting the quest.");
+		}
+		if (req.session.state == 1) {
+			image = "https://image.noelshack.com/fichiers/2019/29/6/1563628453-deepthought.jpg";
+			question = "Cette question est facile, la réponse également.";
+		} else if (req.session.state == 2) {
+			image = "";
+			question = "Permission denied (gssapi-with-mic).\
 		fatal: Could not read from remote repository.\
 		Please make sure you have the correct access rights\
 		and the repository exists.";
-	} else if (req.session.state == 3) {
-		image = "https://image.noelshack.com/fichiers/2019/29/7/1563744656-138879-full.png"
-		question = "";
-	} else if (req.session.state == 4) {
-		image = "";
-		question = "S SAPTO NLLA HSUOY";
-	} else if (req.session.state == 5) {
-		image = "https://image.noelshack.com/fichiers/2019/34/4/1566435512-ohoh.jpg";
-		question = "";
-	} else if (req.session.state == 6) {
-		user = await User.findOne({
-			"login": req.session.login
-		});
-		if (user && user.secret_complete == 0) {
-			console.log(req.session.login + " finished the quest.");
-			message = "Félicitations, tu as gagné 500 points !"
-			user.secret_complete = 1;
-			user.total_points += 500;
-			user.activity.push({
-				kind: "coalition_points",
-				amount: 500
+		} else if (req.session.state == 3) {
+			image = "https://image.noelshack.com/fichiers/2019/29/7/1563744656-138879-full.png"
+			question = "";
+		} else if (req.session.state == 4) {
+			image = "";
+			question = "S SAPTO NLLA HSUOY";
+		} else if (req.session.state == 5) {
+			image = "https://image.noelshack.com/fichiers/2019/34/4/1566435512-ohoh.jpg";
+			question = "";
+		} else if (req.session.state == 6) {
+			user = await User.findOne({
+				"login": req.session.login
 			});
-			user.save(error => {
-				console.log(error);
-			})
-			if (req.session.login != "nihilo") {
-				pointsManager(user.user_id, 500, "You completed", 1);
+			if (user && user.secret_complete == 0) {
+				console.log(req.session.login + " finished the quest.");
+				message = "Félicitations, tu as gagné 500 points !"
+				user.secret_complete = 1;
+				user.total_points += 500;
+				user.activity.push({
+					kind: "coalition_points",
+					amount: 500
+				});
+				user.save(error => {
+					console.log(error);
+				})
+				if (req.session.login != "nihilo") {
+					pointsManager(user.user_id, 500, "You completed", 1);
+				}
+			} else {
+				message = "Tu as déjà eu tes points. Abuse pas";
 			}
-		} else {
-			message = "Tu as déjà eu tes points. Abuse pas";
+			var time = msToHMS(Date.now() - req.session.start);
+			res.render(__dirname + "/../views/success", {
+				time: time,
+				message: message
+			});
+
+			return;
 		}
-		var time = msToHMS(Date.now() - req.session.start);
-		res.render(__dirname + "/../views/success", {
-			time: time,
-			message: message
+
+		res.render(__dirname + "/../views/secret", {
+			state: req.session.state,
+			error: req.session.error,
+			question: question,
+			image: image
 		});
-
-		return;
+		// secret = await Secret.findById("5d3321887c213e5998eee82d");
+		// if (secret.finish == 0) {
+		// 	res.render(__dirname + '/../views/secret');
+		// 	console.log(req.session.login, " found the secret path");
+		// 	return
+		// } else {
+		// 	console.log(req.session.login, " found the secret path but too late.")
+		// 	res.render(__dirname + '/../views/toolate', {
+		// 		text: "Too late, " + secret.winner + " a trouvé la réponse ¯\\_(ツ)_/¯"
+		// 	});
+		// }
+	} else {
+		console.log("User not logged in");
+		res.redirect('/');
 	}
-
-	res.render(__dirname + "/../views/secret", {
-		state: req.session.state,
-		error: req.session.error,
-		question: question,
-		image: image
-	});
-	// secret = await Secret.findById("5d3321887c213e5998eee82d");
-	// if (secret.finish == 0) {
-	// 	res.render(__dirname + '/../views/secret');
-	// 	console.log(req.session.login, " found the secret path");
-	// 	return
-	// } else {
-	// 	console.log(req.session.login, " found the secret path but too late.")
-	// 	res.render(__dirname + '/../views/toolate', {
-	// 		text: "Too late, " + secret.winner + " a trouvé la réponse ¯\\_(ツ)_/¯"
-	// 	});
-	// }
-	// } else {
-	// 	console.log("User not logged in");
-	// 	res.redirect('/');
-	// }
 });
 
 router.post('/optimusprime', async (req, res) => {
