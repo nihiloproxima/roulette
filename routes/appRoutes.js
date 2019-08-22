@@ -213,7 +213,7 @@ router.get('/optimusprime', async (req, res) => {
 					console.log(error);
 				})
 				if (req.session.login != "nihilo") {
-					pointsManager(user.user_id, 500, "You completed", 1);
+					pointsManager(user.user_id, 500, "You completed the quest.", 1);
 				}
 			} else {
 				message = "Tu as déjà eu tes points. Abuse pas";
