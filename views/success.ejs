@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Escape AFK</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+	<style>
+		* {
+			font-family: Verdana, Geneva, Tahoma, sans-serif;
+			background-color: black;
+			color: white;
+		}
+
+		h1 {
+			text-align: center;
+		}
+
+		h5 {
+			color: #f44336;
+		}
+
+		img {
+			width: 50%;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="container" class="center-align">
+		<% if (locals.message) {%>
+		<h2 class="center-align"><%= message %></h2>
+		<% } if (locals.time) { %>
+		<h5 class="center-align">Tu as mis : <%= time %></h5>
+		<% } %>
+		<p class="center-align">Ce serait top que tu laisses les autres chercher sans leur donner les réponses :)</p>
+		<a href="/">Return</a>
+	</div>
+</body>
+
+</html>

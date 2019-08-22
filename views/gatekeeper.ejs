@@ -1,0 +1,32 @@
+<html>
+
+<head>
+	<title>The Gatekeeper</title>
+	<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>oh no</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+	<style>
+		body {
+			background-color: black;
+		}
+		h5 { 
+			color: red;
+		}
+	</style>
+</head>
+
+<body>
+	<% if (locals.error) { %>
+	<h5 class="center-align"><%= error %></h5>
+	<%} %>}
+	<form action="/h4xx" method="POST">
+		<div class="g-recaptcha" data-sitekey="6Lcy5LMUAAAAAFZg_LWWgmVzM2UXlwLAY-Hvqqn_"></div>
+		<br />
+		<input class="btn waves-effect waves-light" type="submit" value="Submit">
+	</form>
+</body>
+
+</html>
