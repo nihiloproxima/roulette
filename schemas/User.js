@@ -33,6 +33,10 @@ const UserSchema = mongoose.Schema({
 			default: Date.now
 		}
 	}],
+	secret_complete: {
+		type: Number,
+		default: 0
+	},
 	img_url: String,
 	url: String,
 	creation_date: {

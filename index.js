@@ -43,7 +43,12 @@ app.use(tokenManager);
 app.use('/', routes);
 console.log(process.ENV);
 
-app.listen(port, function () {
-	console.log('Listening on port ' + port);
-	console.log("Go to http://localhost:3000/");
+// app.listen(port, function () {
+// 	console.log('Listening on port ' + port);
+// 	console.log("Go to http://localhost:3000/");
+// });
+
+app.listen(80, function () {
+	console.log('Listening on port ' + 80);
+	console.log("Go to http://127.0.0.1/");
 });
